@@ -63,16 +63,16 @@ namespace FormGeneratorDemo.Components.FormGenerator
             MethodInfo method = typeof(FormElementComponent).GetMethod(nameof(FormElementComponent.CreateFormComponent));
             var componentType = _repo.GetComponent(propInfoValue.PropertyType.ToString());
 
-            ICanRenderChildren renderChildrenInstance = null;
+            IRenderChildren renderChildrenInstance = null;
 
             if (componentType == null)
                 return;
 
             var elementType = componentType;         
 
-            if (TypeImplementsInterface(componentType, typeof(ICanRenderChildren)))
+            if (TypeImplementsInterface(componentType, typeof(IRenderChildren)))
             {               
-                renderChildrenInstance = Activator.CreateInstance(componentType) as ICanRenderChildren;
+                renderChildrenInstance = Activator.CreateInstance(componentType) as IRenderChildren;
                 elementType = renderChildrenInstance.TypeToRender;
             }
 
@@ -89,7 +89,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
 
         public static void CreateFormComponent<T, TElement>(object target,
             object dataContext,
-            PropertyInfo propInfoValue, RenderTreeBuilder builder, ICanRenderChildren renderChildrenInstance)
+            PropertyInfo propInfoValue, RenderTreeBuilder builder, IRenderChildren renderChildrenInstance)
         {
 
             builder.OpenComponent(0, typeof(TElement));

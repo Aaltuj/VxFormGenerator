@@ -7,7 +7,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
     /// <summary>
     /// Helper interface for rendering values in components, needs to be non-generic for the form generator
     /// </summary>
-    public interface ICanRenderChildren
+    public interface IRenderChildren
     {
         /// <summary>
         /// Let the form generator know what element to render    

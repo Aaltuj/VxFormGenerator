@@ -33,7 +33,7 @@ namespace FormGeneratorDemo
                         {typeof(string).ToString(), typeof(InputText) },
                         {typeof(DateTime).ToString(), typeof(InputDate<>) },
                         {typeof(bool).ToString(), typeof(InputCheckbox) },
-                        {typeof(FoodKind).ToString(), typeof(InputSelect<>) },
+                        {typeof(FoodKind).ToString(), typeof(RenderChildrenInputSelect) },
                         {typeof(decimal).ToString(), typeof(InputNumber<>) }
                   }, null));
         }
