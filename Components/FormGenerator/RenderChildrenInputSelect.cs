@@ -19,6 +19,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
                 {
                     if (typeof(TValue).IsEnum)
                     {
+                        // when type is a enum present them as an <option> element by levering the component InputSelectOption
                         var values = typeof(TValue).GetEnumValues();
                         foreach (var val in values)
                         {
