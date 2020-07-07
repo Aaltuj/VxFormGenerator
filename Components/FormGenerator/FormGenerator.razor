@@ -10,7 +10,7 @@
     @foreach (var field in Properties)
     {
 
-        <FormElement FieldIdentifier="@field"></FormElement>
+        @RenderFormElement(field);
     }
 
     <button type="submit">Submit</button>

@@ -30,12 +30,12 @@ namespace FormGeneratorDemo
             services.AddSingleton(new FormGeneratorComponentsRepository(
                   new Dictionary<string, Type>()
                   {
-                        {typeof(string).ToString(), typeof(InputText) },
+                        {typeof(string).ToString(), typeof(BootstrapInputText) },
                         {typeof(DateTime).ToString(), typeof(InputDate<>) },
                         {typeof(bool).ToString(), typeof(InputCheckbox) },
-                        {typeof(FoodKind).ToString(), typeof(RenderChildrenInputSelect) },
+                        {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
                         {typeof(decimal).ToString(), typeof(InputNumber<>) }
-                  }, null));
+                  }, null, typeof(BootstrapFormElement)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

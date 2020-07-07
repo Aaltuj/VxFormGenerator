@@ -2,21 +2,21 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace FormGeneratorDemo.Components.FormGenerator
 {
-    public class RenderChildrenInputSelect : IRenderChildren
+    public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren
     {
-        public Type TypeToRender =>typeof(InputSelect<>);
 
-        public void RenderChildren<TValue>(RenderTreeBuilder builder, int index, object dataContext,
+        public void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
             PropertyInfo propInfoValue)
         {
             // the builder position is between the builder.OpenComponent() and builder.CloseComponent()
             // This means that the component of InputSelect is added en stil open for changes.
             // We can create a new RenderFragment and set the ChildContent attribute of the InputSelect component
-            builder.AddAttribute(index + 1, nameof(InputSelect<TValue>.ChildContent),
+            builder.AddAttribute(index + 1, nameof(ChildContent),
                 new RenderFragment(builder =>
                 {
                     // check if the type of the propery is an Enum

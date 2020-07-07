@@ -1,0 +1,11 @@
+﻿@inherits BootstrapFormElementComponent
+
+
+<div class="form-group">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="form-control-label" for="@Id">@Label</label>
+    }
+    @CreateComponent(FieldIdentifier)
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+</div>

@@ -12,7 +12,8 @@ namespace FormGeneratorDemo.Components.FormGenerator
         /// <summary>
         /// Let the form generator know what element to render    
         /// </summary>
-        Type TypeToRender { get; }
+    //    Type TypeToRender { get; }
+
         /// <summary>
         /// Function that will render the children for <see cref="TypeToRender"/>
         /// </summary>
@@ -21,7 +22,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
         /// <param name="index">The index of the element</param>
         /// <param name="dataContext">The model for the form</param>
         /// <param name="propInfoValue">The property that is filled by the <see cref="FormElement"/></param>
-        void RenderChildren<TElement>(RenderTreeBuilder builder, int index, object dataContext,
+        void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
             PropertyInfo propInfoValue);
     }
 }

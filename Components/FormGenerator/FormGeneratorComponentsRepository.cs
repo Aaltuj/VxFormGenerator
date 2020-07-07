@@ -10,6 +10,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
         private Dictionary<string, Type> _ComponentDict = new Dictionary<string, Type>();
 
         public Type _DefaultComponent { get; private set; }
+        public Type FormElementComponent { get; private set; }
 
         public FormGeneratorComponentsRepository()
         {
@@ -19,7 +20,15 @@ namespace FormGeneratorDemo.Components.FormGenerator
         {
             _ComponentDict = componentRegistrations;
             _DefaultComponent = defaultComponent;
+            FormElementComponent = typeof(FormElement);
         }
+        public FormGeneratorComponentsRepository(Dictionary<string, Type> componentRegistrations, Type defaultComponent, Type formElement)
+        {
+            _ComponentDict = componentRegistrations;
+            _DefaultComponent = defaultComponent;
+            FormElementComponent = formElement;
+        }
+
 
         public void RegisterComponent(string key, Type component)
         {

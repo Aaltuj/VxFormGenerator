@@ -34,6 +34,14 @@ namespace FormGeneratorDemo.Components.FormGenerator
             Properties = typeof(TValue).GetProperties();
         }
 
+        public RenderFragment RenderFormElement(System.Reflection.PropertyInfo propInfoValue) => builder =>
+        {
+            builder.OpenComponent(0, _repo.FormElementComponent);
+
+            builder.AddAttribute(1, nameof(FormElement.FieldIdentifier), propInfoValue);
+
+            builder.CloseComponent();
+        };
 
         public bool HasLabel(System.Reflection.PropertyInfo propInfoValue)
         {

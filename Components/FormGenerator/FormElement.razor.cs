@@ -60,36 +60,42 @@ namespace FormGeneratorDemo.Components.FormGenerator
 
         public RenderFragment CreateComponent(System.Reflection.PropertyInfo propInfoValue) => builder =>
         {
-            MethodInfo method = typeof(FormElementComponent).GetMethod(nameof(FormElementComponent.CreateFormComponent));
+           
             var componentType = _repo.GetComponent(propInfoValue.PropertyType.ToString());
 
-            IRenderChildren renderChildrenInstance = null;
+            FormElementMover renderChildrenInstance = null;
 
             if (componentType == null)
                 return;
 
             var elementType = componentType;         
 
-            if (TypeImplementsInterface(componentType, typeof(IRenderChildren)))
-            {               
-                renderChildrenInstance = Activator.CreateInstance(componentType) as IRenderChildren;
-                elementType = renderChildrenInstance.TypeToRender;
-            }
-
-
+            // When the elementType that is rendered is a generic Set the propertyType as the generic type
             if (elementType.IsGenericTypeDefinition)
             {
                 Type[] typeArgs = { propInfoValue.PropertyType };
                 elementType = elementType.MakeGenericType(typeArgs);
             }
 
+            // Check if the component has the IRenderChildren and read the type of component that should be rendered
+            if (TypeImplementsInterface(componentType, typeof(IRenderChildren)))
+            {
+                // Activate the the Type so that the methods can be called
+                var instance = Activator.CreateInstance(elementType) as IRenderChildren;
+                // wrap into a non-generic class because it's a parameter of invocated method. because it doesn't accept generic parameters
+                renderChildrenInstance = new FormElementMover(instance);
+            }
+
+            // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
+            MethodInfo method = typeof(FormElementComponent).GetMethod(nameof(FormElementComponent.CreateFormComponent));
             MethodInfo genericMethod = method.MakeGenericMethod(propInfoValue.PropertyType, elementType);
+            // Execute the method with the following parameters
             genericMethod.Invoke(this, new object[] { this, CascadedEditContext.Model, propInfoValue, builder, renderChildrenInstance });
         };
 
         public static void CreateFormComponent<T, TElement>(object target,
             object dataContext,
-            PropertyInfo propInfoValue, RenderTreeBuilder builder, IRenderChildren renderChildrenInstance)
+            PropertyInfo propInfoValue, RenderTreeBuilder builder, FormElementMover renderChildrenInstance)
         {
 
             builder.OpenComponent(0, typeof(TElement));
@@ -115,7 +121,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
 
             if (renderChildrenInstance != null)
             {
-                renderChildrenInstance.RenderChildren<T>(builder, 5, dataContext, propInfoValue);
+                renderChildrenInstance.Payload.RenderChildren(builder, 5, dataContext, propInfoValue);
             }
 
             builder.CloseComponent();
