@@ -1,8 +1,8 @@
 ﻿@inherits BootstrapInputCheckboxComponent;
 
-<div class="custom-control custom-checkbox line-height-checkbox ">
-    <input type="checkbox" class="custom-control-input" id="exampleCheck1" @bind="CurrentValue">
-
-    <label class="custom-control-label" for="exampleCheck1">test</label>
-
-</div>
+<VxInputCheckbox ContainerCss="custom-control custom-checkbox line-height-checkbox"
+                 class="custom-control-input"
+                 LabelCss="custom-control-label"
+                 Label="@Label"
+                 Id="@Id"
+                 @bind-Value="CurrentValue"></VxInputCheckbox>
