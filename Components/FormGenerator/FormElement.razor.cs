@@ -98,6 +98,12 @@ namespace FormGeneratorDemo.Components.FormGenerator
             {
                 // wrap into a non-generic class because it's a parameter of invocated method. because it doesn't accept generic parameters
                 formElementInstanceMover.PayloadCSS = instance as IRenderCss;
+
+            }
+
+            if (TypeImplementsInterface(componentType, typeof(IRenderAsFormElement)))
+            {
+                this.CssClasses.AddRange((instance as IRenderAsFormElement).FormElementClasses);
             }
 
             // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered

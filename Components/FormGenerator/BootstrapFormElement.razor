@@ -4,8 +4,10 @@
 <div class="@CssClass">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
-        <label class="form-control-label" for="@Id">@Label</label>
+     <label class="col-sm-3 col-form-label" for="@Id">@Label</label>
     }
-    @CreateComponent(FieldIdentifier)
-    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+    <div class="col-sm-9">
+        @CreateComponent(FieldIdentifier)
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+    </div>
 </div>

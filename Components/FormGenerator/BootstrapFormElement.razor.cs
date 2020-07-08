@@ -11,7 +11,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
         public BootstrapFormElementComponent()
         {
             DefaultFieldClasses = new List<string>() { "form-control"};
-            CssClasses = new List<string>() { "form-group" };
+            CssClasses = new List<string>() { "form-group", "row" };
         }
     }
 }
