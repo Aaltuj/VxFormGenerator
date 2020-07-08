@@ -30,9 +30,9 @@ namespace FormGeneratorDemo
             services.AddSingleton(new FormGeneratorComponentsRepository(
                   new Dictionary<string, Type>()
                   {
-                        {typeof(string).ToString(), typeof(BootstrapInputText) },
+                        {typeof(string).ToString(), typeof(InputText) },
                         {typeof(DateTime).ToString(), typeof(InputDate<>) },
-                        {typeof(bool).ToString(), typeof(InputCheckbox) },
+                        {typeof(bool).ToString(), typeof(BootstrapInputCheckbox) },
                         {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
                         {typeof(decimal).ToString(), typeof(InputNumber<>) }
                   }, null, typeof(BootstrapFormElement)));

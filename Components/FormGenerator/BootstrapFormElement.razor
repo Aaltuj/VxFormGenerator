@@ -1,7 +1,7 @@
 ﻿@inherits BootstrapFormElementComponent
 
 
-<div class="form-group">
+<div class="@CssClass">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
         <label class="form-control-label" for="@Id">@Label</label>

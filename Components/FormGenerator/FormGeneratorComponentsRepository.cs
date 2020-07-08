@@ -12,10 +12,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
         public Type _DefaultComponent { get; private set; }
         public Type FormElementComponent { get; private set; }
 
-        public FormGeneratorComponentsRepository()
-        {
 
-        }
         public FormGeneratorComponentsRepository(Dictionary<string, Type> componentRegistrations, Type defaultComponent)
         {
             _ComponentDict = componentRegistrations;

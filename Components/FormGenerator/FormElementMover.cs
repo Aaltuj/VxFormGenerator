@@ -2,11 +2,8 @@
 {
     public class FormElementMover
     {
-        public IRenderChildren Payload { get; private set; }
+        public IRenderChildren PayloadRenderChildren { get; set; }
+        public IRenderCss PayloadCSS { get; set; }
 
-        public FormElementMover(IRenderChildren payload)
-        {
-            this.Payload = payload;
-        }
     }
 }
