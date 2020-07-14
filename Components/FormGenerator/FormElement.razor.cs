@@ -75,6 +75,16 @@ namespace FormGeneratorDemo.Components.FormGenerator
             genericMethod.Invoke(this, new object[] { this, CascadedEditContext.Model, propInfoValue, builder, instance });
         };
 
+        /// <summary>
+        /// Creates the component that is rendered in the form
+        /// </summary>
+        /// <typeparam name="T">The type of the property</typeparam>
+        /// <typeparam name="TElement">The type of the form element, should be based on <see cref="InputBase{TValue}"/>, like a <see cref="InputText"/></typeparam>
+        /// <param name="target"></param>
+        /// <param name="dataContext"></param>
+        /// <param name="propInfoValue"></param>
+        /// <param name="builder"></param>
+        /// <param name="instance"></param>
         public void CreateFormComponent<T, TElement>(object target,
             object dataContext,
             PropertyInfo propInfoValue, RenderTreeBuilder builder, InputBase<T> instance)
