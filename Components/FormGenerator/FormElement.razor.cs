@@ -81,7 +81,8 @@ namespace FormGeneratorDemo.Components.FormGenerator
 
 
             if (componentType == null)
-                throw new Exception($"No component found for: {propInfoValue.PropertyType.ToString()}");
+                return;
+              //  throw new Exception($"No component found for: {propInfoValue.PropertyType.ToString()}");
 
             // Set the found component
             var elementType = componentType;

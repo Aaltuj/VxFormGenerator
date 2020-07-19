@@ -12,6 +12,17 @@ Welcome to your new app.
 <FormGenerator DataContext="session"
                OnValidSubmit="HandleValidSubmit"></FormGenerator>
 
+<EditForm Model="session">
+    <InputCheckboxMultiple @bind-Value="session.ThrowingUpDict">
+        @foreach (var item in values)
+        {
+            <VxInputCheckbox Label="@item.Key" @bind-Value="@item.Value"></VxInputCheckbox>
+        }
+        <!-- <VxInputCheckbox bind-Value="session.ThrowingUp"></VxInputCheckbox> -->
+
+    </InputCheckboxMultiple>
+
+</EditForm>
 <!-- Output -->
 <div class="card mt-2">
     <div class="card-header">
@@ -39,9 +50,13 @@ Welcome to your new app.
             <label>@session.KindOfFood</label>
         </div>
         <div>
-        <label class="mr-2">Has thrown up:</label>
-        <label>@session.ThrowingUp</label>
-    </div>
+            <label class="mr-2">Has thrown up:</label>
+            <label>@session.ThrowingUp</label>
+        </div>
+        <div>
+            <label class="mr-2">Has thrown up:</label>
+            <label>@session.ThrowingUpDict</label>
+        </div>
     </div>
 </div>
 
@@ -51,6 +66,11 @@ Welcome to your new app.
     /// Model that is used for the form
     /// </summary>
     private FeedingSession session = new FeedingSession();
+
+    private List<ValueReference<string, bool>> values = typeof(FoodKind).GetEnumValues()
+        .Cast<FoodKind>()
+        .Select(m => new ValueReference<string, bool>() { Key = m.ToString(), Value = false })
+        .ToList();
 
     /// <summary>
     /// Will handle the submit action of the form

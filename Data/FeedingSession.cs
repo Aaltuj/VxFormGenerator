@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FormGeneratorDemo.Components.FormGenerator;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FormGeneratorDemo.Data
@@ -17,6 +19,9 @@ namespace FormGeneratorDemo.Data
         public DateTime End { get; set; }
         [Display(Name = "Throwing up")]
         public bool ThrowingUp { get; set; }
+
+        [Display(Name = "Throwing up dict")]
+        public List<ValueReference<FoodKind, bool>> ThrowingUpDict { get; set; }
     }
 
     public enum FoodKind
