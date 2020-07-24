@@ -21,7 +21,7 @@ namespace FormGeneratorDemo.Data
         public bool ThrowingUp { get; set; }
 
         [Display(Name = "Throwing up dict")]
-        public List<ValueReference<string, bool>> ThrowingUpDict { get; set; }
+        public ValueReferences<FoodKind> ThrowingUpDict { get; set; } = new ValueReferences<FoodKind>();
     }
 
     public enum FoodKind

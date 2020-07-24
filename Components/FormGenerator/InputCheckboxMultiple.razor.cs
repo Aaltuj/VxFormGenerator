@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace FormGeneratorDemo.Components.FormGenerator
 {
-    public class InputCheckboxMultipleComponent : VxInputBase<List<ValueReference<string, bool>>>
+    public class InputCheckboxMultipleComponent<T> : VxInputBase<ValueReferences<T>>
     {
         /// <summary>
         /// Gets or sets the child content to be rendering inside the select element.
@@ -17,7 +17,7 @@ namespace FormGeneratorDemo.Components.FormGenerator
         List<VxInputCheckboxComponent> Checkboxes = new List<VxInputCheckboxComponent>();
 
         /// <inheritdoc />
-        protected override bool TryParseValueFromString(string value, out List<ValueReference<string, bool>> result, out string validationErrorMessage)
+        protected override bool TryParseValueFromString(string value, out ValueReferences<T> result, out string validationErrorMessage)
             => throw new NotImplementedException($"This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.");
 
         internal void RegisterCheckbox(VxInputCheckboxComponent checkbox)

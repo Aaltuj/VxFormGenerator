@@ -12,20 +12,11 @@ namespace FormGeneratorDemo.Components.FormGenerator
         [Parameter] public string LabelCss { get; set; }
         [Parameter] public string ContainerCss { get; set; }
 
-        [CascadingParameter(Name = "InputCheckboxMultiple")]
-        private InputCheckboxMultiple Parent { get; set; }
 
         protected override bool TryParseValueFromString(string value, out bool result, out string validationErrorMessage)
            => throw new NotImplementedException($"This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.");
 
-        protected override void OnInitialized()
-        {
-            if (Parent != null)
-                Parent.RegisterCheckbox(this);
-            
 
-            base.OnInitialized();
-        }
     }
 
 }
