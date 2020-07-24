@@ -9,5 +9,6 @@ namespace FormGeneratorDemo.Components.FormGenerator
         private string id = Guid.NewGuid().ToString();
 
         [Parameter] public string Id { get => id; set => id = value; }
+
     }
 }

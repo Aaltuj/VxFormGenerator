@@ -14,9 +14,9 @@ Welcome to your new app.
 
 <EditForm Model="session">
     <InputCheckboxMultiple @bind-Value="session.ThrowingUpDict">
-        @foreach (var item in values)
+        @foreach (var item in session.ThrowingUpDict)
         {
-            <VxInputCheckbox Label="@item.Key" @bind-Value="@item.Value"></VxInputCheckbox>
+            <VxInputCheckbox Label="@item.Key" Value="item.Value" ValueChanged="() => MyValueChangeHandler(item)" ValueExpression="()=>item.Value"></VxInputCheckbox>
         }
         <!-- <VxInputCheckbox bind-Value="session.ThrowingUp"></VxInputCheckbox> -->
 
@@ -55,7 +55,7 @@ Welcome to your new app.
         </div>
         <div>
             <label class="mr-2">Has thrown up:</label>
-            <label>@session.ThrowingUpDict</label>
+            <label>@session.ThrowingUpDict[0].Value</label>
         </div>
     </div>
 </div>
@@ -72,6 +72,11 @@ Welcome to your new app.
         .Select(m => new ValueReference<string, bool>() { Key = m.ToString(), Value = false })
         .ToList();
 
+    protected override void OnInitialized()
+    {
+        session.ThrowingUpDict = values;
+    }
+
     /// <summary>
     /// Will handle the submit action of the form
     /// </summary>
@@ -79,6 +84,12 @@ Welcome to your new app.
     private void HandleValidSubmit(EditContext context)
     {
         // save your changes
+    }
+
+    private void MyValueChangeHandler(ValueReference<string, bool> selection)
+    {
+        selection.Value = !selection.Value;
+
     }
 
 }

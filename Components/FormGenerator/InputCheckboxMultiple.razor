@@ -1,4 +1,6 @@
-﻿@typeparam TValue
+﻿
 @inherits InputCheckboxMultipleComponent
 
-@ChildContent
+<CascadingValue Value="@this"  Name="InputCheckboxMultiple">
+    @ChildContent
+</CascadingValue>
