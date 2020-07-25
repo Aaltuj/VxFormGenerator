@@ -23,7 +23,6 @@ namespace FormGeneratorDemo.Components.FormGenerator
 
             this.AddRange(values);
 
-
         }
     }
 }

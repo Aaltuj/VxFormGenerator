@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FormGeneratorDemo.Components.FormGenerator;
+using FormGeneratorDemo.Components.FormGenerator.Components;
 using FormGeneratorDemo.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Forms;
