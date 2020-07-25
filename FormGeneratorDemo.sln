@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormGeneratorDemo", "Demo\FormGeneratorDemo.csproj", "{93087E84-D125-415E-822A-9805A48C473B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VxFormGenerator", "VxFormGenerator\VxFormGenerator.csproj", "{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93087E84-D125-415E-822A-9805A48C473B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93087E84-D125-415E-822A-9805A48C473B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93087E84-D125-415E-822A-9805A48C473B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93087E84-D125-415E-822A-9805A48C473B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3153DC95-ACE4-473D-8019-C5E251952CEF}
+	EndGlobalSection
+EndGlobal
