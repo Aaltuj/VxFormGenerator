@@ -1,2 +1,4 @@
 
-.vs/FormGeneratorDemo/v16/
+.vs/
+bin/
+obj/
