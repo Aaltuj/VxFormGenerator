@@ -10,8 +10,9 @@ namespace VxFormGenerator.Components
 {
     public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren
     {
+        public static Type TypeOfChildToRender => typeof(InputSelectOption<string>);
 
-        public void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
+        public static void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
             PropertyInfo propInfoValue)
         {
             // the builder position is between the builder.OpenComponent() and builder.CloseComponent()
@@ -29,7 +30,7 @@ namespace VxFormGenerator.Components
                         foreach (var val in values)
                         {
                             //  Open the InputSelectOption component
-                            _builder.OpenComponent(0, typeof(InputSelectOption<string>));
+                            _builder.OpenComponent(0, TypeOfChildToRender);
 
                             // Set the value of the enum as a value and key parameter
                             _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.ToString());

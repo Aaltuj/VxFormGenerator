@@ -82,7 +82,7 @@ namespace VxFormGenerator
 
             if (componentType == null)
                 return;
-              //  throw new Exception($"No component found for: {propInfoValue.PropertyType.ToString()}");
+            //  throw new Exception($"No component found for: {propInfoValue.PropertyType.ToString()}");
 
             // Set the found component
             var elementType = componentType;
@@ -94,14 +94,14 @@ namespace VxFormGenerator
                 elementType = elementType.MakeGenericType(typeArgs);
             }
 
-            // Activate the the Type so that the methods can be called
-            var instance = Activator.CreateInstance(elementType);
+            /*   // Activate the the Type so that the methods can be called
+               var instance = Activator.CreateInstance(elementType);*/
 
             // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
             MethodInfo method = typeof(FormElementComponent).GetMethod(nameof(FormElementComponent.CreateFormComponent));
             MethodInfo genericMethod = method.MakeGenericMethod(propInfoValue.PropertyType, elementType);
             // Execute the method with the following parameters
-            genericMethod.Invoke(this, new object[] { this, CascadedEditContext.Model, propInfoValue, builder, instance });
+            genericMethod.Invoke(this, new object[] { this, CascadedEditContext.Model, propInfoValue, builder });
         };
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace VxFormGenerator
         /// <param name="instance">THe control instance</param>
         public void CreateFormComponent<T, TElement>(object target,
             object dataContext,
-            PropertyInfo propInfoValue, RenderTreeBuilder builder, InputBase<T> instance)
+            PropertyInfo propInfoValue, RenderTreeBuilder builder)
         {
             // Create the component based on the mapped Element Type
             builder.OpenComponent(0, typeof(TElement));
@@ -126,7 +126,7 @@ namespace VxFormGenerator
             builder.AddAttribute(1, nameof(InputBase<T>.Value), s);
 
             // Create the handler for ValueChanged. This wil update the model instance with the input
-            builder.AddAttribute(3, nameof(InputBase<T>.ValueChanged),
+            builder.AddAttribute(2, nameof(InputBase<T>.ValueChanged),
                     Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck(
                         EventCallback.Factory.Create<T>(
                             target, EventCallback.Factory.
@@ -140,9 +140,9 @@ namespace VxFormGenerator
             builder.AddAttribute(4, nameof(InputBase<T>.ValueExpression), lamb);
 
             // Set the class for the the formelement.
-            builder.AddAttribute(5, "class", GetDefaultFieldClasses(instance));
+            // builder.AddAttribute(5, "class", GetDefaultFieldClasses(instance));
 
-            CheckForInterfaceActions<T, TElement>(this, CascadedEditContext.Model, propInfoValue, builder, instance, 6);
+            CheckForInterfaceActions<T, TElement>(this, CascadedEditContext.Model, propInfoValue, builder, 6);
 
             builder.CloseComponent();
 
@@ -150,18 +150,20 @@ namespace VxFormGenerator
 
         private void CheckForInterfaceActions<T, TElement>(object target,
             object dataContext,
-            PropertyInfo propInfoValue, RenderTreeBuilder builder, InputBase<T> instance, int indexBuilder)
+            PropertyInfo propInfoValue, RenderTreeBuilder builder, int indexBuilder)
         {
             // overriding the default classes for FormElement
             if (TypeImplementsInterface(typeof(TElement), typeof(IRenderAsFormElement)))
             {
-                this.CssClasses.AddRange((instance as IRenderAsFormElement).FormElementClasses);
+                //this.CssClasses.AddRange((instance as IRenderAsFormElement).FormElementClasses);
             }
 
             // Check if the component has the IRenderChildren and renderen them in the form control
             if (TypeImplementsInterface(typeof(TElement), typeof(IRenderChildren)))
             {
-                (instance as IRenderChildren).RenderChildren(builder, indexBuilder, dataContext, propInfoValue);
+                var method = typeof(TElement).GetMethod(nameof(IRenderChildren.RenderChildren), BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
+
+                method.Invoke(null, new object[] { builder, indexBuilder, dataContext, propInfoValue });
             }
         }
 

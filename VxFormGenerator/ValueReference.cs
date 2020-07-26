@@ -12,7 +12,7 @@ namespace VxFormGenerator
 
     }
 
-    public class ValueReferences<T> : List<ValueReference<string, bool>>
+    public class ValueReferences<T> : ValueReferences
     {
         public ValueReferences()
         {
@@ -24,5 +24,10 @@ namespace VxFormGenerator
             this.AddRange(values);
 
         }
+    }
+
+    public class ValueReferences: List<ValueReference<string, bool>>
+    {
+
     }
 }
