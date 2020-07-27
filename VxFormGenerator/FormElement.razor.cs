@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using VxFormGenerator.Validation;
 
 namespace VxFormGenerator
 {
@@ -144,6 +145,11 @@ namespace VxFormGenerator
 
             CheckForInterfaceActions<T, TElement>(this, CascadedEditContext.Model, propInfoValue, builder, 6);
 
+            builder.CloseComponent();
+
+            builder.OpenComponent(8, typeof(VxValidationMessage<T>));
+            builder.AddAttribute(9, nameof(VxValidationMessage<T>.For), lamb);
+            builder.AddAttribute(9, nameof(VxValidationMessage<T>.Class), "poep");
             builder.CloseComponent();
 
         }

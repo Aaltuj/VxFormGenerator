@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormGeneratorDemo", "Demo\FormGeneratorDemo.csproj", "{93087E84-D125-415E-822A-9805A48C473B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VxFormGenerator", "VxFormGenerator\VxFormGenerator.csproj", "{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator", "VxFormGenerator\VxFormGenerator.csproj", "{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

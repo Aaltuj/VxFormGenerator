@@ -11,6 +11,7 @@ namespace FormGeneratorDemo.Data
         [Display(Name = "Kind of food")]
         public FoodKind KindOfFood { get; set; }
         [Display(Name = "Note")]
+        [MinLength(5)]
         public string Note { get; set; }
         [Display(Name = "Amount")]
         public decimal Amount { get; set; }
