@@ -36,7 +36,7 @@ namespace FormGeneratorDemo
                         {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
                         {typeof(ValueReferences<FoodKind>).ToString(), typeof(BootstrapInputCheckboxMultiple<>) },
                         {typeof(decimal).ToString(), typeof(InputNumber<>) }
-                  }, null, typeof(BootstrapFormElement)));
+                  }, null, typeof(BootstrapFormElement<>)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

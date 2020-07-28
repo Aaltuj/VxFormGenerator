@@ -1,4 +1,5 @@
-﻿@inherits FormElementComponent
+﻿@typeparam TFormElement
+@inherits FormElementComponent<TFormElement>
 
 @if (!string.IsNullOrWhiteSpace(Label))
 {
@@ -6,3 +7,5 @@
 }
 
 @CreateComponent(FieldIdentifier)
+
+<VxFormGenerator.Validation.VxValidationMessage For="@FieldExpression" Class="poep" ></VxFormGenerator.Validation.VxValidationMessage>

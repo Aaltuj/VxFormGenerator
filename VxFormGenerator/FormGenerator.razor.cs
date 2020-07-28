@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -36,9 +37,19 @@ namespace VxFormGenerator
 
         public RenderFragment RenderFormElement(System.Reflection.PropertyInfo propInfoValue) => builder =>
         {
-            builder.OpenComponent(0, _repo.FormElementComponent);
 
-            builder.AddAttribute(1, nameof(FormElement.FieldIdentifier), propInfoValue);
+            var elementType = _repo.FormElementComponent;
+
+            // When the elementType that is rendered is a generic Set the propertyType as the generic type
+            if (elementType.IsGenericTypeDefinition)
+            {
+                Type[] typeArgs = { propInfoValue.PropertyType };
+                elementType = elementType.MakeGenericType(typeArgs);
+            }
+
+            builder.OpenComponent(0, elementType);
+
+            builder.AddAttribute(1, nameof(FormElement<object>.FieldIdentifier), propInfoValue);
 
             builder.CloseComponent();
         };

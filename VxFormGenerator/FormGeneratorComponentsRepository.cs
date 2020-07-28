@@ -17,7 +17,7 @@ namespace VxFormGenerator
         {
             _ComponentDict = componentRegistrations;
             _DefaultComponent = defaultComponent;
-            FormElementComponent = typeof(FormElement);
+            FormElementComponent = typeof(FormElement<>);
         }
         public FormGeneratorComponentsRepository(Dictionary<string, Type> componentRegistrations, Type defaultComponent, Type formElement)
         {
