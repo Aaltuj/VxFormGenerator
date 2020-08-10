@@ -18,9 +18,9 @@ namespace VxFormGenerator.Components
         public static new void RenderChildren(RenderTreeBuilder builder,
          int index,
          object dataContext,
-         PropertyInfo propInfoValue)
+         string fieldIdentifier)
         {
-            RenderChildren(builder, index, dataContext, propInfoValue, typeof(BootstrapInputCheckbox));
+            RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(BootstrapInputCheckbox));
         }
 
 

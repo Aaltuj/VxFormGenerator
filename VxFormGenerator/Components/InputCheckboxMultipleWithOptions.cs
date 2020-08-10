@@ -9,32 +9,34 @@ using System.Text;
 
 namespace VxFormGenerator.Components
 {
-    public class InputCheckboxMultipleWithOptions<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenSwabable
+    public class InputCheckboxMultipleWithOptions<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenSwapable
     {
 
         public static void RenderChildren(RenderTreeBuilder builder,
             int index,
             object dataContext,
-            PropertyInfo propInfoValue)
+            string fieldIdentifier)
         {
-            RenderChildren(builder, index, dataContext, propInfoValue, typeof(VxInputCheckbox));
+            RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(VxInputCheckbox));
         }
 
         internal static void RenderChildren(RenderTreeBuilder builder,
             int index,
             object dataContext,
-            PropertyInfo propInfoValue,
+            string fieldIdentifier,
             Type typeOfChildToRender)
         {
             builder.AddAttribute(index++, nameof(ChildContent),
                new RenderFragment(_builder =>
                {
+
                    // when type is a enum present them as an <option> element 
                    // by leveraging the component InputSelectOption
-                   var values = propInfoValue.GetValue(dataContext) as ValueReferences;
+                   var values = FormElementReference<ValueReferences>.GetValue(dataContext, fieldIdentifier);
                    foreach (var val in values)
                    {
                        var _index = 0;
+
                        //  Open the InputSelectOption component
                        _builder.OpenComponent(_index++, typeOfChildToRender);
 

@@ -13,7 +13,7 @@ namespace VxFormGenerator.Components
         public static Type TypeOfChildToRender => typeof(InputSelectOption<string>);
 
         public static void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
-            PropertyInfo propInfoValue)
+            string fieldIdentifier)
         {
             // the builder position is between the builder.OpenComponent() and builder.CloseComponent()
             // This means that the component of InputSelect is added en stil open for changes.

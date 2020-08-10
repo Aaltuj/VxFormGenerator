@@ -19,7 +19,7 @@ namespace VxFormGenerator
         /// <param name="dataContext">The model for the form</param>
         /// <param name="propInfoValue">The property that is filled by the <see cref="FormElement"/></param>
         public static void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
-            PropertyInfo propInfoValue) => throw new NotImplementedException();
+            string fieldIdentifier) => throw new NotImplementedException();
 
     }
 
@@ -27,7 +27,7 @@ namespace VxFormGenerator
     /// Helper interface for that allows a derived component set the component that needs to render. 
     /// Useful for components that render children and should allow a different styling without changing logic
     /// </summary>
-    public interface IRenderChildrenSwabable: IRenderChildren
+    public interface IRenderChildrenSwapable: IRenderChildren
     {
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace VxFormGenerator
         /// <param name="propInfoValue">The property that is filled by the <see cref="FormElement"/></param>
         /// <param name="typeOfChildToRender">The type of the child that should be rendered</param>
         public static void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
-            PropertyInfo propInfoValue, 
+            string fieldIdentifier,
             Type typeOfChildToRender) => throw new NotImplementedException();
 
     }

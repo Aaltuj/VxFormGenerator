@@ -3,76 +3,46 @@
 @using VxFormGenerator
 @using VxFormGenerator.Components
 @using FormGeneratorDemo.Data
+@using System.Dynamic
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
 <!-- Bind the session instance of the FeedingSession to the DataContext parameter
-     Also hook up the event when the submit button is clicked -->
+     Also hook up the event when the submit button is clicked
 <FormGenerator DataContext="session"
-               OnValidSubmit="HandleValidSubmit"></FormGenerator>
-
-<EditForm Model="session">
-    <InputCheckboxMultiple @bind-Value="session.ThrowingUpDict" >
-        @foreach (var item in session.ThrowingUpDict)
-        {
-            <VxInputCheckbox Label="@item.Key" Value="item.Value" ValueChanged="() => MyValueChangeHandler(item)" ValueExpression="()=>item.Value"></VxInputCheckbox>
-        }
-        <!-- <VxInputCheckbox bind-Value="session.ThrowingUp"></VxInputCheckbox> -->
-
-    </InputCheckboxMultiple>
-
-</EditForm>
+               OnValidSubmit="HandleValidSubmit"></FormGenerator-->
 <!-- Output -->
-<div class="card mt-2">
-    <div class="card-header">
-        Output
-    </div>
-    <div class="card-body">
-        <div>
-            <label class="mr-2">Note:</label>
-            <label>@session.Note</label>
-        </div>
-        <div>
-            <label class="mr-2">Amount:</label>
-            <label>@session.Amount</label>
-        </div>
-        <div>
-            <label class="mr-2">Start:</label>
-            <label>@session.Start</label>
-        </div>
-        <div>
-            <label class="mr-2">End:</label>
-            <label>@session.End</label>
-        </div>
-        <div>
-            <label class="mr-2">Kind of food:</label>
-            <label>@session.KindOfFood</label>
-        </div>
-        <div>
-            <label class="mr-2">Has thrown up:</label>
-            <label>@session.ThrowingUp</label>
-        </div>
-        <div>
-            <label class="mr-2">Has thrown up:</label>
-            <label>@session.ThrowingUpDict[0].Value</label>
-        </div>
-    </div>
-</div>
+
+<EditForm Model="session" OnValidSubmit="HandleValidSubmit">
+    <RenderFormElements></RenderFormElements>
+    <button type="submit">Submit</button>
+</EditForm>
+
+<label>@session.Note</label>
+
+<EditForm Model="poco" OnValidSubmit="HandleValidSubmit">
+    <RenderFormElements></RenderFormElements>
+    <button type="submit">Submit</button>
+</EditForm>
 
 @code{
 
     /// <summary>
     /// Model that is used for the form
     /// </summary>
-    private FeedingSession session = new FeedingSession();
-
+    private FeedingSession poco = new FeedingSession();
+    private dynamic session;
 
 
     protected override void OnInitialized()
     {
-        
+        var o = new ExpandoObject();
+        ((IDictionary<String, Object>)o).Add("Name", "add");
+        ((IDictionary<String, Object>)o).Add("Note", "Blaaat");
+        ((IDictionary<String, Object>)o).Add("Date", DateTime.Now);
+        session = o;
     }
 
     /// <summary>

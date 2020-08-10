@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace VxFormGenerator.Components
 {
 
-    public class BootstrapFormElementComponent<TFormElement> : FormElementComponent<TFormElement>
+    public class BootstrapFormElementComponent<TFormElement> : FormElementBase<TFormElement>
     {
         public BootstrapFormElementComponent()
         {
