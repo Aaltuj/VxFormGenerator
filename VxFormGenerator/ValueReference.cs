@@ -32,7 +32,7 @@ namespace VxFormGenerator
 
         public EventCallback<TValue> ValueChanged { get; set; }
         public string Key { get; internal set; }
-
+        public Expression<Func<TValue>> ValueExpression { get; internal set; }
 
         public static void SetValue(object model, string key, TValue value)
         {

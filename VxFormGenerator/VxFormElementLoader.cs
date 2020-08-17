@@ -36,12 +36,19 @@ namespace VxFormGenerator
             // Create the handler for ValueChanged. This wil update the model instance with the input
             builder.AddAttribute(2, nameof(FormElement<TValue>.ValueChanged), ValueReference.ValueChanged);
 
-            // Create an expression to set the ValueExpression-attribute.
-            var constant = Expression.Constant(ValueReference, ValueReference.GetType());
-            var exp = Expression.Property(constant, nameof(ValueReference.Value));
-            var lamb = Expression.Lambda<Func<TValue>>(exp);
+            if (ValueReference.ValueExpression == null)
+            {
+                // Create an expression to set the ValueExpression-attribute.
+                var constant = Expression.Constant(ValueReference, ValueReference.GetType());
+                var exp = Expression.Property(constant, nameof(ValueReference.Value));
+                var lamb = Expression.Lambda<Func<TValue>>(exp);
 
-            builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), lamb);
+                builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), lamb);
+             }else
+            {
+                builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), ValueReference.ValueExpression);
+            }
+
             builder.AddAttribute(5, nameof(FormElement<TValue>.FieldIdentifier), ValueReference.Key);
 
             builder.CloseComponent();

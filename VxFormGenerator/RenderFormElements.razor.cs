@@ -93,14 +93,21 @@ namespace VxFormGenerator
                         EventCallback.Factory.Create<TValue>(
                             this, EventCallback.Factory.
                             CreateInferred(this, __value => propertyInfo.SetValue(model, __value),
+
                             (TValue)propertyInfo.GetValue(model))));
+   // Create an expression to set the ValueExpression-attribute.
+            var constant = Expression.Constant(model, model.GetType());
+            var exp = Expression.Property(constant, propertyInfo.Name);
+            var lamb = Expression.Lambda<Func<TValue>>(exp);
 
             var formElementReference = new FormElementReference<TValue>()
             {
                 Value = (TValue)propertyInfo.GetValue(model),
                 ValueChanged = valueChanged,
+                ValueExpression = lamb,
                 Key = propertyInfo.Name
             };
+                     
 
             var elementType = typeof(VxFormElementLoader<TValue>);
 
