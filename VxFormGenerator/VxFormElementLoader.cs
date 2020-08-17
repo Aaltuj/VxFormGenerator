@@ -10,15 +10,24 @@ namespace VxFormGenerator
 {
     public class VxFormElementLoader<TValue> : OwningComponentBase
     {
+        private FormGeneratorComponentsRepository _repo;
+
         [Parameter] public FormElementReference<TValue> ValueReference { get; set; }
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            // setup the repo containing the mappings
+            _repo = ScopedServices.GetService(typeof(FormGeneratorComponentsRepository)) as FormGeneratorComponentsRepository;
+        }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             base.BuildRenderTree(builder);
 
 
-            var elementType = typeof(FormElement<>);
+            var elementType = _repo.FormElementComponent;
 
             // When the elementType that is rendered is a generic Set the propertyType as the generic type
             if (elementType.IsGenericTypeDefinition)
@@ -44,7 +53,8 @@ namespace VxFormGenerator
                 var lamb = Expression.Lambda<Func<TValue>>(exp);
 
                 builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), lamb);
-             }else
+            }
+            else
             {
                 builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), ValueReference.ValueExpression);
             }

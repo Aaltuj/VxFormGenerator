@@ -23,15 +23,34 @@ namespace VxFormGenerator.Validation
 
         protected override void OnInitialized()
         {
+
             _fieldIdentifier = FieldIdentifier.Create(For);
             EditContext.OnValidationStateChanged += HandleValidationStateChanged;
+            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+            EditContext.OnValidationRequested += EditContext_OnValidationRequested;
         }
 
-        private void HandleValidationStateChanged(object o, ValidationStateChangedEventArgs args) => StateHasChanged();
+        private void HandleValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
+        {
+            StateHasChanged();
+        }
+
+        private void EditContext_OnValidationRequested(object sender, ValidationRequestedEventArgs e)
+        {
+         
+        }
+
+        private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+        {
+            
+        }
+
+        
 
         public void Dispose()
         {
             EditContext.OnValidationStateChanged -= HandleValidationStateChanged;
         }
+       
     }
 }

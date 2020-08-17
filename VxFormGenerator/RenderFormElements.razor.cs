@@ -24,7 +24,7 @@ namespace VxFormGenerator
             base.BuildRenderTree(builder);
 
             var modelType = CascadedEditContext.Model.GetType();
-
+            
             if (modelType == typeof(ExpandoObject))
             {
                 var accessor = ((IDictionary<string, object>)CascadedEditContext.Model);
@@ -55,9 +55,6 @@ namespace VxFormGenerator
         protected override void OnInitialized()
         {
             base.OnInitialized();
-
-
-
         }
 
         private void CreateFormElementReferenceExpando<TValue>(ExpandoObject model, string key, RenderTreeBuilder builder)

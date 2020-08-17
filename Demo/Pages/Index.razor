@@ -15,7 +15,7 @@ Welcome to your new app.
                OnValidSubmit="HandleValidSubmit"></FormGenerator-->
 <!-- Output -->
 
-<EditForm Model="session" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="session" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleValidSubmit">
     <RenderFormElements></RenderFormElements>
     <button type="submit">Submit</button>
 </EditForm>
@@ -23,6 +23,7 @@ Welcome to your new app.
 <label>@session.Note</label>
 
 <EditForm Model="poco" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
     <RenderFormElements></RenderFormElements>
     <button type="submit">Submit</button>
 </EditForm>
@@ -42,7 +43,9 @@ Welcome to your new app.
         ((IDictionary<String, Object>)o).Add("Name", "add");
         ((IDictionary<String, Object>)o).Add("Note", "Blaaat");
         ((IDictionary<String, Object>)o).Add("Date", DateTime.Now);
+        ((IDictionary<String, Object>)o).Add("Amount", 0);
         session = o;
+
     }
 
     /// <summary>

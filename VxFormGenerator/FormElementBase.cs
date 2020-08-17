@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -33,6 +34,11 @@ namespace VxFormGenerator
         [Parameter] public string Id { get; set; }
 
         /// <summary>
+        /// Get the <see cref="EditForm.EditContext"/> instance. This instance will be used to fill out the values inputted by the user
+        /// </summary>
+        [CascadingParameter] EditContext CascadedEditContext { get; set; }
+
+        /// <summary>
         /// The label for the <see cref="FormElement"/>, if not set, it will check for a <see cref="DisplayAttribute"/> on the <see cref="CascadedEditContext.Model"/>
         /// </summary>
         [Parameter]
@@ -40,26 +46,28 @@ namespace VxFormGenerator
         {
             get
             {
-                var dd = CascadedEditContext.Model
-                     .GetType()
-                     .GetProperty(FieldIdentifier.Name)
-                     .GetCustomAttributes(typeof(DisplayAttribute), false)
-                     .FirstOrDefault() as DisplayAttribute;
 
-                return _Label ?? dd?.Name;
+                var modelType = CascadedEditContext.Model.GetType();
+
+                if (modelType == typeof(ExpandoObject))
+                {
+                    return FieldIdentifier;
+                }
+                else
+                {
+                    var dd = CascadedEditContext.Model
+                    .GetType()
+                    .GetProperty(FieldIdentifier)
+                    .GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .FirstOrDefault() as DisplayAttribute;
+
+                    return _Label ?? dd?.Name;
+                }
+
+
             }
             set { _Label = value; }
         }
-
-        /// <summary>
-        /// The property that should generate a formcontrol
-        /// </summary>
-        [Parameter] public PropertyInfo FieldIdentifier { get; set; }
-
-        /// <summary>
-        /// Get the <see cref="EditForm.EditContext"/> instance. This instance will be used to fill out the values inputted by the user
-        /// </summary>
-        [CascadingParameter] EditContext CascadedEditContext { get; set; }
 
         protected override void OnInitialized()
         {
@@ -67,17 +75,25 @@ namespace VxFormGenerator
             _repo = ScopedServices.GetService(typeof(FormGeneratorComponentsRepository)) as FormGeneratorComponentsRepository;
         }
 
-        public Expression<Func<TFormElement>> FieldExpression { get; set; }
+        /// <summary>
+        /// The property that should generate a formcontrol
+        /// </summary>
+        [Parameter] public string FieldIdentifier { get; set; }
+
+        [Parameter] public EventCallback<TFormElement> ValueChanged { get; set; }
+        [Parameter] public Expression<Func<TFormElement>> ValueExpression { get; set; }
+        [Parameter] public TFormElement Value { get; set; }
+
 
         /// <summary>
         /// A method thar renders the form control based on the <see cref="FormElement.FieldIdentifier"/>
         /// </summary>
         /// <param name="propInfoValue"></param>
         /// <returns></returns>
-        public RenderFragment CreateComponent(System.Reflection.PropertyInfo propInfoValue) => builder =>
+        public RenderFragment CreateComponent() => builder =>
         {
             // Get the mapped control based on the property type
-            var componentType = _repo.GetComponent(propInfoValue.PropertyType.ToString());
+            var componentType = _repo.GetComponent(typeof(TFormElement).ToString());
 
 
             if (componentType == null)
@@ -90,14 +106,14 @@ namespace VxFormGenerator
             // When the elementType that is rendered is a generic Set the propertyType as the generic type
             if (elementType.IsGenericTypeDefinition)
             {
-                Type[] typeArgs = { propInfoValue.PropertyType };
+                Type[] typeArgs = { Value.GetType() };
                 elementType = elementType.MakeGenericType(typeArgs);
             }
 
             /*   // Activate the the Type so that the methods can be called
                var instance = Activator.CreateInstance(elementType);*/
 
-            this.CreateFormComponent(this, CascadedEditContext.Model, propInfoValue, builder, elementType);
+            this.CreateFormComponent(this, CascadedEditContext.Model, FieldIdentifier, builder, elementType);
         };
 
         /// <summary>
@@ -112,51 +128,33 @@ namespace VxFormGenerator
         /// <param name="instance">THe control instance</param>
         public void CreateFormComponent(object target,
             object dataContext,
-            PropertyInfo propInfoValue, RenderTreeBuilder builder, Type elementType)
+            string fieldIdentifier, RenderTreeBuilder builder, Type elementType)
         {
             // Create the component based on the mapped Element Type
             builder.OpenComponent(0, elementType);
 
             // Bind the value of the input base the the propery of the model instance
-            var s = propInfoValue.GetValue(dataContext);
-            builder.AddAttribute(1, nameof(InputBase<TFormElement>.Value), s);
+            builder.AddAttribute(1, nameof(InputBase<TFormElement>.Value), Value);
 
             // Create the handler for ValueChanged. This wil update the model instance with the input
-            builder.AddAttribute(2, nameof(InputBase<TFormElement>.ValueChanged),
-                    Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck(
-                        EventCallback.Factory.Create<TFormElement>(
-                            target, EventCallback.Factory.
-                            CreateInferred(target, __value => propInfoValue.SetValue(dataContext, __value),
-                            (TFormElement)propInfoValue.GetValue(dataContext)))));
+            builder.AddAttribute(2, nameof(InputBase<TFormElement>.ValueChanged), ValueChanged);
 
-            // Create an expression to set the ValueExpression-attribute.
-            var constant = Expression.Constant(dataContext, dataContext.GetType());
-            var exp = Expression.Property(constant, propInfoValue.Name);
-            var lamb = Expression.Lambda<Func<TFormElement>>(exp);
-
-            FieldExpression = lamb;
-
-            builder.AddAttribute(4, nameof(InputBase<TFormElement>.ValueExpression), lamb);
+            builder.AddAttribute(4, nameof(InputBase<TFormElement>.ValueExpression), ValueExpression);
 
             // Set the class for the the formelement.
-            // builder.AddAttribute(5, "class", GetDefaultFieldClasses(instance));
+            builder.AddAttribute(5, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
 
-            CheckForInterfaceActions(this, CascadedEditContext.Model, propInfoValue, builder, 6, elementType);
-
+            CheckForInterfaceActions(this, CascadedEditContext.Model, fieldIdentifier, builder, 6, elementType);
 
 
             builder.CloseComponent();
 
-            /*  builder.OpenComponent(8, typeof(VxValidationMessage<T>));
-              builder.AddAttribute(9, nameof(VxValidationMessage<T>.For), FieldExpression as Expression<Func<T>>);
-              builder.AddAttribute(9, nameof(VxValidationMessage<T>.Class), "poep");
-              builder.CloseComponent();
-  */
+
         }
 
         private void CheckForInterfaceActions(object target,
             object dataContext,
-            PropertyInfo propInfoValue, RenderTreeBuilder builder, int indexBuilder, Type elementType)
+            string fieldIdentifier, RenderTreeBuilder builder, int indexBuilder, Type elementType)
         {
             // overriding the default classes for FormElement
             if (TypeImplementsInterface(elementType, typeof(IRenderAsFormElement)))
@@ -169,7 +167,7 @@ namespace VxFormGenerator
             {
                 var method = elementType.GetMethod(nameof(IRenderChildren.RenderChildren), BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
 
-                method.Invoke(null, new object[] { builder, indexBuilder, dataContext, propInfoValue });
+                method.Invoke(null, new object[] { builder, indexBuilder, dataContext, fieldIdentifier });
             }
         }
 
