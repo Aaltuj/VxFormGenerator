@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using VxFormGenerator.Components.Plain;
 
-namespace VxFormGenerator.Components
+namespace VxFormGenerator.Components.Bootstrap
 {
     public class BootstrapInputCheckboxMultiple<TValue> : InputCheckboxMultipleWithOptions<TValue>, IRenderChildren
     {

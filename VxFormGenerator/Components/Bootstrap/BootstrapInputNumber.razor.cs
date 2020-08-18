@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VxFormGenerator.Components
+namespace VxFormGenerator.Components.Bootstrap
 {
-    public class BootstrapInputTextComponent : Microsoft.AspNetCore.Components.Forms.InputText
+    public class BootstrapInputNumberComponent<TValue> : Microsoft.AspNetCore.Components.Forms.InputNumber<TValue>
     {
         protected string fixClassNames(string inputClassNames)
         {
@@ -27,6 +27,5 @@ namespace VxFormGenerator.Components
 
             return result;
         }
-
     }
 }

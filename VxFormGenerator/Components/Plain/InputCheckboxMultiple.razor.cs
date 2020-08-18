@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace VxFormGenerator.Components
+namespace VxFormGenerator.Components.Plain
 {
     public class InputCheckboxMultipleComponent<T> : VxInputBase<T>
     {
@@ -23,7 +25,7 @@ namespace VxFormGenerator.Components
         internal void RegisterCheckbox(VxInputCheckboxComponent checkbox)
         {
             Checkboxes.Add(checkbox);
-            
+
 
             StateHasChanged();
         }

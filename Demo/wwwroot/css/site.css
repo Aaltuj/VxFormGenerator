@@ -105,12 +105,23 @@ app {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.valid.modified:not([type=checkbox]) {
+/*Added bootstrap override, other wise the two styles where used*/
+.valid:not(.is-valid).modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
 
-.invalid {
+/*Added bootstrap override, other wise the two styles where used*/
+.invalid:not(.is-invalid) {
     outline: 1px solid red;
+}
+
+/*Added bootstrap override, so the hardcoded field statuses will work with bootstrap validation message
+    otherwise we needed to patch all the form elements*/
+.form-control.invalid ~ .invalid-feedback, 
+.form-control.invalid ~ .invalid-tooltip, 
+.was-validated .form-control:invalid ~ .invalid-feedback, 
+.was-validated .form-control:invalid ~ .invalid-tooltip {
+    display: block;
 }
 
 .validation-message {
@@ -185,5 +196,4 @@ app {
 
 .line-height-checkbox {
     line-height: 1.5em;
-    
 }

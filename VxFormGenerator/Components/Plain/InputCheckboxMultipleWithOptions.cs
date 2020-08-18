@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace VxFormGenerator.Components
+namespace VxFormGenerator.Components.Plain
 {
     public class InputCheckboxMultipleWithOptions<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenSwapable
     {

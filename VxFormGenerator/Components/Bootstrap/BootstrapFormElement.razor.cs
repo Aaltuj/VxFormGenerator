@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VxFormGenerator.Components
+namespace VxFormGenerator.Components.Bootstrap
 {
 
     public class BootstrapFormElementComponent<TFormElement> : FormElementBase<TFormElement>

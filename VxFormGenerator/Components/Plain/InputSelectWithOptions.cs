@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace VxFormGenerator.Components
+namespace VxFormGenerator.Components.Plain
 {
     public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren
     {

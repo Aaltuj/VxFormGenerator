@@ -155,13 +155,7 @@ namespace VxFormGenerator
         private void CheckForInterfaceActions(object target,
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, int indexBuilder, Type elementType)
-        {
-            // overriding the default classes for FormElement
-            if (TypeImplementsInterface(elementType, typeof(IRenderAsFormElement)))
-            {
-                //this.CssClasses.AddRange((instance as IRenderAsFormElement).FormElementClasses);
-            }
-
+        {            
             // Check if the component has the IRenderChildren and renderen them in the form control
             if (TypeImplementsInterface(elementType, typeof(IRenderChildren)))
             {

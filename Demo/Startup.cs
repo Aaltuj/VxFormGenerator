@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VxFormGenerator;
 using VxFormGenerator.Components;
+using VxFormGenerator.Components.Bootstrap;
 
 namespace FormGeneratorDemo
 {
@@ -35,7 +36,7 @@ namespace FormGeneratorDemo
                         {typeof(bool).ToString(), typeof(BootstrapInputCheckbox) },
                         {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
                         {typeof(ValueReferences<FoodKind>).ToString(), typeof(BootstrapInputCheckboxMultiple<>) },
-                        {typeof(decimal).ToString(), typeof(InputNumber<>) }
+                        {typeof(decimal).ToString(), typeof(BootstrapInputNumber<>) }
                   }, null, typeof(BootstrapFormElement<>)));
         }
 
