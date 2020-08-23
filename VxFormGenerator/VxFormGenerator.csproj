@@ -11,26 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.4" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Compile Update="Components\Bootstrap\BootstrapInputText - Copy %282%29 - Copy.razor.cs">
-      <DependentUpon>BootstrapInputText - Copy (2).razor.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Components\Bootstrap\BootstrapInputText - Copy %282%29.razor.cs">
-      <DependentUpon>BootstrapInputText.razor.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Components\Bootstrap\BootstrapInputText - Copy - Copy %282%29.razor.cs">
-      <DependentUpon>BootstrapInputText - Copy.razor.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Components\Bootstrap\BootstrapInputText - Copy - Copy - Copy.razor.cs">
-      <DependentUpon>BootstrapInputText - Copy - Copy.razor.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Components\Bootstrap\BootstrapInputText - Copy - Copy.razor.cs">
-      <DependentUpon>BootstrapInputText - Copy.razor.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Components\Bootstrap\BootstrapInputText - Copy.razor.cs">
-      <DependentUpon>BootstrapInputText.razor.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
 </Project>
