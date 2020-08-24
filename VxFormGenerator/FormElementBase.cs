@@ -79,14 +79,22 @@ namespace VxFormGenerator
         /// The property that should generate a formcontrol
         /// </summary>
         [Parameter] public string FieldIdentifier { get; set; }
-
+        /// <summary>
+        /// Updates the property with the new value
+        /// </summary>
         [Parameter] public EventCallback<TFormElement> ValueChanged { get; set; }
+        /// <summary>
+        /// Get the property that is bound
+        /// </summary>
         [Parameter] public Expression<Func<TFormElement>> ValueExpression { get; set; }
+        /// <summary>
+        /// The current Value of the <see cref="FormElementBase{TFormElement}"/>
+        /// </summary>
         [Parameter] public TFormElement Value { get; set; }
 
 
         /// <summary>
-        /// A method thar renders the form control based on the <see cref="FormElement.FieldIdentifier"/>
+        /// A method that renders the form control based on the <see cref="FormElement.FieldIdentifier"/>
         /// </summary>
         /// <param name="propInfoValue"></param>
         /// <returns></returns>
