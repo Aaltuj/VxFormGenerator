@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\VxFormGenerator\VxFormGenerator.csproj" />
   </ItemGroup>
 

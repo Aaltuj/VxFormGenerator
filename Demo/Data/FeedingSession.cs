@@ -24,8 +24,11 @@ namespace FormGeneratorDemo.Data
 
         [Display(Name = "Throwing up dict")]
         public ValueReferences<FoodKind> ThrowingUpDict { get; set; } = new ValueReferences<FoodKind>();
+        [Display(Name = "Color")]
+        public System.Drawing.Color Color { get; set; }
     }
 
+    [Flags]
     public enum FoodKind
     {
         SOLID,

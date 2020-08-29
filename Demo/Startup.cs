@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using FormGeneratorDemo.Components;
 using FormGeneratorDemo.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Forms;
@@ -36,7 +38,8 @@ namespace FormGeneratorDemo
                         {typeof(bool).ToString(), typeof(BootstrapInputCheckbox) },
                         {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
                         {typeof(ValueReferences<FoodKind>).ToString(), typeof(BootstrapInputCheckboxMultiple<>) },
-                        {typeof(decimal).ToString(), typeof(BootstrapInputNumber<>) }
+                        {typeof(decimal).ToString(), typeof(BootstrapInputNumber<>) },
+                        {typeof(Color).ToString(), typeof(InputColor) }
                   }, null, typeof(BootstrapFormElement<>)));
         }
 
