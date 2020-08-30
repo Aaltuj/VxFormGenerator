@@ -17,19 +17,26 @@ namespace VxFormGenerator
         /// </summary>
         [CascadingParameter] EditContext CascadedEditContext { get; set; }
 
-        //        public Dictionary<string, FormElementReference<string>> Properties { get; set; } = new Dictionary<string, FormElementReference<string>>();
-
+        /// <summary>
+        /// Override the default render method, determining if the <see cref="EditContext.Model"/> 
+        /// is a regular class or a dynamic <see cref="ExpandoObject"/>
+        /// </summary>
+        /// <param name="builder">Instance of the page builder</param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             base.BuildRenderTree(builder);
 
+            // Check the type of the model
             var modelType = CascadedEditContext.Model.GetType();
             
             if (modelType == typeof(ExpandoObject))
             {
+                // Accesing a ExpandoObject requires to cast the model as a dictionary, so it's accesable by a key of type string
                 var accessor = ((IDictionary<string, object>)CascadedEditContext.Model);
+
                 foreach (var key in accessor.Keys)
                 {
+                    // get the value of the object
                     var value = accessor[key];
 
                     // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
@@ -39,8 +46,10 @@ namespace VxFormGenerator
                     genericMethod.Invoke(this, new object[] { accessor, key, builder });
                 }
             }
-            else
+            else // Assume it's a regular class, could be tighter scoped
             {
+                // Look over all the properties in the class. 
+                // TODO: Should have an option to be excluded from selection 
                 foreach (var propertyInfo in modelType.GetProperties())
                 {
                     // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
