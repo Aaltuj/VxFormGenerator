@@ -9,6 +9,11 @@ using VxFormGenerator.Components.Plain;
 
 namespace VxFormGenerator
 {
+    /// <summary>
+    /// The loader has the task to create a <see cref="FormElement"/> with the correct bind-Value.
+    /// It searches for a match in the <see cref="FormGeneratorComponentsRepository"/> and will render the mapped component.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the property</typeparam>
     public class VxFormElementLoader<TValue> : OwningComponentBase
     {
         private FormGeneratorComponentsRepository _repo;
@@ -23,6 +28,10 @@ namespace VxFormGenerator
             _repo = ScopedServices.GetService(typeof(FormGeneratorComponentsRepository)) as FormGeneratorComponentsRepository;
         }
 
+        /// <summary>
+        /// Create the <see cref="FormElement"/> that is associated with the <see cref="TValue"/>
+        /// </summary>
+        /// <param name="builder"></param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             base.BuildRenderTree(builder);
@@ -46,6 +55,7 @@ namespace VxFormGenerator
             // Create the handler for ValueChanged. This wil update the model instance with the input
             builder.AddAttribute(2, nameof(FormElement<TValue>.ValueChanged), ValueReference.ValueChanged);
 
+            // if no explicit value expression create one based on the ValueReference
             if (ValueReference.ValueExpression == null)
             {
                 // Create an expression to set the ValueExpression-attribute.
@@ -60,6 +70,8 @@ namespace VxFormGenerator
                 builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), ValueReference.ValueExpression);
             }
 
+            // Set the property name so the element is aware of the property that it represents
+            // and is able to trace back to the model
             builder.AddAttribute(5, nameof(FormElement<TValue>.FieldIdentifier), ValueReference.Key);
 
             builder.CloseComponent();

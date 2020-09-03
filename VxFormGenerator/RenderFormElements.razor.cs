@@ -66,8 +66,17 @@ namespace VxFormGenerator
             base.OnInitialized();
         }
 
+        /// <summary>
+        /// Create a <see cref="VxFormElementLoader{TValue}"/> that will create a <see cref="FormElement"/>
+        /// based on the dynamic <see cref="ExpandoObject"/>. This allows for dynamic usage of the form-generator.
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="key"></param>
+        /// <param name="builder"></param>
         private void CreateFormElementReferenceExpando<TValue>(ExpandoObject model, string key, RenderTreeBuilder builder)
         {
+            // cast the model to a dictionary so it's accessable
             var accessor = ((IDictionary<string, object>)model);
 
             object value = default(TValue);
