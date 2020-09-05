@@ -9,7 +9,7 @@ using System.Text;
 
 namespace VxFormGenerator.Components.Plain
 {
-    public class InputCheckboxMultipleWithOptions<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenSwapable
+    public class InputCheckboxMultipleWithChildren<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenSwapable
     {
 
         public static void RenderChildren(RenderTreeBuilder builder,

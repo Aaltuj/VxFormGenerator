@@ -12,11 +12,37 @@ using Microsoft.Extensions.Hosting;
 using VxFormGenerator;
 using VxFormGenerator.Components;
 using VxFormGenerator.Components.Bootstrap;
+using VxFormGenerator.Components.Plain;
 
 namespace FormGeneratorDemo
 {
     public class Startup
     {
+        public FormGeneratorComponentsRepository BootstrapFormMapping = new FormGeneratorComponentsRepository(
+                  new Dictionary<string, Type>()
+                  {
+                        {typeof(string).ToString(), typeof(BootstrapInputText) },
+                        {typeof(DateTime).ToString(), typeof(InputDate<>) },
+                        {typeof(bool).ToString(), typeof(BootstrapInputCheckbox) },
+                        {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
+                        {typeof(ValueReferences<FoodKind>).ToString(), typeof(BootstrapInputCheckboxMultiple<>) },
+                        {typeof(decimal).ToString(), typeof(BootstrapInputNumber<>) },
+                        {typeof(Color).ToString(), typeof(InputColor) }
+                  }, null, typeof(BootstrapFormElement<>));
+
+        public FormGeneratorComponentsRepository PlainFormMapping = new FormGeneratorComponentsRepository(
+                 new Dictionary<string, Type>()
+                 {
+                        {typeof(string).ToString(), typeof(InputText) },
+                        {typeof(DateTime).ToString(), typeof(InputDate<>) },
+                        {typeof(bool).ToString(), typeof(InputCheckbox) },
+                        {typeof(FoodKind).ToString(), typeof(InputSelectWithOptions<>) },
+                        {typeof(ValueReferences<FoodKind>).ToString(), typeof(InputCheckboxMultiple<>) },
+                        {typeof(decimal).ToString(), typeof(InputNumber<>) },
+                        {typeof(Color).ToString(), typeof(InputColor) }
+                 }, null, typeof(FormElement<>));
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,17 +56,7 @@ namespace FormGeneratorDemo
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton(new FormGeneratorComponentsRepository(
-                  new Dictionary<string, Type>()
-                  {
-                        {typeof(string).ToString(), typeof(BootstrapInputText) },
-                        {typeof(DateTime).ToString(), typeof(InputDate<>) },
-                        {typeof(bool).ToString(), typeof(BootstrapInputCheckbox) },
-                        {typeof(FoodKind).ToString(), typeof(BootstrapInputSelectWithOptions<>) },
-                        {typeof(ValueReferences<FoodKind>).ToString(), typeof(BootstrapInputCheckboxMultiple<>) },
-                        {typeof(decimal).ToString(), typeof(BootstrapInputNumber<>) },
-                        {typeof(Color).ToString(), typeof(InputColor) }
-                  }, null, typeof(BootstrapFormElement<>)));
+            services.AddSingleton(PlainFormMapping);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

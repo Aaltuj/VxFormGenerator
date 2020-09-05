@@ -1,13 +1,15 @@
 ﻿@typeparam TFormElement
 @inherits FormElementComponent<TFormElement>
 
-@if (!string.IsNullOrWhiteSpace(Label))
-{
-    <label class="form-control-label" for="@Id">@Label</label>
-}
+<div>
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label class="form-control-label" for="@Id">@Label</label>
+    }
 
-@CreateComponent()
+    @CreateComponent()
 
-<VxFormGenerator.Validation.VxValidationMessage For="@ValueExpression">
+    <VxFormGenerator.Validation.VxValidationMessage For="@ValueExpression">
 
-</VxFormGenerator.Validation.VxValidationMessage>
+    </VxFormGenerator.Validation.VxValidationMessage>
+</div>

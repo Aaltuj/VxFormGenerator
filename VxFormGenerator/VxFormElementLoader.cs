@@ -18,6 +18,9 @@ namespace VxFormGenerator
     {
         private FormGeneratorComponentsRepository _repo;
 
+        /// <summary>
+        /// Contains the Value binding methods and the key of the property.
+        /// </summary>
         [Parameter] public FormElementReference<TValue> ValueReference { get; set; }
 
         protected override void OnInitialized()
@@ -36,7 +39,7 @@ namespace VxFormGenerator
         {
             base.BuildRenderTree(builder);
 
-
+            // Get the registered FormElement component. 
             var elementType = _repo.FormElementComponent;
 
             // When the elementType that is rendered is a generic Set the propertyType as the generic type
@@ -49,7 +52,6 @@ namespace VxFormGenerator
             builder.OpenComponent(0, elementType);
 
             // Bind the value of the input base the the propery of the model instance
-
             builder.AddAttribute(1, nameof(FormElement<TValue>.Value), ValueReference.Value);
 
             // Create the handler for ValueChanged. This wil update the model instance with the input

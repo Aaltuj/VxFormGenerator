@@ -157,7 +157,6 @@ namespace VxFormGenerator
 
             builder.CloseComponent();
 
-
         }
 
         private void CheckForInterfaceActions(object target,
@@ -165,7 +164,7 @@ namespace VxFormGenerator
             string fieldIdentifier, RenderTreeBuilder builder, int indexBuilder, Type elementType)
         {            
             // Check if the component has the IRenderChildren and renderen them in the form control
-            if (TypeImplementsInterface(elementType, typeof(IRenderChildren)))
+            if (VxHelpers.TypeImplementsInterface(elementType, typeof(IRenderChildren)))
             {
                 var method = elementType.GetMethod(nameof(IRenderChildren.RenderChildren), BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
 
@@ -181,7 +180,6 @@ namespace VxFormGenerator
         /// <returns></returns>
         private string GetDefaultFieldClasses<T>(InputBase<T> instance)
         {
-
             var output = DefaultFieldClasses == null ? "" : string.Join(" ", DefaultFieldClasses);
 
             if (instance == null)
@@ -199,38 +197,7 @@ namespace VxFormGenerator
             return output;
         }
 
-        private bool IsTypeDerivedFromGenericType(Type typeToCheck, Type genericType)
-        {
-            if (typeToCheck == typeof(object))
-            {
-                return false;
-            }
-            else if (typeToCheck == null)
-            {
-                return false;
-            }
-            else if (typeToCheck.IsGenericType && typeToCheck.GetGenericTypeDefinition() == genericType)
-            {
-                return true;
-            }
-            else
-            {
-                return IsTypeDerivedFromGenericType(typeToCheck.BaseType, genericType);
-            }
-        }
-        private static bool TypeImplementsInterface(Type type, Type typeToImplement)
-        {
-            Type foundInterface = type
-                .GetInterfaces()
-                .Where(i =>
-                {
-                    return i.Name == typeToImplement.Name;
-                })
-                .Select(i => i)
-                .FirstOrDefault();
-
-            return foundInterface != null;
-        }
+     
 
     }
 }

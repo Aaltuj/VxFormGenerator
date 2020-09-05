@@ -8,9 +8,8 @@ using VxFormGenerator.Components.Plain;
 
 namespace VxFormGenerator.Components.Bootstrap
 {
-    public class BootstrapInputCheckboxMultiple<TValue> : InputCheckboxMultipleWithOptions<TValue>, IRenderChildren
+    public class BootstrapInputCheckboxMultiple<TValue> : InputCheckboxMultipleWithChildren<TValue>, IRenderChildren
     {
-
         public BootstrapInputCheckboxMultiple()
         {
             this.AdditionalAttributes = new Dictionary<string, object>() { { "class", "form-control" } };
