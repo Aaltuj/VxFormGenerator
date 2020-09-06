@@ -42,6 +42,18 @@ namespace FormGeneratorDemo
                         {typeof(Color).ToString(), typeof(InputColor) }
                  }, null, typeof(FormElement<>));
 
+        public FormGeneratorComponentsRepository BootstrapPlainFormMapping = new FormGeneratorComponentsRepository(
+               new Dictionary<string, Type>()
+               {
+                        {typeof(string).ToString(), typeof(InputText) },
+                        {typeof(DateTime).ToString(), typeof(InputDate<>) },
+                        {typeof(bool).ToString(), typeof(InputCheckbox) },
+                        {typeof(FoodKind).ToString(), typeof(InputSelectWithOptions<>) },
+                        {typeof(ValueReferences<FoodKind>).ToString(), typeof(InputCheckboxMultiple<>) },
+                        {typeof(decimal).ToString(), typeof(InputNumber<>) },
+                        {typeof(Color).ToString(), typeof(InputColor) }
+               }, null, typeof(BootstrapFormElement<>));
+
 
         public Startup(IConfiguration configuration)
         {
@@ -56,7 +68,7 @@ namespace FormGeneratorDemo
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton(PlainFormMapping);
+            services.AddSingleton(BootstrapPlainFormMapping);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
