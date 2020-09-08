@@ -47,9 +47,9 @@ namespace FormGeneratorDemo
                {
                         {typeof(string).ToString(), typeof(InputText) },
                         {typeof(DateTime).ToString(), typeof(InputDate<>) },
-                        {typeof(bool).ToString(), typeof(InputCheckbox) },
+                        {typeof(bool).ToString(), typeof(BootstrapInputCheckbox) },
                         {typeof(FoodKind).ToString(), typeof(InputSelectWithOptions<>) },
-                        {typeof(ValueReferences<FoodKind>).ToString(), typeof(InputCheckboxMultiple<>) },
+                        {typeof(ValueReferences<FoodKind>).ToString(), typeof(InputCheckboxMultipleWithChildren<>) },
                         {typeof(decimal).ToString(), typeof(InputNumber<>) },
                         {typeof(Color).ToString(), typeof(InputColor) }
                }, null, typeof(BootstrapFormElement<>));

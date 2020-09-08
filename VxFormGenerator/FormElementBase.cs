@@ -138,21 +138,23 @@ namespace VxFormGenerator
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, Type elementType)
         {
+            var treeIndex = 0;
+
             // Create the component based on the mapped Element Type
-            builder.OpenComponent(0, elementType);
+            builder.OpenComponent(treeIndex, elementType);
 
             // Bind the value of the input base the the propery of the model instance
-            builder.AddAttribute(1, nameof(InputBase<TFormElement>.Value), Value);
+            builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.Value), Value);
 
             // Create the handler for ValueChanged. This wil update the model instance with the input
-            builder.AddAttribute(2, nameof(InputBase<TFormElement>.ValueChanged), ValueChanged);
+            builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.ValueChanged), ValueChanged);
 
-            builder.AddAttribute(4, nameof(InputBase<TFormElement>.ValueExpression), ValueExpression);
+            builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.ValueExpression), ValueExpression);
 
             // Set the class for the the formelement.
-            builder.AddAttribute(5, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
+            builder.AddAttribute(treeIndex++, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
 
-            CheckForInterfaceActions(this, CascadedEditContext.Model, fieldIdentifier, builder, 6, elementType);
+            CheckForInterfaceActions(this, CascadedEditContext.Model, fieldIdentifier, builder, treeIndex++, elementType);
 
 
             builder.CloseComponent();
