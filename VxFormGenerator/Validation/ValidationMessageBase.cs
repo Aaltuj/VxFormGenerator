@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace VxFormGenerator.Validation
 {
@@ -33,8 +32,6 @@ namespace VxFormGenerator.Validation
 
             _fieldIdentifier = FieldIdentifier.Create(For);
             EditContext.OnValidationStateChanged += HandleValidationStateChanged;
-            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
-            EditContext.OnValidationRequested += EditContext_OnValidationRequested;
 
         }
 
@@ -43,6 +40,7 @@ namespace VxFormGenerator.Validation
             CheckFieldState();
             StateHasChanged();
         }
+
 
         private void CheckFieldState()
         {
@@ -56,17 +54,6 @@ namespace VxFormGenerator.Validation
                 ValidationClass = "";
             }
         }
-
-        private void EditContext_OnValidationRequested(object sender, ValidationRequestedEventArgs e)
-        {
-
-        }
-
-        private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
-        {
-
-        }
-
 
 
         public void Dispose()

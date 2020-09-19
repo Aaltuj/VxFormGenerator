@@ -14,7 +14,7 @@ namespace VxFormGenerator.Components.Bootstrap
             // too slow for the UI renedering to stay smooth.
 
             // The invalid string shall always be fixed up, as we can never get it until the
-            // element has chacked at least once by an attempted submit.
+            // element has checked at least once by an attempted submit.
             string result = inputClassNames.Replace(" invalid", " is-invalid");
 
             // The valid tag is on by default, and to keep consistancy with BS4 we only want

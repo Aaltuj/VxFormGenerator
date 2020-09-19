@@ -23,6 +23,5 @@ namespace VxFormGenerator.Components.Bootstrap
             RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(BootstrapInputCheckbox));
         }
 
-
     }
 }

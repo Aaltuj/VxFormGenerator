@@ -13,7 +13,7 @@
         <EditForm Model="poco" OnValidSubmit="HandleValidSubmit">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <RenderFormElements></RenderFormElements>
-            <button type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </EditForm>
     </div>
 </div>
@@ -49,7 +49,7 @@
         ((IDictionary<String, Object>)o).Add("Name", "add");
         ((IDictionary<String, Object>)o).Add("Note", "Blaaat");
         ((IDictionary<String, Object>)o).Add("Date", DateTime.Now);
-        ((IDictionary<String, Object>)o).Add("Amount", 0);
+        ((IDictionary<String, Object>)o).Add("Amount", 1);
         session = o;
 
     }
