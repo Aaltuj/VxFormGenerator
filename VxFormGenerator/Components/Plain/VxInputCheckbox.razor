@@ -1,4 +1,5 @@
-﻿@inherits VxFormGenerator.Components.Plain.VxInputCheckboxComponent;
+﻿@typeparam TValue
+@inherits VxFormGenerator.Components.Plain.VxInputCheckboxComponent<TValue>;
 
 <div class="@ContainerCss">
     <input type="checkbox" class="@CssClass" id="@Id" @bind="CurrentValue">

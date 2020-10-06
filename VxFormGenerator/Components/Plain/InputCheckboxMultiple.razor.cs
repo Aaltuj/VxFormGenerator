@@ -16,13 +16,13 @@ namespace VxFormGenerator.Components.Plain
         /// </summary>
         [Parameter] public RenderFragment ChildContent { get; set; }
 
-        List<VxInputCheckboxComponent> Checkboxes = new List<VxInputCheckboxComponent>();
+        List<VxInputCheckboxComponent<T>> Checkboxes = new List<VxInputCheckboxComponent<T>>();
 
         /// <inheritdoc />
         protected override bool TryParseValueFromString(string value, out T result, out string validationErrorMessage)
             => throw new NotImplementedException($"This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.");
 
-        internal void RegisterCheckbox(VxInputCheckboxComponent checkbox)
+        internal void RegisterCheckbox(VxInputCheckboxComponent<T> checkbox)
         {
             Checkboxes.Add(checkbox);
 

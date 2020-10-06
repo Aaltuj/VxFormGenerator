@@ -17,7 +17,7 @@ namespace VxFormGenerator.Components.Plain
             object dataContext,
             string fieldIdentifier)
         {
-            RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(VxInputCheckbox));
+            RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(VxInputCheckbox<TValue>));
         }
 
         internal static void RenderChildren(RenderTreeBuilder builder,
@@ -41,7 +41,7 @@ namespace VxFormGenerator.Components.Plain
                        _builder.OpenComponent(_index++, typeOfChildToRender);
 
                        // Set the value of the enum as a value and key parameter
-                       _builder.AddAttribute(_index++, nameof(VxInputCheckbox.Value), val.Value);
+                       _builder.AddAttribute(_index++, nameof(VxInputCheckbox<TValue>.Value), val.Value);
 
                        // Create the handler for ValueChanged. This wil update the model instance with the input
                        _builder.AddAttribute(_index++, nameof(ValueChanged),
@@ -56,7 +56,7 @@ namespace VxFormGenerator.Components.Plain
                        var lamb = Expression.Lambda<Func<bool>>(exp);
                        _builder.AddAttribute(_index++, nameof(InputBase<bool>.ValueExpression), lamb);
 
-                       _builder.AddAttribute(_index++, nameof(VxInputCheckbox.Label), val.Key);
+                       _builder.AddAttribute(_index++, nameof(VxInputCheckbox<TValue>.Label), val.Key);
 
                        // Close the component
                        _builder.CloseComponent();

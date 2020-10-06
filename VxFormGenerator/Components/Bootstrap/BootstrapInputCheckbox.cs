@@ -3,7 +3,7 @@ using VxFormGenerator.Components.Plain;
 
 namespace VxFormGenerator.Components.Bootstrap
 {
-    public class BootstrapInputCheckbox : VxInputCheckbox
+    public class BootstrapInputCheckbox <TValue>: VxInputCheckbox<TValue>
     {
         public BootstrapInputCheckbox()
         {

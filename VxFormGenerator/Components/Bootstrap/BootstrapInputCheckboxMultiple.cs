@@ -20,7 +20,7 @@ namespace VxFormGenerator.Components.Bootstrap
          object dataContext,
          string fieldIdentifier)
         {
-            RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(BootstrapInputCheckbox));
+            RenderChildren(builder, index, dataContext, fieldIdentifier, typeof(BootstrapInputCheckbox<TValue>));
         }
 
     }
