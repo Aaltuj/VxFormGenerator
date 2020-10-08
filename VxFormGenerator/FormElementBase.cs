@@ -8,9 +8,9 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using VxFormGenerator.Repository;
+using VxFormGenerator.Core.Repository;
 
-namespace VxFormGenerator
+namespace VxFormGenerator.Core
 {
     public class FormElementBase<TFormElement> : OwningComponentBase
     {

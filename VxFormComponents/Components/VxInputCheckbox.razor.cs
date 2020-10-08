@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using VxFormGenerator;
+using VxFormGenerator.Core;
 
-namespace VxFormComponents.Components
+namespace VxFormGenerator.Form.Components.Plain
 {
     public class VxInputCheckboxComponent : VxInputBase<bool>, IDisposable
     {

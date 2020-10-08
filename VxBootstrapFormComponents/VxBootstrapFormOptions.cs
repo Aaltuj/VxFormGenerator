@@ -1,7 +1,8 @@
 ﻿using System;
-using VxFormGenerator;
+using VxFormGenerator.Core;
+using VxFormGenerator.Form;
 
-namespace VxBootstrapFormComponents
+namespace VxFormGenerator.Settings.Bootstrap
 {
     public class VxBootstrapFormOptions : IFormGeneratorOptions
     {

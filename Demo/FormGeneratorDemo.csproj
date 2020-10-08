@@ -4,13 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Watch' " />
   <ItemGroup>
-    <ProjectReference Include="..\VxBootstrapFormComponents\VxBootstrapFormComponents.csproj" />
-    <ProjectReference Include="..\VxFormGenerator\VxFormGenerator.csproj" />
+    <Folder Include="Components\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
+    <ProjectReference Include="..\VxBootstrapFormComponents\VxFormGenerator.Bootstrap.csproj" />
+    <ProjectReference Include="..\VxFormComponents\VxFormGenerator.Plain.csproj" />
   </ItemGroup>
 
 </Project>

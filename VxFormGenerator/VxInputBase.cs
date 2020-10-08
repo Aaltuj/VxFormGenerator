@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 
-namespace VxFormGenerator
+namespace VxFormGenerator.Core
 {
     /// <summary>
     /// Extended version of the <see cref="InputBase{TValue}"/> allows for generated HTML ID attributes

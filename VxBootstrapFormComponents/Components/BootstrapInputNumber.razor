@@ -1,8 +1,10 @@
-﻿@using VxFormGenerator.Validation
+﻿@namespace VxFormGenerator.Form.Components.Bootstrap
+
+@using VxFormGenerator.Core.Validation
 @using Microsoft.AspNetCore.Components.Forms
 
 @typeparam TValue
-@inherits VxBootstrapFormComponents.Components.BootstrapInputNumberComponent<TValue>
+@inherits VxFormGenerator.Form.Components.Bootstrap.BootstrapInputNumberComponent<TValue>
 <!-- temporary workaround for bootstrap validation classes
      until  https://github.com/dotnet/aspnetcore/pull/24835 is accepted and merged-->
 <InputNumber Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"

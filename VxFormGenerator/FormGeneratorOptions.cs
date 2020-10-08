@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VxFormGenerator
+namespace VxFormGenerator.Core
 {
     public interface IFormGeneratorOptions
     {

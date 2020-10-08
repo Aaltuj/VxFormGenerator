@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VxFormGenerator.Repository
+namespace VxFormGenerator.Core.Repository
 {
     public class FormGeneratorComponentDynamicRepository: FormGeneratorComponentsRepository<string>
     {

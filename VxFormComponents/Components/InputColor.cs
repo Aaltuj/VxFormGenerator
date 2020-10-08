@@ -6,10 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using VxFormGenerator;
+using VxFormGenerator.Core;
 using VxFormGenerator.Models;
 
-namespace VxFormComponents.Components
+namespace VxFormGenerator.Form.Components.Plain
 {
     public class InputColor: VxInputBase<VxColor>
     {

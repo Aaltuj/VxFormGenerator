@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace VxFormComponents.Components
+namespace VxFormGenerator.Form.Components.Plain
 {
     public class VxInputText: InputText
     {

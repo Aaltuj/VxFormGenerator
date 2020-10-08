@@ -1,7 +1,7 @@
 ﻿
-using VxFormGenerator;
+using VxFormGenerator.Core;
 
-namespace VxFormComponents
+namespace VxFormGenerator.Form
 {
     public class FormElementComponent<TFormElement> : FormElementBase<TFormElement>
     {

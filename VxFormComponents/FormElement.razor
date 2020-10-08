@@ -1,4 +1,6 @@
-﻿@typeparam TFormElement
+﻿@namespace VxFormGenerator.Form
+
+@typeparam TFormElement
 @inherits  FormElementComponent<TFormElement>
 
 <div>
@@ -9,7 +11,7 @@
 
     @CreateComponent()
 
-    <VxFormGenerator.Validation.VxValidationMessage For="@ValueExpression">
+    <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression">
 
-    </VxFormGenerator.Validation.VxValidationMessage>
+    </VxFormGenerator.Core.Validation.VxValidationMessage>
 </div>

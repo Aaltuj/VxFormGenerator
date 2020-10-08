@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VxBootstrapFormComponents.Components
+﻿
+namespace VxFormGenerator.Form.Components.Bootstrap
 {
     public class BootstrapInputTextComponent : Microsoft.AspNetCore.Components.Forms.InputText
     {      

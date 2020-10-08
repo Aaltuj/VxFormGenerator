@@ -1,10 +1,12 @@
-﻿@typeparam TValue
+﻿@namespace VxFormGenerator.Core.Validation
+
+@typeparam TValue
 @inherits VxValidationMessageComponent<TValue>
 
 @foreach (var message in ValidationMessages)
 {
-    
-<div class="@Class">
-    @message
-</div>
+
+    <div class="@Class">
+        @message
+    </div>
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace VxFormGenerator
+namespace VxFormGenerator.Core
 {
     /// <summary>
     /// Helper interface for rendering values in components, needs to be non-generic for the form generator

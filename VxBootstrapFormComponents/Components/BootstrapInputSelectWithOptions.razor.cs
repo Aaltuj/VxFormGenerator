@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using VxFormComponents.Components;
+﻿using System.Collections.Generic;
+using VxFormGenerator.Form.Components.Plain;
 
-namespace VxBootstrapFormComponents.Components
+namespace VxFormGenerator.Form.Components.Bootstrap
 {
     public class BootstrapInputSelectWithOptionsComponent<TValue>: InputSelectWithOptions<TValue>
     {

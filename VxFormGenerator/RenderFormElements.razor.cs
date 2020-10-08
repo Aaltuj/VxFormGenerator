@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace VxFormGenerator
+namespace VxFormGenerator.Core
 {
     public class RenderFormElements : OwningComponentBase
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace VxFormGenerator.Validation
+namespace VxFormGenerator.Core.Validation
 {
     /// <summary>
     /// 

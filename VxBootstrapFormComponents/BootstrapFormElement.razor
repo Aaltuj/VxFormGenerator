@@ -1,5 +1,7 @@
-﻿@typeparam TFormElement
-@inherits VxBootstrapFormComponents.BootstrapFormElementComponent<TFormElement>
+﻿@namespace VxFormGenerator.Form
+
+@typeparam TFormElement
+@inherits BootstrapFormElementComponent<TFormElement>
 
 
 <div class="@CssClass">
@@ -9,9 +11,9 @@
     }
     <div class="col-sm-9 d-flex justify-content-center flex-column">
         @CreateComponent()
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-        <VxFormGenerator.Validation.VxValidationMessage For="@ValueExpression" Class="form-text">
-        </VxFormGenerator.Validation.VxValidationMessage>
+        
+        <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression" Class="form-text">
+        </VxFormGenerator.Core.Validation.VxValidationMessage>
     </div>
 </div>
 

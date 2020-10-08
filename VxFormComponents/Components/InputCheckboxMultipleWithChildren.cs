@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Linq.Expressions;
-using VxFormGenerator;
+using VxFormGenerator.Core;
 
-namespace VxFormComponents.Components
+namespace VxFormGenerator.Form.Components.Plain
 {
     public class InputCheckboxMultipleWithChildren<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenSwapable
     {

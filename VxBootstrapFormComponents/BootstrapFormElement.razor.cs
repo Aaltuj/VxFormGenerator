@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using VxFormGenerator;
+﻿using System.Collections.Generic;
+using VxFormGenerator.Core;
 
-namespace VxBootstrapFormComponents
+namespace VxFormGenerator.Form
 {
 
     public class BootstrapFormElementComponent<TFormElement> : FormElementBase<TFormElement>

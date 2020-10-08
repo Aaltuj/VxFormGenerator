@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
-using VxBootstrapFormComponents.Components;
-using VxFormGenerator;
-using VxFormComponents.Components;
+using VxFormGenerator.Form.Components.Bootstrap;
 using VxFormGenerator.Models;
-using VxFormGenerator.Repository;
+using VxFormGenerator.Core.Repository;
+using VxFormGenerator.Core;
+using VxFormGenerator.Form.Components.Plain;
 
-namespace VxBootstrapFormComponents
+
+
+namespace VxFormGenerator.Repository.Bootstrap
 {
-    public class VxBootstrapFormComponentsRepository : FormGeneratorComponentModelBasedRepository
+    public class VxBootstrapRepository : FormGeneratorComponentModelBasedRepository
     {
-        public VxBootstrapFormComponentsRepository()
+        public VxBootstrapRepository()
         {
 
             _ComponentDict = new Dictionary<Type, Type>()

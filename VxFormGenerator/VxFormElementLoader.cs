@@ -4,7 +4,7 @@ using System;
 using System.Linq.Expressions;
 
 
-namespace VxFormGenerator
+namespace VxFormGenerator.Core
 {
     /// <summary>
     /// The loader has the task to create a <see cref="FormElement"/> with the correct bind-Value.

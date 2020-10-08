@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using VxFormGenerator;
+using VxFormGenerator.Core;
 using VxFormGenerator.Models;
 
 namespace FormGeneratorDemo.Data

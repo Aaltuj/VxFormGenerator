@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
-using VxFormGenerator;
+using VxFormGenerator.Core;
 
-namespace VxFormComponents.Components
+namespace VxFormGenerator.Form.Components.Plain
 {
     public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren
     {

@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components.Rendering;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using VxFormGenerator;
-using VxFormComponents.Components;
+using VxFormGenerator.Core;
+using VxFormGenerator.Form.Components.Plain;
 
-namespace VxBootstrapFormComponents.Components
+namespace VxFormGenerator.Form.Components.Bootstrap
 {
     public class BootstrapInputCheckboxMultiple<TValue> : InputCheckboxMultipleWithChildren<TValue>, IRenderChildren
     {

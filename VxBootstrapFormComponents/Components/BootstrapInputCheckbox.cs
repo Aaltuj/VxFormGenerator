@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using VxFormComponents.Components;
+using VxFormGenerator.Form.Components.Plain;
 
-namespace VxBootstrapFormComponents.Components
+namespace VxFormGenerator.Form.Components.Bootstrap
 {
     public class BootstrapInputCheckbox : VxInputCheckbox
     {
