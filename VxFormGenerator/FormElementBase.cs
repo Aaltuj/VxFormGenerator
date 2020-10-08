@@ -8,13 +8,16 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using VxFormGenerator.Repository;
 
 namespace VxFormGenerator
 {
     public class FormElementBase<TFormElement> : OwningComponentBase
     {
         private string _Label;
-        private FormGeneratorComponentsRepository _repo;
+        
+        [Inject]
+        protected IFormGeneratorComponentsRepository Repo { get; set; }
         /// <summary>
         /// Bindable property to set the class
         /// </summary>
@@ -71,8 +74,7 @@ namespace VxFormGenerator
 
         protected override void OnInitialized()
         {
-            // setup the repo containing the mappings
-            _repo = ScopedServices.GetService(typeof(FormGeneratorComponentsRepository)) as FormGeneratorComponentsRepository;
+         
         }
 
         /// <summary>
@@ -101,7 +103,9 @@ namespace VxFormGenerator
         public RenderFragment CreateComponent() => builder =>
         {
             // Get the mapped control based on the property type
-            var componentType = _repo.GetComponent(typeof(TFormElement).ToString());
+            var componentType = Repo.GetComponent(typeof(TFormElement));
+            
+            // TODO: add the dynamic version for getting a component
 
 
             if (componentType == null)

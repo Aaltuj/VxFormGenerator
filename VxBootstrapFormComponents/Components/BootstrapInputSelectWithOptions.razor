@@ -1,0 +1,11 @@
+﻿@using VxFormGenerator.Validation
+
+@typeparam TValue
+@inherits BootstrapInputSelectWithOptionsComponent<TValue>
+
+<VxFormComponents.Components.InputSelectWithOptions Value="Value" ValueChanged="ValueChanged" ValueExpression="ValueExpression"
+                                                         ChildContent="ChildContent"
+                                                         class="@ValidationHelpers.FixClassNames(CssClass)">
+
+
+</VxFormComponents.Components.InputSelectWithOptions>
