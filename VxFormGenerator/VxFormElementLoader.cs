@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using VxFormGenerator.Components.Plain;
+
 
 namespace VxFormGenerator
 {
@@ -16,7 +13,9 @@ namespace VxFormGenerator
     /// <typeparam name="TValue">The type of the property</typeparam>
     public class VxFormElementLoader<TValue> : OwningComponentBase
     {
-        private FormGeneratorComponentsRepository _repo;
+        [Inject]
+        private IFormGeneratorOptions Options { get; set; }
+
 
         /// <summary>
         /// Contains the Value binding methods and the key of the property.
@@ -27,8 +26,6 @@ namespace VxFormGenerator
         {
             base.OnInitialized();
 
-            // setup the repo containing the mappings
-            _repo = ScopedServices.GetService(typeof(FormGeneratorComponentsRepository)) as FormGeneratorComponentsRepository;
         }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace VxFormGenerator
             base.BuildRenderTree(builder);
 
             // Get the registered FormElement component. 
-            var elementType = _repo.FormElementComponent;
+            var elementType = Options.FormElementComponent;
 
             // When the elementType that is rendered is a generic Set the propertyType as the generic type
             if (elementType.IsGenericTypeDefinition)
@@ -52,10 +49,10 @@ namespace VxFormGenerator
             builder.OpenComponent(0, elementType);
 
             // Bind the value of the input base the the propery of the model instance
-            builder.AddAttribute(1, nameof(FormElement<TValue>.Value), ValueReference.Value);
+            builder.AddAttribute(1, nameof(FormElementBase<TValue>.Value), ValueReference.Value);
 
             // Create the handler for ValueChanged. This wil update the model instance with the input
-            builder.AddAttribute(2, nameof(FormElement<TValue>.ValueChanged), ValueReference.ValueChanged);
+            builder.AddAttribute(2, nameof(FormElementBase<TValue>.ValueChanged), ValueReference.ValueChanged);
 
             // if no explicit value expression create one based on the ValueReference
             if (ValueReference.ValueExpression == null)
@@ -65,16 +62,16 @@ namespace VxFormGenerator
                 var exp = Expression.Property(constant, nameof(ValueReference.Value));
                 var lamb = Expression.Lambda<Func<TValue>>(exp);
 
-                builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), lamb);
+                builder.AddAttribute(4, nameof(FormElementBase<TValue>.ValueExpression), lamb);
             }
             else
             {
-                builder.AddAttribute(4, nameof(FormElement<TValue>.ValueExpression), ValueReference.ValueExpression);
+                builder.AddAttribute(4, nameof(FormElementBase<TValue>.ValueExpression), ValueReference.ValueExpression);
             }
 
             // Set the property name so the element is aware of the property that it represents
             // and is able to trace back to the model
-            builder.AddAttribute(5, nameof(FormElement<TValue>.FieldIdentifier), ValueReference.Key);
+            builder.AddAttribute(5, nameof(FormElementBase<TValue>.FieldIdentifier), ValueReference.Key);
 
             builder.CloseComponent();
 

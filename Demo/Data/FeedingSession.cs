@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using VxFormGenerator;
+using VxFormGenerator.Models;
 
 namespace FormGeneratorDemo.Data
 {
@@ -25,7 +26,7 @@ namespace FormGeneratorDemo.Data
         [Display(Name = "Throwing up dict")]
         public ValueReferences<FoodKind> ThrowingUpDict { get; set; } = new ValueReferences<FoodKind>();
         [Display(Name = "Color")]
-        public System.Drawing.Color Color { get; set; }
+        public VxColor Color { get; set; }
     }
 
     [Flags]
