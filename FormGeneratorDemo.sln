@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormGeneratorDemo", "Demo\FormGeneratorDemo.csproj", "{93087E84-D125-415E-822A-9805A48C473B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Core", "VxFormGenerator\VxFormGenerator.Core.csproj", "{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Core", "VxFormGenerator.Core\VxFormGenerator.Core.csproj", "{EDEF4FEC-5088-4DF5-B057-2CDA074505EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Bootstrap", "VxBootstrapFormComponents\VxFormGenerator.Bootstrap.csproj", "{23AB5CD5-8FB4-43A5-9B7B-1E704C1A3909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Components.Bootstrap", "VxFormGenerator.Components.Bootstrap\VxFormGenerator.Components.Bootstrap.csproj", "{23AB5CD5-8FB4-43A5-9B7B-1E704C1A3909}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Plain", "VxFormComponents\VxFormGenerator.Plain.csproj", "{5BB684AC-3B47-4492-9AE6-8FA93567E53A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Components.Plain", "VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj", "{5BB684AC-3B47-4492-9AE6-8FA93567E53A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

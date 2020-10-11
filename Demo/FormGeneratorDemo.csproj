@@ -5,13 +5,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Watch' " />
+
   <ItemGroup>
-    <Folder Include="Components\" />
+    <Compile Remove="Components\**" />
+    <Content Remove="Components\**" />
+    <EmbeddedResource Remove="Components\**" />
+    <None Remove="Components\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VxBootstrapFormComponents\VxFormGenerator.Bootstrap.csproj" />
-    <ProjectReference Include="..\VxFormComponents\VxFormGenerator.Plain.csproj" />
+    <ProjectReference Include="..\VxFormGenerator.Components.Bootstrap\VxFormGenerator.Components.Bootstrap.csproj" />
+    <ProjectReference Include="..\VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj" />
   </ItemGroup>
 
 </Project>
