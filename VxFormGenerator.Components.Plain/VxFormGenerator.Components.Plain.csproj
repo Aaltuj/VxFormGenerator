@@ -2,9 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <AssemblyVersion>0.0.4.0</AssemblyVersion>
-    <FileVersion>0.0.4.0</FileVersion>
-    <Version>0.0.4</Version>
+    <AssemblyVersion>0.0.5.0</AssemblyVersion>
+    <FileVersion>0.0.5.0</FileVersion>
+    <Version>0.0.5</Version>
     <Authors>Alex Knijf</Authors>
     <Company>Codershop</Company>
     <Description>The unstyled version of the input components for the VxFormGenerator</Description>
@@ -14,8 +14,8 @@
     <RepositoryUrl>https://github.com/Aaltuj/VxFormGenerator</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>VxFormGenerator.Plain</PackageId>
-    <Product>VxFormGenerator.Plain</Product>
+    <PackageId>VxFormGenerator.Components.Plain</PackageId>
+    <Product>VxFormGenerator.Components.Plain</Product>
   </PropertyGroup>
 
   <ItemGroup>

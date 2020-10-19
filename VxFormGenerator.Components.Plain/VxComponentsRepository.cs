@@ -6,7 +6,7 @@ using VxFormGenerator.Core;
 using VxFormGenerator.Models;
 using VxFormGenerator.Core.Repository;
 
-namespace VxFormGenerator.Repository.Bootstrap
+namespace VxFormGenerator.Repository.Plain
 {
     public class VxComponentsRepository : FormGeneratorComponentModelBasedRepository
     {
@@ -17,6 +17,7 @@ namespace VxFormGenerator.Repository.Bootstrap
                   {
                         {typeof(string), typeof(VxInputText) },
                         {typeof(DateTime), typeof(InputDate<>) },
+                        {typeof(int), typeof(InputNumber<>) },
                         {typeof(bool), typeof(VxInputCheckbox) },
                         {typeof(Enum), typeof(InputSelectWithOptions<>) },
                         {typeof(ValueReferences), typeof(InputCheckboxMultiple<>) },

@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
     <Authors>Alex Knijf</Authors>
     <Company>Codershop</Company>
     <Description>The Bootstrap styled form components for the VxFormGenerator</Description>
@@ -15,6 +15,7 @@
     <PackageTags>Form generator, Blazor, POCOS</PackageTags>
     <PackageId>VxFormGenerator.Components.Bootstrap</PackageId>
     <Product>VxFormGenerator.Components.Bootstrap</Product>
+    <AssemblyVersion>0.0.5.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
