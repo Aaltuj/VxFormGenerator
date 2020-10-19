@@ -24,6 +24,7 @@ namespace VxFormGenerator.Repository.Bootstrap
                     { typeof(Enum),            typeof(BootstrapInputSelectWithOptions<>) },
                     { typeof(ValueReferences), typeof(BootstrapInputCheckboxMultiple<>) },
                     { typeof(decimal),         typeof(BootstrapInputNumber<>) },
+                    { typeof(int),         typeof(BootstrapInputNumber<>) },
                     { typeof(VxColor),         typeof(InputColor) }
                   };
 

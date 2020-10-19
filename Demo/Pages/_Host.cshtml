@@ -34,7 +34,10 @@
     <script src="_framework/blazor.server.js"></script>
     <script>
         Blazor.defaultReconnectionHandler._reconnectCallback = function (d) {
-            document.location.reload();
+            setTimeout(function () {
+                document.location.reload();
+            },5000)
+            
         }
     </script>
 </body>

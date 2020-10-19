@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
     <Authors>Alex Knijf</Authors>
     <Company>Codershop</Company>
     <Description>A dynamic form generator based on POCO and ExpandoObjects. Easily create and validate your forms based on a model and validation attributes. Works with built-in Blazor Input components. Works with all InputBase inherited components out of the box.</Description>

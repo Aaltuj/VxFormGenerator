@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using VxFormGenerator.Core;
-using VxFormGenerator.Core.Repository;
-using VxFormGenerator.Repository.Bootstrap;
 using VxFormGenerator.Settings.Bootstrap;
 
 namespace FormGeneratorDemo
@@ -28,10 +25,7 @@ namespace FormGeneratorDemo
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton(typeof(IFormGeneratorComponentsRepository), new VxBootstrapRepository());
-            services.AddSingleton(typeof(IFormGeneratorOptions), new VxBootstrapFormOptions());
-
-
+            services.AddVxFormGenerator();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
