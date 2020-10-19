@@ -2,7 +2,7 @@
 using VxFormGenerator.Core;
 using VxFormGenerator.Form;
 
-namespace VxFormGenerator.Settings
+namespace VxFormGenerator.Settings.Plain
 {
     public class VxFormOptions : IFormGeneratorOptions
     {
