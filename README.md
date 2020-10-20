@@ -2,6 +2,44 @@
 
 The library contains a component, that nests itself into the Blazor EditForm instead of a wrapper around the EditForm. The component is able to generate a form based on a POCO or a ExpandoObject. Because of this architecture the library provides the developer flexibility and direct usage of the EditForm. 
 
+# TLDR
+
+Turns an annotated object....
+
+```csharp
+public class FeedingSession
+{
+    [Display(Name = "Kind of food")]
+    public FoodKind KindOfFood { get; set; }
+
+    [Display(Name = "Note")]
+    [MinLength(5)]
+    public string Note { get; set; }
+    
+    [Display(Name = "Amount")]
+    public decimal Amount { get; set; }
+    
+    [Display(Name = "Start")]
+    public DateTime Start { get; set; }
+    
+    [Display(Name = "End")]
+    public DateTime End { get; set; }
+    
+    [Display(Name = "Throwing up")]
+    public bool ThrowingUp { get; set; }
+
+    [Display(Name = "Throwing up dict")]
+    public ValueReferences<FoodKind> ThrowingUpDict { get; set; } = new ValueReferences<FoodKind>();
+    
+    [Display(Name = "Color")]
+    public VxColor Color { get; set; }
+}
+```
+
+... into a nice Blazor form:
+
+![A nice form!](Docs\sample_form.png)
+
 ### Setup
 
 Add the NuGet package.
