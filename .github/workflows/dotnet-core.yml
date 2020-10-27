@@ -22,6 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Publish
+      continue-on-error: true
       env:
        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       run: dotnet nuget push "**/*.nupkg" -k ${{env.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
