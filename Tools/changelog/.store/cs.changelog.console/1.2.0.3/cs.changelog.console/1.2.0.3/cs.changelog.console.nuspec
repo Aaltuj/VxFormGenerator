@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>CS.Changelog.Console</id>
+    <version>1.2.0.3</version>
+    <title>Changelog generator</title>
+    <authors>Robert Sirre</authors>
+    <owners>Robert Sirre</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MS-PL</license>
+    <licenseUrl>https://licenses.nuget.org/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/cswebworks/CS.Changelog</projectUrl>
+    <description>A git-commit based changelog generator.
+      Can also be used for changelog deserialization.</description>
+    <releaseNotes>1.2.0.3: Fixed ignoring of startTag argument.
+      1.2.0.2: Migrated to .Net core</releaseNotes>
+    <copyright>CS /webworks 2019</copyright>
+    <tags>git changelog generator</tags>
+    <packageTypes>
+      <packageType name="DotnetTool" />
+    </packageTypes>
+    <repository type="Git" url="https://github.com/cswebworks/CS.Changelog" />
+  </metadata>
+</package>

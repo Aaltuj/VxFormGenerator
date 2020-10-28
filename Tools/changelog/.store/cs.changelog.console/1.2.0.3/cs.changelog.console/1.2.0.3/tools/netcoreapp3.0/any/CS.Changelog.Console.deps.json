@@ -1,0 +1,134 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "CS.Changelog.Console/1.2.0.3": {
+        "dependencies": {
+          "CS.Changelog": "1.2.0.3",
+          "CommandLineParser": "2.6.0",
+          "Microsoft.CodeAnalysis.FxCopAnalyzers": "2.9.4"
+        },
+        "runtime": {
+          "CS.Changelog.Console.dll": {}
+        }
+      },
+      "CommandLineParser/2.6.0": {
+        "runtime": {
+          "lib/netstandard2.0/CommandLine.dll": {
+            "assemblyVersion": "2.6.0.0",
+            "fileVersion": "2.6.0.0"
+          }
+        }
+      },
+      "Markdig.Signed/0.17.1": {
+        "runtime": {
+          "lib/netcoreapp2.1/Markdig.Signed.dll": {
+            "assemblyVersion": "0.17.1.0",
+            "fileVersion": "0.17.1.0"
+          }
+        }
+      },
+      "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.4": {
+        "dependencies": {
+          "Microsoft.CodeAnalysis.VersionCheckAnalyzer": "2.9.4",
+          "Microsoft.CodeQuality.Analyzers": "2.9.4",
+          "Microsoft.NetCore.Analyzers": "2.9.4",
+          "Microsoft.NetFramework.Analyzers": "2.9.4"
+        }
+      },
+      "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.4": {},
+      "Microsoft.CodeQuality.Analyzers/2.9.4": {},
+      "Microsoft.NetCore.Analyzers/2.9.4": {},
+      "Microsoft.NetFramework.Analyzers/2.9.4": {},
+      "Newtonsoft.Json/12.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.2.23222"
+          }
+        }
+      },
+      "CS.Changelog/1.2.0.3": {
+        "dependencies": {
+          "Markdig.Signed": "0.17.1",
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "runtime": {
+          "CS.Changelog.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CS.Changelog.Console/1.2.0.3": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CommandLineParser/2.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jjJ2Ey2pPY6OeY74Qau2cH+M+pN4kvvSP+kKlDzIZUcJs1oK+QlNjQYnm8HQj2fQa2aZLtwJig4MI0Vbx4YBSA==",
+      "path": "commandlineparser/2.6.0",
+      "hashPath": "commandlineparser.2.6.0.nupkg.sha512"
+    },
+    "Markdig.Signed/0.17.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+aZ3NSJ/66WvWdhu4you4TCxW659kN4gmsExk8jycfok06dUTVRPfMquOdRFfQkewTgkveRAcXaU3UwJwMZWbw==",
+      "path": "markdig.signed/0.17.1",
+      "hashPath": "markdig.signed.0.17.1.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Hq8ubc3mgNElouL7+nYqUfrgtH0s5F8UUdicBnjr72DSPKC/bQMU8lpySQ3Hog7JU7SyblFfpJR3VMgNFTzcww==",
+      "path": "microsoft.codeanalysis.fxcopanalyzers/2.9.4",
+      "hashPath": "microsoft.codeanalysis.fxcopanalyzers.2.9.4.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vKZIF7bNEOwaHvS163bdmq9zcpcN4ve2hXEacoeeeGGYClo8/YqM1iMYnsTdWtcXZj7VT9SvwhkIapjkjGM3OQ==",
+      "path": "microsoft.codeanalysis.versioncheckanalyzer/2.9.4",
+      "hashPath": "microsoft.codeanalysis.versioncheckanalyzer.2.9.4.nupkg.sha512"
+    },
+    "Microsoft.CodeQuality.Analyzers/2.9.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+uoxsrXJ27SYXjGcXTGHwLqjC3pXe6NEDUUGv1uCWtgl7kLMHmqqPA/3zAy/H2OhU/Zq9XrYEABYXNiLUqLjMA==",
+      "path": "microsoft.codequality.analyzers/2.9.4",
+      "hashPath": "microsoft.codequality.analyzers.2.9.4.nupkg.sha512"
+    },
+    "Microsoft.NetCore.Analyzers/2.9.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WF0/qmG4cgMA7bl+82OfAW+DH7Qo3Np72ocK8Qr8eTyg5ZPEPonDLL0doZz29o2DF0bUht5t84lDccy+vIhXxQ==",
+      "path": "microsoft.netcore.analyzers/2.9.4",
+      "hashPath": "microsoft.netcore.analyzers.2.9.4.nupkg.sha512"
+    },
+    "Microsoft.NetFramework.Analyzers/2.9.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xH1wQgNCIMmDWn1Y0ppu0hLqD+xexU4sygsLMIqpro9S7g+l1fBiDKuIq5dEIUmKetseyj/DLXn/ymfF5CKgBQ==",
+      "path": "microsoft.netframework.analyzers/2.9.4",
+      "hashPath": "microsoft.netframework.analyzers.2.9.4.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
+      "path": "newtonsoft.json/12.0.2",
+      "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+    },
+    "CS.Changelog/1.2.0.3": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

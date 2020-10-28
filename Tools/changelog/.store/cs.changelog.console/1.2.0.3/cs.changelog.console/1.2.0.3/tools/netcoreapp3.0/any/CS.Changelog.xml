@@ -1,0 +1,599 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CS.Changelog</name>
+    </assembly>
+    <members>
+        <member name="T:CS.Changelog.ChangeLog">
+            <summary>
+            A full changelog, containing multiple changesets
+            </summary>
+            <seealso cref="T:System.Collections.Generic.List`1" />
+        </member>
+        <member name="P:CS.Changelog.ChangeLog.RepositoryUrl">
+            <summary>Gets the repository URL. Allows serialized, unformatted exports to create links to commit details.</summary>
+            <value>The repository URL.</value>
+            <seealso cref="P:CS.Changelog.Exporters.ExportOptions.RepositoryUrl"/>
+        </member>
+        <member name="P:CS.Changelog.ChangeLog.IssueNumberRegex">
+            <summary>Gets the issue number regex. Allows serialized, unformatted exports to recognize references to issues.</summary>
+            <value>The issue number regex.</value>
+            <seealso cref="P:CS.Changelog.Exporters.ExportOptions.IssueNumberRegex"/>
+        </member>
+        <member name="P:CS.Changelog.ChangeLog.IssueTrackerUrl">
+            <summary>Gets the issue tracker URL. Allows serialized, unformatted exports to create links to issue details.</summary>
+            <value>The issue tracker URL.</value>
+            <seealso cref="P:CS.Changelog.Exporters.ExportOptions.IssueTrackerUrl"/>
+        </member>
+        <member name="P:CS.Changelog.ChangeLog.ChangeSets">
+            <summary>Gets or sets the change sets. For serialization purposes only</summary>
+            <value>The change sets.</value>
+        </member>
+        <member name="T:CS.Changelog.ChangeLogMessage">
+            <summary>
+            A change log message, usually derived from a commit message
+            </summary>
+        </member>
+        <member name="P:CS.Changelog.ChangeLogMessage.Category">
+            <summary>Gets or sets the category.</summary>
+            <value>The category.</value>
+        </member>
+        <member name="P:CS.Changelog.ChangeLogMessage.Hash">
+            <summary>Gets or sets the hash of the commit.</summary>
+            <value>The hash.</value>
+            <remarks>In the serialized change log the hash may be empty, for not referring to a commit, but just adding a change log entry.</remarks>
+        </member>
+        <member name="P:CS.Changelog.ChangeLogMessage.Message">
+            <summary>Gets or sets the message.</summary>
+            <value>The message.</value>
+        </member>
+        <member name="P:CS.Changelog.ChangeLogMessage.Ignore">
+            <summary>
+            Marks a change log entry as not-to be displayed.
+            </summary>
+            <value><c>true</c> if to be ignored; otherwise, <c>false</c>.</value>
+            <remarks>Allows marking a particular commit message as to be ignored.
+            This works when the change log is appended to a serializable format (like <see cref="F:CS.Changelog.OutputFormat.JSON"/> or <see cref="F:CS.Changelog.OutputFormat.XML"/>.
+            When this property is set in the serialized format, the entry is hidden from the final output (like <see cref="F:CS.Changelog.OutputFormat.Console"/>, <see cref="F:CS.Changelog.OutputFormat.Html"/> or <see cref="F:CS.Changelog.OutputFormat.MarkDown"/>)
+            </remarks>
+        </member>
+        <member name="M:CS.Changelog.ChangeLogMessage.ShouldSerializeIgnore">
+            <summary>Indicated whether <see cref="P:CS.Changelog.ChangeLogMessage.Ignore"/> should be serialized</summary>
+            <returns><c>false</c> unless <see cref="P:CS.Changelog.ChangeLogMessage.Ignore"/> is <c>true</c>.</returns>
+            <remarks>This applied to both <see cref="T:CS.Changelog.Exporters.XmlChangelogExporter"/> and <see cref="T:CS.Changelog.Exporters.JsonChangelogExporter"/></remarks>
+        </member>
+        <member name="M:CS.Changelog.ChangeLogMessage.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String" /> that represents this instance.</returns>
+        </member>
+        <member name="T:CS.Changelog.ChangeSet">
+            <summary>
+            A set of <see cref="T:CS.Changelog.ChangeLogMessage">changes</see>, release / deployed on a specific <see cref="P:CS.Changelog.ChangeSet.Date"/>.
+            </summary>
+            <seealso cref="T:System.Collections.Generic.List`1" />
+        </member>
+        <member name="P:CS.Changelog.ChangeSet.Date">
+            <summary>The date of the release / deployment</summary>
+        </member>
+        <member name="P:CS.Changelog.ChangeSet.Name">
+            <summary>The name of the release</summary>
+        </member>
+        <member name="P:CS.Changelog.ChangeSet.Changes">
+            <summary>Gets the changes, for serialization purposes only</summary>
+            <value>The changes.</value>
+        </member>
+        <member name="M:CS.Changelog.ChangeSet.Add(System.String,System.String,System.String)">
+            <summary>Adds the specified hash.</summary>
+            <param name="hash">The hash.</param>
+            <param name="category">The category.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="T:CS.Changelog.Constants">
+            <summary>
+            Reusable constant values
+            </summary>
+        </member>
+        <member name="F:CS.Changelog.Constants.Version">
+            <summary>
+            The version number of CS.Changelog
+            </summary>
+            <remarks>When changing, also change the version number in the installer.</remarks>
+        </member>
+        <member name="T:CS.Changelog.Exporters.ChangelogDeserializerHelper">
+            <summary>
+            Helper class for <see cref="T:CS.Changelog.Exporters.IChangelogDeserializer"/> implementations
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Exporters.ChangelogDeserializerHelper.TryDeserialize(CS.Changelog.Exporters.IChangelogDeserializer,System.String,CS.Changelog.ChangeLog@)">
+            <summary>
+            Tries to deserialize <paramref name="data"/> using <paramref name="deserializer"/>.
+            </summary>
+            <param name="deserializer">The deserializer.</param>
+            <param name="data">The data.</param>
+            <param name="changelog">The changelog.</param>
+            <returns></returns>
+        </member>
+        <member name="T:CS.Changelog.Exporters.ChangelogExporterHelper">
+            <summary>
+            Helper class for <see cref="T:CS.Changelog.Exporters.IChangelogExporter"/> implementations
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Exporters.ChangelogExporterHelper.SupportsDeserializing(CS.Changelog.Exporters.IChangelogExporter)">
+            <summary>
+            Indicates if <paramref name="exporter"/> als implements <see cref="T:CS.Changelog.Exporters.IChangelogDeserializer"/>
+            </summary>
+            <param name="exporter">The exporter.</param>
+            <returns></returns>
+        </member>
+        <member name="T:CS.Changelog.Exporters.ChangelogExportExtensions">
+            <summary>
+            Extensions for exporting a changeklog to multiple formats
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter"/>
+        </member>
+        <member name="M:CS.Changelog.Exporters.ChangelogExportExtensions.Export(CS.Changelog.ChangeSet,CS.Changelog.OutputFormat,System.String,CS.Changelog.Exporters.ExportOptions)">
+            <summary>Exports the specified format.</summary>
+            <param name="changes">The changes to exort.</param>
+            <param name="format">The format to export to.</param>
+            <param name="targetFile">The target file (when applicable).</param>
+            <param name="exportOptions">The export options.</param>
+            <exception cref="T:System.NotImplementedException">When an export format (<paramref name="format"/>) is not supported yet</exception>
+            <returns>A <see cref="T:System.IO.FileInfo"/> referring to the exported file (when applicable).</returns>
+        </member>
+        <member name="T:CS.Changelog.Exporters.ConsoleChangelogExporter">
+            <summary>
+            <see cref="T:CS.Changelog.Exporters.IChangelogExporter"/> for exporting to the console output window.
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter" />
+        </member>
+        <member name="P:CS.Changelog.Exporters.ConsoleChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value>
+              <c>false</c>.
+            </value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.ConsoleChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>
+            Exports the specified <paramref name="changes">changeset</paramref> to a console window, ignoring <paramref name="file"/>.
+            </summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">Ignored, there is no file output.</param>
+            <param name="options">The options for exporting.</param>
+        </member>
+        <member name="T:CS.Changelog.Exporters.ExportOptions">
+            <summary>
+            Options for exporting the change log (not all options are applicable for all implementataions of <see cref="T:CS.Changelog.Exporters.IChangelogExporter"/>).
+            </summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.Append">
+            <summary>Whether to append to an existing file, or when <c>false</c> replace any existing file.</summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.Reverse">
+            <summary>Logs changesets in reverse order, newest one on top. (default is <c>true</c>)</summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.ResolveIssueNumbers">
+            <summary>
+            Wether to resolve issue numbers, when <c>true</c>, requires <see cref="P:CS.Changelog.Exporters.ExportOptions.IssueNumberRegex"/> to be set, see <see cref="P:CS.Changelog.Exporters.ExportOptions.IssueNumberRegex"/>.
+            </summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.IssueTrackerUrl">
+            <summary>The issue tracker URL, used when <see cref="P:CS.Changelog.Exporters.ExportOptions.ResolveIssueNumbers"/> is <c>true</c>.<c>$0</c> will be substituded with the issue number.</summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.RepositoryUrl">
+            <summary>The repository URL, used when <see cref="P:CS.Changelog.Exporters.ExportOptions.LinkHash"/> is true.</summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.LinkHash">
+            <summary>Whether to linkify the <see cref="P:CS.Changelog.ChangeLogMessage.Hash"/>, uses <see cref="P:CS.Changelog.Exporters.ExportOptions.RepositoryUrl"/></summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.ShortHash">
+            <summary>Whether to display the short hash.</summary>
+        </member>
+        <member name="F:CS.Changelog.Exporters.ExportOptions.IssueNumberRegexDefault">
+            <summary>
+            The default value for <see cref="P:CS.Changelog.Exporters.ExportOptions.IssueNumberRegex"/>
+            </summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.ExportOptions.IssueNumberRegex">
+            <summary>The regular expression for recognizing issue numbers. The entire match will be substituted in argument <c>$0</c> in <see cref="P:CS.Changelog.Exporters.ExportOptions.IssueTrackerUrl"/>.</summary>
+        </member>
+        <member name="T:CS.Changelog.Exporters.HtmlChangelogExporter">
+            <summary>
+            <see cref="T:CS.Changelog.Exporters.IChangelogExporter"/> for exporting to <see cref="F:CS.Changelog.OutputFormat.Html"/>.
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter" />
+        </member>
+        <member name="P:CS.Changelog.Exporters.HtmlChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value>
+              <c>true</c>.
+            </value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.HtmlChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>
+            Exports the specified <paramref name="changes">changeset</paramref> to a Html <paramref name="file" />.
+            </summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">The file to create or overwrite. <see cref="P:CS.Changelog.Exporters.ExportOptions.Append" /> is ignored.</param>
+            <param name="options">The options for exporting.</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:CS.Changelog.Exporters.HtmlChangelogExporter.GetCss">
+            <summary>
+            Gets the CSS from the embedded resource.
+            </summary>
+            <returns>The CSS as string to use for formatting MarkDown.</returns>
+        </member>
+        <member name="T:CS.Changelog.Exporters.IChangelogDeserializer">
+            <summary>
+            Interface for implementing <see cref="T:CS.Changelog.ChangeLog"/> deserializing
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Exporters.IChangelogDeserializer.Deserialize(System.String)">
+            <summary>
+            Deserializes the specified data to a <see cref="T:CS.Changelog.ChangeLog"/>
+            </summary>
+            <param name="data">The data.</param>
+            <returns></returns>
+        </member>
+        <member name="T:CS.Changelog.Exporters.IChangelogExporter">
+            <summary>
+            Interface defining methods to be implemented by changelog exporters
+            </summary>
+        </member>
+        <member name="P:CS.Changelog.Exporters.IChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value><c>true</c> if the change log exporter supports writing to a file; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.IChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>Exports the specified <paramref name="changes">changeset</paramref> to a <paramref name="file"/>.</summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">The file to create of append, depending on <see cref="P:CS.Changelog.Exporters.ExportOptions.Append"/>.</param>
+            <param name="options">The options for exporting.</param>
+        </member>
+        <member name="T:CS.Changelog.Exporters.IOExtensions">
+            <summary>
+            Simple extensions for <see cref="N:System.IO"/>.
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Exporters.IOExtensions.AssertExistence(System.IO.DirectoryInfo)">
+            <summary>Asserts the existence of a directory by possibly creating the entire tree.</summary>
+            <param name="directory">The directory to create.</param>
+        </member>
+        <member name="T:CS.Changelog.Exporters.JsonChangelogExporter">
+            <summary>
+            A change log exported for JSON formatting.
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter" />
+        </member>
+        <member name="P:CS.Changelog.Exporters.JsonChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value>
+              <c>true</c>.
+            </value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.JsonChangelogExporter.Deserialize(System.String)">
+            <summary>
+            Deserializes the specified data to a <see cref="T:CS.Changelog.ChangeLog" />
+            </summary>
+            <param name="data">The data in JSON format.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Changelog.Exporters.JsonChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>
+            Exports the specified <paramref name="changes">changeset</paramref> to a MarkDown <paramref name="file" />.
+            </summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">The file to create of append, depending on <see cref="P:CS.Changelog.Exporters.ExportOptions.Append" />.</param>
+            <param name="options">The options for exporting.</param>
+        </member>
+        <member name="T:CS.Changelog.Exporters.MarkDownChangelogExporter">
+            <summary>
+            <see cref="T:CS.Changelog.Exporters.IChangelogExporter"/> for exporting to <see cref="F:CS.Changelog.OutputFormat.MarkDown"/>.
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter" />
+        </member>
+        <member name="P:CS.Changelog.Exporters.MarkDownChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value>
+              <c>true</c>.
+            </value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.MarkDownChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>
+            Exports the specified <paramref name="changes">changeset</paramref> to a Json <paramref name="file" />.
+            </summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">The file to create of append, depending on <see cref="P:CS.Changelog.Exporters.ExportOptions.Append" />.</param>
+            <param name="options">The options for exporting.</param>
+        </member>
+        <member name="M:CS.Changelog.Exporters.MarkDownChangelogExporter.WriteChanges(CS.Changelog.ChangeSet,CS.Changelog.Exporters.ExportOptions)">
+            <summary>Writes the changes to s <see cref="T:System.Text.StringBuilder"/>.</summary>
+            <param name="changes">The changes to write.</param>
+            <param name="options">The options (for formatting text mainly).</param>
+            <returns>A <see cref="T:System.Text.StringBuilder"/> containing the MarkDown.</returns>
+        </member>
+        <member name="T:CS.Changelog.Exporters.NamespaceDoc">
+            <summary>
+            Logic for writing and appending changelogs
+            </summary>
+        </member>
+        <member name="T:CS.Changelog.Exporters.NamespaceGroupDoc">
+             <summary>
+             See <see cref="N:CS.Changelog.Exporters"/>
+            </summary>
+        </member>
+        <member name="T:CS.Changelog.Exporters.TraceChangelogExporter">
+            <summary>
+            <see cref="T:CS.Changelog.Exporters.IChangelogExporter"/> for exporting to the diagnostics trace.
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter" />
+        </member>
+        <member name="P:CS.Changelog.Exporters.TraceChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value>
+              <c>false</c>.
+            </value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.TraceChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>
+            Exports the specified <paramref name="changes">changeset</paramref> to a console window, ignoring <paramref name="file"/>.
+            </summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">Ignored, there is no file output.</param>
+            <param name="options">The options for exporting.</param>
+        </member>
+        <member name="T:CS.Changelog.Exporters.XmlChangelogExporter">
+            <summary>
+            A change log exported for JSON formatting.
+            </summary>
+            <seealso cref="T:CS.Changelog.Exporters.IChangelogExporter" />
+        </member>
+        <member name="P:CS.Changelog.Exporters.XmlChangelogExporter.SupportsWritingToFile">
+            <summary>
+            Gets a value indicating whether the change log exporter supports writing to a file.
+            </summary>
+            <value>
+              <c>true</c>.
+            </value>
+        </member>
+        <member name="M:CS.Changelog.Exporters.XmlChangelogExporter.Deserialize(System.String)">
+            <summary>
+            Deserializes the specified data to a <see cref="T:CS.Changelog.ChangeLog" />
+            </summary>
+            <param name="data">The data in Xml format.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CS.Changelog.Exporters.XmlChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">
+            <summary>
+            Exports the specified <paramref name="changes">changeset</paramref> to a MarkDown <paramref name="file" />.
+            </summary>
+            <param name="changes">The changes to export.</param>
+            <param name="file">The file to create of append, depending on <see cref="P:CS.Changelog.Exporters.ExportOptions.Append" />.</param>
+            <param name="options">The options for exporting.</param>
+        </member>
+        <member name="T:CS.Changelog.GitExtensions">
+            <summary>
+            Extensions for obtaining the history from Git.
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.GitExtensions.GetHistory(System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            Gets the history as a string that can be parsed using <see cref="M:CS.Changelog.Parsing.Parse(System.String,CS.Changelog.ParseOptions)" />.
+            </summary>
+            <param name="workingDirectory">The working directory, should be the git repository directory.</param>
+            <param name="pathToGit">The path to git, defaults to 'git', which should suffice. Usually git is a PATH variable.</param>
+            <param name="incremental">if set to <c>true</c> obtains changes since the last release.</param>
+            <param name="startTag">The starting tag to use when making getting incremental history, overriding auto-detection. When set, sets <paramref name="incremental"/> to <c>true</c>.</param>
+            <returns>The log message in custom pretty-print format</returns>
+            <exception cref="T:System.Exception">An error occurred while reading the log.</exception>
+        </member>
+        <member name="T:CS.Changelog.LogLevel">
+            <summary>
+            Basic log level for specifiying program verbosity.
+            </summary>
+        </member>
+        <member name="F:CS.Changelog.LogLevel.Error">
+            <summary>The error log level, will always be sent to output.</summary>
+        </member>
+        <member name="F:CS.Changelog.LogLevel.Warning">
+            <summary>Warnings, non necesarily errors, but may need attention.</summary>
+        </member>
+        <member name="F:CS.Changelog.LogLevel.Info">
+            <summary>Informational message, general progress</summary>
+        </member>
+        <member name="F:CS.Changelog.LogLevel.Debug">
+            <summary>The whole shebang, for debugging purposes only.</summary>
+        </member>
+        <member name="T:CS.Changelog.NamespaceDoc">
+             <summary>
+             Main engine for changelog generation. Generally a changelog is created by:
+             <list type="number">  
+                <item>  
+                    <term>Reading commits</term>  
+                    <description><see cref="M:CS.Changelog.GitExtensions.GetHistory(System.String,System.String,System.Boolean,System.String)">Obtain commit history, based on git commits</see></description>  
+                </item>  
+                <item>  
+                    <term>Interpreting the history</term>  
+                    <description><see cref="M:CS.Changelog.Parsing.Parse(System.String,CS.Changelog.ParseOptions)">Interpret commits</see> based on <see cref="T:CS.Changelog.ParseOptions"/>.</description>  
+                </item>  
+                <item>  
+                    <term>Writing or appending the changelog</term>  
+                    <description><see cref="M:CS.Changelog.Exporters.IChangelogExporter.Export(CS.Changelog.ChangeSet,System.IO.FileInfo,CS.Changelog.Exporters.ExportOptions)">Export the changelog</see> to the requested <see cref="T:CS.Changelog.OutputFormat"/>.</description>  
+                </item>
+            </list>
+            </summary>
+            <seealso cref="T:CS.Changelog.GitExtensions"/>
+            <seealso cref="N:CS.Changelog.Exporters"/>
+            <seealso cref="T:CS.Changelog.Parsing"/>
+        </member>
+        <member name="T:CS.Changelog.NamespaceGroupDoc">
+             <summary>
+             See <see cref="N:CS.Changelog"/>
+            </summary>
+        </member>
+        <member name="T:CS.Changelog.OutputExtensions">
+            <summary>
+            Helper methods for generating output
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.OutputExtensions.FileExtension(CS.Changelog.OutputFormat)">
+            <summary>Returns the file extension for the specified <see cref="T:CS.Changelog.OutputFormat"/>.</summary>
+            <param name="format">The format.</param>
+            <returns>A file extension, excluding the dot.</returns>
+            <exception cref="T:System.NotImplementedException">When <paramref name="format"/> is not handled.</exception>
+        </member>
+        <member name="T:CS.Changelog.OutputFormat">
+            <summary>
+            The supported output formats
+            </summary>
+        </member>
+        <member name="F:CS.Changelog.OutputFormat.Console">
+            <summary>Console-only output, does not write to file</summary>
+        </member>
+        <member name="F:CS.Changelog.OutputFormat.MarkDown">
+            <summary>MarkDown output, slightly enhanced text file, cannot be deserialized.</summary>
+        </member>
+        <member name="F:CS.Changelog.OutputFormat.JSON">
+            <summary>Serializes to JSON, can be deserialized.</summary>
+        </member>
+        <member name="F:CS.Changelog.OutputFormat.XML">
+            <summary>Serializes to XML, can be deserialized.</summary>
+        </member>
+        <member name="F:CS.Changelog.OutputFormat.Html">
+            <summary>Converts to HTML, keeps intermediate file (in the form of <see cref="F:CS.Changelog.OutputFormat.MarkDown"/>, <see cref="F:CS.Changelog.OutputFormat.JSON"/> or <see cref="F:CS.Changelog.OutputFormat.XML"/>) in order to be able to support <see cref="P:CS.Changelog.Exporters.ExportOptions.Append"/>.</summary>
+        </member>
+        <member name="T:CS.Changelog.Parsing">
+            <summary>
+            Class for parsing the commit message history.
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Parsing.Parse(System.String,CS.Changelog.ParseOptions)">
+            <summary>Parses the specified log.</summary>
+            <param name="log">The log to parse</param>
+            <param name="options">The options for parsing the log file.</param>
+            <returns>A changeset</returns>
+            <remarks>
+            See internals on how changelog is to be obtained (<seealso cref="M:CS.Changelog.GitExtensions.GetHistory(System.String,System.String,System.Boolean,System.String)" />).
+            Log format is:
+            <code>
+            HASH DATE MULTILINEMESSAGE
+            </code>
+            </remarks>
+            <seealso cref="M:CS.Changelog.GitExtensions.GetHistory(System.String,System.String,System.Boolean,System.String)" />
+        </member>
+        <member name="T:CS.Changelog.ParseOptions">
+            <summary>
+            Options for parsing the git changelog
+            </summary>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.prefix_feature">
+            <summary>Gets or sets the prefix for feature branches.</summary>
+            <value>The prefix for feature branches.</value>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.prefix_hotfix">
+            <summary>Gets or sets the prefix for hotfix branches.</summary>
+            <value>The prefix for hotfix branches.</value>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.prefix_release">
+            <summary>Gets or sets the prefix for release branches.</summary>
+            <value>The prefix for release branches.</value>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.branch_development">
+            <summary>Gets or sets the name of the development branch.</summary>
+            <value>The name of the development branch.</value>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.branch_master">
+            <summary>Gets or sets the name of the master branch.</summary>
+            <value>The name of the master branch.</value>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.branch_preview">
+            <summary>Gets or sets the name of the preview branch.</summary>
+            <value>The name of the preview branch.</value>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.category_hotfix">
+            <summary>The display category for hotfixes</summary>
+        </member>
+        <member name="P:CS.Changelog.ParseOptions.category_feature">
+            <summary>The display category for features</summary>
+        </member>
+        <member name="T:CS.Changelog.Utils.ConsoleExtensions">
+            <summary>
+            <see cref="T:System.Console"/> extensions for logging, writing in color.
+            </summary>
+            <remarks>Some part should be move to a more console-centric lib.</remarks>
+        </member>
+        <member name="T:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor">
+            <summary>
+            Trick for changing the console color and reverting to the original color upon disposal.
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor.#ctor(System.ConsoleColor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor"/> class, setting the console color and remembering the current color for reverting to upon disposing.
+            </summary>
+            <param name="color">The color.</param>
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor"/> class.
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor.op_Implicit(System.ConsoleColor)~CS.Changelog.Utils.ConsoleExtensions.ConsoleColor">
+            <summary>
+            Performs an implicit conversion from <see cref="T:System.ConsoleColor"/> to <see cref="T:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor"/>.
+            </summary>
+            <param name="color">The color.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor.ToConsoleColor(System.ConsoleColor)">
+            <summary>
+            Converts <paramref name="color"/> to <see cref="T:CS.Changelog.Utils.ConsoleExtensions.ConsoleColor"/>.
+            </summary>
+            <param name="color">The color.</param>
+            <returns></returns>
+        </member>
+        <member name="F:CS.Changelog.Utils.ConsoleExtensions.DefaultVerbosity">
+            <summary>The default verbosity</summary>
+        </member>
+        <member name="P:CS.Changelog.Utils.ConsoleExtensions.Verbosity">
+            <summary>The verbosity, by deafult uses <see cref="F:CS.Changelog.Utils.ConsoleExtensions.DefaultVerbosity"/>.</summary>
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.Dump(System.Object,CS.Changelog.LogLevel,System.Nullable{System.ConsoleColor})">
+            <summary>Dumps the specified <paramref name="trash"/> to a console window, either for development purposes or to use the programs' verbosity.</summary>
+            <param name="trash">The 'trash', the object or text to dump.</param>
+            <param name="loglevel">The loglevel.</param>
+            <param name="color">The color in which to write to the console.</param>
+        </member>
+        <member name="M:CS.Changelog.Utils.ConsoleExtensions.ToConsoleColor(CS.Changelog.LogLevel)">
+            <summary>Converts <paramref name="level"/> to <see cref="T:System.ConsoleColor"/>.</summary>
+            <param name="level">The level.</param>
+            <returns>A <see cref="T:System.ConsoleColor"/> for the specified <paramref name="level"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">level</exception>
+        </member>
+        <member name="T:CS.Changelog.Utils.NamespaceDoc">
+            <summary>
+            Simple generic utility methods
+            </summary>
+        </member>
+    </members>
+</doc>
