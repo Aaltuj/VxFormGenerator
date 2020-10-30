@@ -16,7 +16,7 @@
     <PackageTags>Form generator, Blazor, POCOS</PackageTags>
     <PackageId>VxFormGenerator.Components.Bootstrap</PackageId>
     <Product>VxFormGenerator.Components.Bootstrap</Product>
-    <AssemblyVersion>0.0.5.0</AssemblyVersion>
+    <AssemblyVersion>0.0.6.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
