@@ -13,7 +13,7 @@ namespace VxFormGenerator.Settings.Bootstrap
         {
             var cssClassName = base.GetFieldCssClass(editContext, fieldIdentifier);
 
-            // If we can find a [CustomValidationClassName], use it
+            // If we can find a [VxFormValidationCssClass], use it
             var propertyInfo = fieldIdentifier.Model.GetType().GetProperty(fieldIdentifier.FieldName);
             if (propertyInfo != null)
             {
