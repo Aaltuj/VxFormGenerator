@@ -3,9 +3,9 @@ using VxFormGenerator.Form.Components.Plain;
 
 namespace VxFormGenerator.Form.Components.Bootstrap
 {
-    public class BootstrapInputSelectWithOptionsComponent<TValue>: InputSelectWithOptions<TValue>
+    public class BootstrapInputSelectWithOptions<TValue>: InputSelectWithOptions<TValue>
     {
-        public BootstrapInputSelectWithOptionsComponent()
+        public BootstrapInputSelectWithOptions()
         {
             this.AdditionalAttributes = new Dictionary<string, object>() { { "class", "custom-select" } };
         }

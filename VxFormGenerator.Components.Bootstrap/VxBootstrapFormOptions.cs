@@ -20,7 +20,7 @@ namespace VxFormGenerator.Settings.Bootstrap
         public VxBootstrapFormOptions()
         {
             FormElementComponent = typeof(BootstrapFormElement<>);
-            FieldCssClassProvider = new VxBootstrapFormValidationCssClassProvider();
+            FieldCssClassProvider = new VxBootstrapFormCssClassProvider();
         }
     }
 }
