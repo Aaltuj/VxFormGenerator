@@ -5,8 +5,9 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.6</Version>
+    <Version>0.1.1</Version>
     <Authors>Alex Knijf</Authors>
+	  <Copyright>Alex Knijf</Copyright>
     <Company>Codershop</Company>
     <Description>The Bootstrap styled form components for the VxFormGenerator</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -29,6 +30,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+	  <None Include="..\VxFormGenerator.Core\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath></PackagePath>
+	  </None>
   </ItemGroup>
 
   <ItemGroup>
