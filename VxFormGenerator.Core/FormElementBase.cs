@@ -118,7 +118,7 @@ namespace VxFormGenerator.Core
             // When the elementType that is rendered is a generic Set the propertyType as the generic type
             if (elementType.IsGenericTypeDefinition)
             {
-                Type[] typeArgs = { Value.GetType() };
+                Type[] typeArgs = { typeof(TFormElement) };
                 elementType = elementType.MakeGenericType(typeArgs);
             }
 

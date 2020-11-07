@@ -14,9 +14,15 @@ namespace VxFormGenerator.Core.Repository
             {
                 type = typeof(Enum);
             }
+            // When the type is a ValuesReferences use the base type. example ValuesReferences<bool>
             else if (key.BaseType == typeof(ValueReferences))
             {
                 type = typeof(ValueReferences);
+            }
+            // When it's a Nullable type use the underlying type for matching
+            else if(Nullable.GetUnderlyingType(key) != null )
+            {
+                type = Nullable.GetUnderlyingType(key);
             }
 
             return base.GetComponent(type);
