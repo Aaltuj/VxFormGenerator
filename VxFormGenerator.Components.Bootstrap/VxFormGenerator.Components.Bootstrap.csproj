@@ -1,11 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-	  <TargetFramework>net5.0</TargetFramework>
-    <RazorLangVersion>3.0</RazorLangVersion>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.1</Version>
+    <Version>0.2.0</Version>
     <Authors>Alex Knijf</Authors>
 	  <Copyright>Alex Knijf</Copyright>
     <Company>Codershop</Company>
@@ -17,12 +15,11 @@
     <PackageTags>Form generator, Blazor, POCOS</PackageTags>
     <PackageId>VxFormGenerator.Components.Bootstrap</PackageId>
     <Product>VxFormGenerator.Components.Bootstrap</Product>
-    <AssemblyVersion>0.0.6.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0-rc.2.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0-rc.2.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
