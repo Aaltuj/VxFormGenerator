@@ -18,6 +18,9 @@ namespace VxFormGenerator.Core
         /// </summary>
         [CascadingParameter] EditContext CascadedEditContext { get; set; }
 
+        [Inject]
+        IFormGeneratorOptions FormGeneratorOptions { get; set; }
+
         /// <summary>
         /// Override the default render method, determining if the <see cref="EditContext.Model"/> 
         /// is a regular class or a dynamic <see cref="ExpandoObject"/>
@@ -65,6 +68,13 @@ namespace VxFormGenerator.Core
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            SetupFramework();
+        }
+
+        private void SetupFramework()
+        {
+            if(FormGeneratorOptions.FormElementComponent != null)
+            CascadedEditContext.SetFieldCssClassProvider(FormGeneratorOptions.FieldCssClassProvider);
         }
 
         /// <summary>
