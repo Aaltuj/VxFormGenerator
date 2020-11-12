@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -51,7 +52,7 @@ namespace VxFormGenerator.Core
             {
                 // Look over all the properties in the class. 
                 // TODO: Should have an option to be excluded from selection 
-                foreach (var propertyInfo in modelType.GetProperties().Where(w=> w.GetCustomAttribute<VxIgnoreAttribute>() == null))
+                foreach (var propertyInfo in modelType.GetProperties().Where(w => w.GetCustomAttribute<VxIgnoreAttribute>() == null).OrderBy(m => m.GetCustomAttribute<DisplayAttribute>()?.GetOrder() ?? 0))
                 {
                     // Get the generic CreateFormComponent and set the property type of the model and the elementType that is rendered
                     MethodInfo method = typeof(RenderFormElements).GetMethod(nameof(RenderFormElements.CreateFormElementReferencePoco), BindingFlags.NonPublic | BindingFlags.Instance);
