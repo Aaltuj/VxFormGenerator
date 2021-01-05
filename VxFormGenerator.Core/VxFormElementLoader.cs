@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Linq.Expressions;
-
+using VxFormGenerator.Core.Layout;
 
 namespace VxFormGenerator.Core
 {
@@ -67,11 +67,9 @@ namespace VxFormGenerator.Core
             else
             {
                 builder.AddAttribute(4, nameof(FormElementBase<TValue>.ValueExpression), ValueReference.ValueExpression);
-            }
+            } 
 
-            // Set the property name so the element is aware of the property that it represents
-            // and is able to trace back to the model
-            builder.AddAttribute(5, nameof(FormElementBase<TValue>.FieldIdentifier), ValueReference.Key);
+            builder.AddAttribute(6, nameof(FormElementBase<TValue>.FormColumnDefinition), ValueReference.FormColumnDefinition);
 
             builder.CloseComponent();
 

@@ -2,6 +2,7 @@
 using System;
 using VxFormGenerator.Core;
 using VxFormGenerator.Form;
+using VxFormGenerator.Render.Bootstrap;
 
 namespace VxFormGenerator.Settings.Bootstrap
 {
@@ -16,10 +17,12 @@ namespace VxFormGenerator.Settings.Bootstrap
         /// <inheritdoc/>
         /// </summary>
         public FieldCssClassProvider FieldCssClassProvider { get; set; }
+        public Type FormGroupElement { get; set; }
 
         public VxBootstrapFormOptions()
         {
             FormElementComponent = typeof(BootstrapFormElement<>);
+            FormGroupElement = typeof(VxBootstrapFormGroup);
             FieldCssClassProvider = new VxBootstrapFormCssClassProvider();
         }
     }

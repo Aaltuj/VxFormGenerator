@@ -198,3 +198,10 @@ You can render a form that is based on a dynamic `ExpandoObject`. The developer 
 ### Apply your own styling
 
 > This is a work in progress
+
+
+
+### Contact
+
+<img src="https://i.pinimg.com/564x/1a/9a/f1/1a9af177bdcd0bd93568e59bb7600cbe.jpg" alt="Discord" style="zoom:5%;" /> [Server](https://discord.gg/pyCtvFdTdV)
+

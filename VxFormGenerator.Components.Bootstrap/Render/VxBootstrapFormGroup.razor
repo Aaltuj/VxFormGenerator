@@ -1,0 +1,17 @@
+﻿@namespace VxFormGenerator.Render.Bootstrap
+@inherits VxFormGenerator.Render.Bootstrap.VxBootstrapFormGroupComponent
+
+
+
+<fieldset>
+
+    <label>@FormGroupDefinition.Label</label>
+
+
+    @foreach (var row in FormGroupDefinition.Rows)
+    {
+        <VxFormGenerator.Render.Bootstrap.VxBootstrapFormRow FormRowDefinition="@row">
+
+        </VxFormGenerator.Render.Bootstrap.VxBootstrapFormRow>
+    }
+</fieldset>

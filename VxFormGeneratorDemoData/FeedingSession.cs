@@ -1,11 +1,10 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using VxFormGenerator.Core;
 using VxFormGenerator.Models;
 
-namespace FormGeneratorDemo.Data
+namespace VxFormGeneratorDemoData
 {
     public class FeedingSession
     {
@@ -14,10 +13,10 @@ namespace FormGeneratorDemo.Data
         
         [Display(Name = "Note")]
         [MinLength(5)]
-        public string? Note { get; set; }
+        public string Note { get; set; }
 
         [Display(Name = "Amount")]
-        public decimal? Amount { get; set; }
+        public decimal Amount { get; set; }
         [Display(Name = "Start")]
         public DateTime Start { get; set; }
         [Display(Name = "End")]

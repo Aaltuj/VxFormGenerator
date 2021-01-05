@@ -1,0 +1,19 @@
+﻿@namespace VxFormGenerator.Render.Bootstrap
+@inherits VxFormGenerator.Render.Bootstrap.VxBootstrapFormRowComponent
+
+
+
+<div class="form-row">
+    @if (FormRowDefinition.Label != null)
+    {
+        <label class="col-sm-2 col-form-label">@FormRowDefinition.Label</label>
+    }
+
+    @foreach (var column in FormRowDefinition.Columns)
+    {
+        <VxFormGenerator.Render.Bootstrap.VxBootstrapFormColumn FormColumnDefinition="@column">
+
+        </VxFormGenerator.Render.Bootstrap.VxBootstrapFormColumn>
+    }
+</div>
+
