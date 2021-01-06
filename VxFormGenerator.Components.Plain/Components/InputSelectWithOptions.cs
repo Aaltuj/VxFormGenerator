@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
+using System.Collections.Generic;
+using VxFormGenerator.Components.Plain.Models;
 using VxFormGenerator.Core;
 
 namespace VxFormGenerator.Form.Components.Plain
@@ -25,14 +27,18 @@ namespace VxFormGenerator.Form.Components.Plain
                         // when type is a enum present them as an <option> element 
                         // by leveraging the component InputSelectOption
                         var values = typeof(TValue).GetEnumValues();
+
+
                         foreach (var val in values)
                         {
+                            var value = VxSelectItem.ToSelectItem(val as Enum);
+
                             //  Open the InputSelectOption component
                             _builder.OpenComponent(0, TypeOfChildToRender);
 
                             // Set the value of the enum as a value and key parameter
-                            _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.ToString());
-                            _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), val.ToString());
+                            _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), value.Label);
+                            _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), value.Key);
 
                             // Close the component
                             _builder.CloseComponent();

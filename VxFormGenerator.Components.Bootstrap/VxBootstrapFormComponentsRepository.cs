@@ -18,18 +18,17 @@ namespace VxFormGenerator.Repository.Bootstrap
 
             _ComponentDict = new Dictionary<Type, Type>()
                   {
-                    { typeof(string),          typeof(BootstrapInputText) },
+                    { typeof(string),          typeof(InputText) },
                     { typeof(DateTime),        typeof(InputDate<>) },
                     { typeof(bool),            typeof(BootstrapInputCheckbox) },
                     { typeof(Enum),            typeof(BootstrapInputSelectWithOptions<>) },
                     { typeof(ValueReferences), typeof(BootstrapInputCheckboxMultiple<>) },
-                    { typeof(decimal),         typeof(BootstrapInputNumber<>) },
-                    { typeof(int),         typeof(BootstrapInputNumber<>) },
+                    { typeof(decimal),         typeof(InputNumber<>) },
+                    { typeof(int),             typeof(InputNumber<>) },
                     { typeof(VxColor),         typeof(InputColor) }
                   };
 
             _DefaultComponent = null;
-
 
         }
 

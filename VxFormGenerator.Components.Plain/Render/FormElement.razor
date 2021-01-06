@@ -1,0 +1,17 @@
+﻿@namespace VxFormGenerator.Form
+
+@typeparam TFormElement
+@inherits  FormElementComponent<TFormElement>
+
+<div>
+    @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
+    {
+        <label class="col-form-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+    }
+
+    @CreateComponent()
+
+    <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression">
+
+    </VxFormGenerator.Core.Validation.VxValidationMessage>
+</div>

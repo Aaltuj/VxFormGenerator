@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Core.Tests", "VxFormGenerator.Core.Tests\VxFormGenerator.Core.Tests.csproj", "{73AE376A-E7AA-4C7B-972C-6CAD787364D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGeneratorDemoData", "VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj", "{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{5BB684AC-3B47-4492-9AE6-8FA93567E53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BB684AC-3B47-4492-9AE6-8FA93567E53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BB684AC-3B47-4492-9AE6-8FA93567E53A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73AE376A-E7AA-4C7B-972C-6CAD787364D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73AE376A-E7AA-4C7B-972C-6CAD787364D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73AE376A-E7AA-4C7B-972C-6CAD787364D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73AE376A-E7AA-4C7B-972C-6CAD787364D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AC6DF2-4B77-4463-9EB8-D445A858C2F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

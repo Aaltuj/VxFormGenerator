@@ -117,9 +117,9 @@ app {
 
 /*Added bootstrap override, so the hardcoded field statuses will work with bootstrap validation message
     otherwise we needed to patch all the form elements*/
-.form-control.invalid ~ .invalid-feedback, 
-.form-control.invalid ~ .invalid-tooltip, 
-.was-validated .form-control:invalid ~ .invalid-feedback, 
+.form-control.invalid ~ .invalid-feedback,
+.form-control.invalid ~ .invalid-tooltip,
+.was-validated .form-control:invalid ~ .invalid-feedback,
 .was-validated .form-control:invalid ~ .invalid-tooltip {
     display: block;
 }
@@ -196,4 +196,18 @@ app {
 
 .line-height-checkbox {
     line-height: 1.5em;
+}
+
+
+fieldset:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.form-control-plain {
+    width: 100%;
+    display: block;
+}
+
+.form-group-plain {
+   
 }

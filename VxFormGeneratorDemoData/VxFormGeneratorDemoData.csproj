@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj" />
+    <ProjectReference Include="..\VxFormGenerator.Core\VxFormGenerator.Core.csproj" />
+  </ItemGroup>
+
+</Project>

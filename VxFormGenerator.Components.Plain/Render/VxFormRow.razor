@@ -1,0 +1,19 @@
+﻿@namespace VxFormGenerator.Render.Plain
+@inherits VxFormGenerator.Render.Plain.VxFormRowComponent
+
+
+
+<div class="form-row">
+    @if (FormRowDefinition.Label != null)
+    {
+        <label class="col-sm-3 col-form-label">@FormRowDefinition.Label</label>
+    }
+
+    @foreach (var column in FormRowDefinition.Columns)
+    {
+        <VxFormGenerator.Render.Plain.VxFormColumn FormColumnDefinition="@column">
+
+        </VxFormGenerator.Render.Plain.VxFormColumn>
+    }
+</div>
+

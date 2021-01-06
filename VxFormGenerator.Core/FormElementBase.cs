@@ -8,14 +8,14 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using VxFormGenerator.Core.Layout;
 using VxFormGenerator.Core.Repository;
 
 namespace VxFormGenerator.Core
 {
     public class FormElementBase<TFormElement> : OwningComponentBase
     {
-        private string _Label;
-        
+
         [Inject]
         protected IFormGeneratorComponentsRepository Repo { get; set; }
         /// <summary>
@@ -35,52 +35,6 @@ namespace VxFormGenerator.Core
         /// The identifier for the <see cref="FormElement"/>"/> used by the label element
         /// </summary>
         [Parameter] public string Id { get; set; }
-
-        /// <summary>
-        /// Get the <see cref="EditForm.EditContext"/> instance. This instance will be used to fill out the values inputted by the user
-        /// </summary>
-        [CascadingParameter] EditContext CascadedEditContext { get; set; }
-
-        /// <summary>
-        /// The label for the <see cref="FormElement"/>, if not set, it will check for a <see cref="DisplayAttribute"/> on the <see cref="CascadedEditContext.Model"/>
-        /// </summary>
-        [Parameter]
-        public string Label
-        {
-            get
-            {
-
-                var modelType = CascadedEditContext.Model.GetType();
-
-                if (modelType == typeof(ExpandoObject))
-                {
-                    return FieldIdentifier;
-                }
-                else
-                {
-                    var dd = CascadedEditContext.Model
-                    .GetType()
-                    .GetProperty(FieldIdentifier)
-                    .GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .FirstOrDefault() as DisplayAttribute;
-
-                    return _Label ?? dd?.Name;
-                }
-
-
-            }
-            set { _Label = value; }
-        }
-
-        protected override void OnInitialized()
-        {
-         
-        }
-
-        /// <summary>
-        /// The property that should generate a formcontrol
-        /// </summary>
-        [Parameter] public string FieldIdentifier { get; set; }
         /// <summary>
         /// Updates the property with the new value
         /// </summary>
@@ -93,6 +47,21 @@ namespace VxFormGenerator.Core
         /// The current Value of the <see cref="FormElementBase{TFormElement}"/>
         /// </summary>
         [Parameter] public TFormElement Value { get; set; }
+        [Parameter] public Layout.VxFormElementDefinition FormColumnDefinition { get; set; }
+
+        /// <summary>
+        /// Get the <see cref="EditForm.EditContext"/> instance. This instance will be used to fill out the values inputted by the user
+        /// </summary>
+        [CascadingParameter] EditContext CascadedEditContext { get; set; }
+
+        [CascadingParameter] public VxFormLayoutOptions FormLayoutOptions { get; set; }
+
+
+        protected override void OnInitialized()
+        {
+
+        }
+
 
 
         /// <summary>
@@ -104,7 +73,7 @@ namespace VxFormGenerator.Core
         {
             // Get the mapped control based on the property type
             var componentType = Repo.GetComponent(typeof(TFormElement));
-            
+
             // TODO: add the dynamic version for getting a component
 
 
@@ -125,7 +94,7 @@ namespace VxFormGenerator.Core
             /*   // Activate the the Type so that the methods can be called
                var instance = Activator.CreateInstance(elementType);*/
 
-            this.CreateFormComponent(this, CascadedEditContext.Model, FieldIdentifier, builder, elementType);
+            this.CreateFormComponent(this, FormColumnDefinition.Model, FormColumnDefinition.Name, builder, elementType);
         };
 
         /// <summary>
@@ -155,10 +124,13 @@ namespace VxFormGenerator.Core
 
             builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.ValueExpression), ValueExpression);
 
+            if (FormColumnDefinition.RenderOptions.Placeholder != null)
+                builder.AddAttribute(treeIndex++, "placeholder", FormColumnDefinition.RenderOptions.Placeholder);
+
             // Set the class for the the formelement.
             builder.AddAttribute(treeIndex++, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
 
-            CheckForInterfaceActions(this, CascadedEditContext.Model, fieldIdentifier, builder, treeIndex++, elementType);
+            CheckForInterfaceActions(this, FormColumnDefinition.Model, fieldIdentifier, builder, treeIndex++, elementType);
 
 
             builder.CloseComponent();
@@ -168,7 +140,7 @@ namespace VxFormGenerator.Core
         private void CheckForInterfaceActions(object target,
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, int indexBuilder, Type elementType)
-        {            
+        {
             // Check if the component has the IRenderChildren and renderen them in the form control
             if (VxHelpers.TypeImplementsInterface(elementType, typeof(IRenderChildren)))
             {
@@ -203,7 +175,7 @@ namespace VxFormGenerator.Core
             return output;
         }
 
-     
+
 
     }
 }

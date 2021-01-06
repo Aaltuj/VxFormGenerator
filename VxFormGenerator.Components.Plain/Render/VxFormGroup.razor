@@ -1,0 +1,15 @@
+﻿@namespace VxFormGenerator.Render.Plain
+@inherits VxFormGenerator.Render.Plain.VxFormGroupComponent
+
+<fieldset>
+
+    <h5>@FormGroupDefinition.Label</h5>
+
+
+    @foreach (var row in FormGroupDefinition.Rows)
+    {
+        <VxFormGenerator.Render.Plain.VxFormRow FormRowDefinition="@row">
+
+        </VxFormGenerator.Render.Plain.VxFormRow>
+    }
+</fieldset>
