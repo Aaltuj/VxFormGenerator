@@ -21,7 +21,7 @@ namespace VxFormGenerator.Core.Render
         {
             get
             {
-               
+
                 if (FormLayoutOptions.LabelOrientation == LabelOrientation.TOP && this.FormColumnDefinition.RenderOptions.ColSpan > 0)
                     return $"col-{this.FormColumnDefinition.RenderOptions.ColSpan}";
                 else
@@ -36,7 +36,7 @@ namespace VxFormGenerator.Core.Render
 
                 if (FormLayoutOptions.LabelOrientation == LabelOrientation.LEFT && FormColumnDefinition.RenderOptions.ColSpan > 0)
                 {
-                    var colspan = ((FormColumnDefinition.RenderOptions.ColSpan * (100 - 16.666667)) / 12);
+                    var colspan = Math.Round(FormColumnDefinition.RenderOptions.ColSpan * (100.0 - 25.0) / 12.0);
                     string colspanS = colspan.ToString(CultureInfo.InvariantCulture);
                     return $"flex: 0 0 {colspanS}%; max-width: {colspanS}";
                 }

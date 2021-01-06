@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using System;
-using VxFormGenerator.Core.Render;
+using VxFormGenerator.Core.Layout;
 
 namespace VxFormGenerator.Core
 {
@@ -17,5 +17,6 @@ namespace VxFormGenerator.Core
         /// CSS class provider for custom classes for invalid of valid form field states
         /// </summary>
         public FieldCssClassProvider FieldCssClassProvider { get; set; }
+
     }
 }

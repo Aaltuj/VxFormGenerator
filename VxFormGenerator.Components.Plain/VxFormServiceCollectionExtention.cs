@@ -5,9 +5,12 @@ namespace VxFormGenerator.Settings.Plain
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddVxFormGenerator(this IServiceCollection services, VxComponentsRepository repository = null, VxFormOptions options = null)
+        public static void AddVxFormGenerator(this IServiceCollection services, Core.Layout.VxFormLayoutOptions vxFormLayoutOptions = null, VxComponentsRepository repository = null, VxFormOptions options = null)
         {
-            FormGeneratorServiceServiceCollectionExtension.AddVxFormGenerator(services, repository ?? new VxComponentsRepository(), options ?? new VxFormOptions());
+            FormGeneratorServiceServiceCollectionExtension.AddVxFormGenerator(services, 
+                vxFormLayoutOptions ?? new Core.Layout.VxFormLayoutOptions(),
+                repository ?? new VxComponentsRepository(), 
+                options ?? new VxFormOptions());
         }
     }
 }

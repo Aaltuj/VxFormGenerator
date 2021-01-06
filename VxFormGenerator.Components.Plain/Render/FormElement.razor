@@ -4,9 +4,9 @@
 @inherits  FormElementComponent<TFormElement>
 
 <div>
-    @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label))
+    @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
     {
-        <label class="form-control-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+        <label class="col-form-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
     }
 
     @CreateComponent()
