@@ -2,9 +2,9 @@
 using VxFormGenerator.Core;
 using VxFormGenerator.Core.Layout;
 
-namespace VxFormGenerator.Render.Bootstrap
+namespace VxFormGenerator.Render.Plain
 {
-    public class VxBootstrapFormRowComponent : OwningComponentBase
+    public class VxFormRowComponent : OwningComponentBase
     {
         [Parameter] public Core.Layout.VxFormRow FormRowDefinition { get; set; }
         [CascadingParameter] public VxFormLayoutOptions FormLayoutOptions { get; set; }

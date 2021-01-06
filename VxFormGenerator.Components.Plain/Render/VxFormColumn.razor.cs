@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using VxFormGenerator.Core.Render;
 
-namespace VxFormGenerator.Render.Bootstrap
+namespace VxFormGenerator.Render.Plain
 {
-    public class VxBootstrapFormColumnComponent : VxFormColumnBase
+    public class VxFormColumnComponent : VxFormColumnBase
     {
 
     }

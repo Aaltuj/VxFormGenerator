@@ -2,6 +2,7 @@
 using System;
 using VxFormGenerator.Core;
 using VxFormGenerator.Form;
+using VxFormGenerator.Render.Plain;
 
 namespace VxFormGenerator.Settings.Plain
 {
@@ -9,11 +10,12 @@ namespace VxFormGenerator.Settings.Plain
     {
         public Type FormElementComponent { get; set; }
         public FieldCssClassProvider FieldCssClassProvider { get; set; }
-        public Type FormGroupElement { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Type FormGroupElement { get; set; }
 
         public VxFormOptions()
         {
             FormElementComponent = typeof(FormElement<>);
+            FormGroupElement = typeof(VxFormGroup);
         }
     }
 }

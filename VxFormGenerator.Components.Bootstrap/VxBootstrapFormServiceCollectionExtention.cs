@@ -3,11 +3,15 @@ using VxFormGenerator.Repository.Bootstrap;
 
 namespace VxFormGenerator.Settings.Bootstrap
 {
-    public static class ServiceCollectionExtensions 
+    public static class ServiceCollectionExtensions
     {
-        public static void AddVxFormGenerator(this IServiceCollection services, VxBootstrapRepository repository = null, VxBootstrapFormOptions options = null)
+        public static void AddVxFormGenerator(this IServiceCollection services, Core.Layout.VxFormLayoutOptions vxFormLayoutOptions = null, VxBootstrapRepository repository = null, VxBootstrapFormOptions options = null)
         {
-            FormGeneratorServiceServiceCollectionExtension.AddVxFormGenerator(services, repository ?? new VxBootstrapRepository(), options ?? new VxBootstrapFormOptions());
+            FormGeneratorServiceServiceCollectionExtension.AddVxFormGenerator(services,
+                vxFormLayoutOptions ?? new Core.Layout.VxFormLayoutOptions(),
+                repository ?? new VxBootstrapRepository(),
+                options ?? new VxBootstrapFormOptions()
+                );
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.2.0</Version>
+    <Version>0.4.0</Version>
     <Authors>Alex Knijf</Authors>
     <Company>Codershop</Company>
     <Description>The unstyled version of the input components for the VxFormGenerator</Description>

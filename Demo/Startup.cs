@@ -5,7 +5,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using VxFormGenerator.Settings.Bootstrap;
+
+#if BOOTSTRAP
+ using VxFormGenerator.Settings.Bootstrap;
+#else
+ using VxFormGenerator.Settings.Plain;
+#endif
+
+
 
 namespace FormGeneratorDemo
 {

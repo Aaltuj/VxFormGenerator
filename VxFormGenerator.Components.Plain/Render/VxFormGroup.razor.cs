@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using VxFormGenerator.Core;
 using VxFormGenerator.Core.Layout;
 
-namespace VxFormGenerator.Render.Bootstrap
+namespace VxFormGenerator.Render.Plain
 {
-    public class VxBootstrapFormGroupComponent : OwningComponentBase
+    public class VxFormGroupComponent : OwningComponentBase
     {
         [Parameter] public Core.Layout.VxFormGroup FormGroupDefinition { get; set; }
 

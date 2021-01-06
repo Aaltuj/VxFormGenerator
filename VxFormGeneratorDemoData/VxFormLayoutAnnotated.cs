@@ -10,13 +10,15 @@ namespace VxFormGeneratorDemoData
 {
     public class VxFormLayoutOptionsAnnotated
     {
-
+        [VxFormElementLayout(Label = "Complexity of the form")]
+        public TypeOfForm FormRenderKind { get; set; }
         [VxFormElementLayout(Label = "Label Orientation")]
         public LabelOrientationAnnotated LabelOrientation { get; set; }
         [VxFormElementLayout(Label = "Placeholder Policy")]
         public PlaceholderPolicyAnnotated ShowPlaceholder { get; set; }
         [VxFormElementLayout(Label = "Validation Mode")]
         public VisualFeedbackValidationPolicyAnnotated VisualValidationPolicy { get; set; }
+      
 
         public VxFormLayoutOptions ToFormLayoutOptions()
         {
@@ -27,6 +29,16 @@ namespace VxFormGeneratorDemoData
                 VisualValidationPolicy = (VisualFeedbackValidationPolicy)this.VisualValidationPolicy
             };
         }
+    }
+
+    public enum TypeOfForm
+    {
+        [Display(Name = "Simple datastructure")]
+        SIMPLE = 0,
+        [Display(Name = "Advanced datastructure")]
+        ADVANCED = 1,
+        [Display(Name = "Complex datastructure")]
+        COMPLEX = 2
     }
 
     public enum LabelOrientationAnnotated
