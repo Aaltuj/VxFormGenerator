@@ -14,7 +14,7 @@ using Microsoft.Extensions.Hosting;
 
 
 
-namespace FormGeneratorDemo
+namespace VxFormGeneratorDemo.Server
 {
     public class Startup
     {

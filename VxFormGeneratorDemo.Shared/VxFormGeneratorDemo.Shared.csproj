@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>VxFormGeneratorDemo.Shared</AssemblyName>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VxFormGenerator.Components.Bootstrap\VxFormGenerator.Components.Bootstrap.csproj" />
+    <ProjectReference Include="..\VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj" />
+    <ProjectReference Include="..\VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj" />
+  </ItemGroup>
+  
+
+
+</Project>

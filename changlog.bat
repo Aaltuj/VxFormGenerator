@@ -11,7 +11,7 @@ set /p name="Specify release name (optional):"
 tools\changelog\changelog.exe ^
  --verbosity Info ^
  --repositoryurl "https://github.com/Aaltuj/VxFormGenerator/commit/{0}" ^
- --filename "VxFormGenerator.Core\changelog" ^
+ --filename "changelogs\refs\tags\%name%.md" ^
  --issueformat "(?:#)\d{1,4}" ^
  --outputformat markdown ^
  --releasename "%name%"
