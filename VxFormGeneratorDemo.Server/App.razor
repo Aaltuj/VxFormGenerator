@@ -1,4 +1,7 @@
-<Router AppAssembly="@typeof(Program).Assembly">
+@using VxFormGeneratorDemo.Shared.Navigation
+
+<Router AppAssembly="@typeof(Program).Assembly"
+        AdditionalAssemblies="new[] { typeof(VxFormGeneratorDemo.Shared._Imports).Assembly }">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>

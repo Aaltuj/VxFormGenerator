@@ -25,7 +25,12 @@
   <ItemGroup>
     <ProjectReference Include="..\VxFormGenerator.Components.Bootstrap\VxFormGenerator.Components.Bootstrap.csproj" />
     <ProjectReference Include="..\VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj" />
+    <ProjectReference Include="..\VxFormGeneratorDemo.Shared\VxFormGeneratorDemo.Shared.csproj" />
     <ProjectReference Include="..\VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Shared\" />
   </ItemGroup>
 
 </Project>

@@ -38,7 +38,7 @@ public class FeedingSession
 
 ... into a nice Blazor form:
 
-![A nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/sample_form.png)
+![A nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/sample_form.png)
 
 ### Setup
 
@@ -235,7 +235,7 @@ The form generator supports layout structuring based on meta-data defined at mod
 
     }
 ````
-![Another nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/Advanced_sample_form.png)
+![Another nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/Advanced_sample_form.png)
 
 There is also support for nested models. 
 
@@ -262,7 +262,7 @@ There is also support for nested models.
     }
     }
 ```
-![Another Another nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/complex_sample_form.png)
+![Another Another nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/complex_sample_form.png)
 
 
 #### Layout options
@@ -325,5 +325,5 @@ Run the demo so you can see the options and effects interactively:
 
 ### Contact
 
-<img src="https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/discord-logo.png" alt="Discord" /> [Server](https://discord.gg/pyCtvFdTdV)
+<img src="https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/discord-logo.png" alt="Discord" /> [Server](https://discord.gg/pyCtvFdTdV)
 
