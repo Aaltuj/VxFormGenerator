@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VxFormGenerator.Core.Layout;
+using VxFormGenerator.Core.Attributes;
 
 namespace VxFormGeneratorDemoData
 {
@@ -29,7 +30,8 @@ namespace VxFormGeneratorDemoData
 
         [Display(Name = "Country"),
          // Show Placeholder
-         VxFormElementLayout(Placeholder = "The country you live")]
+         VxFormElementLayout(Placeholder = "The country you live"),
+            VxLookup(typeof(CountryResolver))]
         public string Country { get; set; }
 
         [Display(Name = "State")]
