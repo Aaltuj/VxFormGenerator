@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using VxFormGenerator.Components.Plain.Models;
 using VxFormGenerator.Core;
+using VxFormGenerator.Core.Attributes;
+using VxFormGenerator.Core.Render;
 
 namespace VxFormGenerator.Form.Components.Plain
 {
-    public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren
+    public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren, IRenderChildrenVxLookupValueKey
     {
         public static Type TypeOfChildToRender => typeof(InputSelectOption<string>);
 
@@ -43,11 +46,29 @@ namespace VxFormGenerator.Form.Components.Plain
                             // Close the component
                             _builder.CloseComponent();
                         }
+                   
                     }
-
+                   
 
                 }));
 
+        }
+
+        public static void RenderChildren(RenderTreeBuilder _builder, int index, object dataContext,
+            string fieldIdentifier, VxLookupResult<string> vxLookup)
+        {
+            foreach (var val in vxLookup.Values)
+            {
+                //  Open the InputSelectOption component
+                _builder.OpenComponent(0, TypeOfChildToRender);
+
+                // Set the value of the enum as a value and key parameter
+                _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.Value);
+                _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), val.Key);
+
+                // Close the component
+                _builder.CloseComponent();
+            }
         }
 
     }

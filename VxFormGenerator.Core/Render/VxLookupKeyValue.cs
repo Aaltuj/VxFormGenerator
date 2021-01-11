@@ -10,7 +10,8 @@ namespace VxFormGenerator.Core.Render
     {
         public abstract string Name { get; set; }
 
-        public abstract Task<VxLookupResult<string>> GetLookupValues(object param);
+        public abstract Task<VxLookupResult<string>> GetLookupValues(object param = null);
 
     }
+
 }
