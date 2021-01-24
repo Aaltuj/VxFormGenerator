@@ -7,7 +7,7 @@ namespace VxFormGeneratorDemoData
     [VxFormRowLayout(Id = 2, Label = "Adress")]
     public class AddressViewModel
     {
-        [Display(Name = "Firstname")]
+       [Display(ResourceType = typeof(Resources.Address), Name = nameof(Resources.Address.FIRSTNAME_LABEL))]
         // Add element to row 1 with automatic width based on number of items in a row
         [VxFormElementLayout(RowId = 1)]
         public string SurName { get; set; }
@@ -19,7 +19,7 @@ namespace VxFormGeneratorDemoData
         [Display(Name = "Street")]
         // Add element to row 2 and set the width to 9 of 12 columns
         [VxFormElementLayout(RowId = 2, ColSpan = 9)]
-        [MinLength(5)]
+        [MinLength(5, ErrorMessage = nameof(Resources.Address.FIRSTNAME_LABEL), ErrorMessageResourceType = typeof(Resources.Address))]
         public string Street { get; set; }
 
         [Display(Name = "Number")]

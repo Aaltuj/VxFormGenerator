@@ -47,6 +47,13 @@ namespace VxFormGeneratorDemo.Server
                 app.UseExceptionHandler("/Error");
             }
 
+            var supportedCultures = new[] { "en", "nl" };
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            app.UseRequestLocalization(localizationOptions);
+
             app.UseStaticFiles();
 
             app.UseRouting();
