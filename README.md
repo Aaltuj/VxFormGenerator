@@ -62,7 +62,7 @@ The Bootstrap styled form components for the **VxFormGenerator**
 
 ### Initialize
 
-Open the `Startup.cs` and add one of the following usage statements:
+Copy one of the following usage statements:
 
 ###### Plain components
 
@@ -72,7 +72,27 @@ Open the `Startup.cs` and add one of the following usage statements:
 
 `using VxFormGenerator.Settings.Bootstrap;`
 
-After adding one of the usage statements add the line `services.AddVxFormGenerator();` like shown here below.
+##### Webassembly (WASM)
+
+Open `Program.cs`, add one of the copied usage statements add the line `builder.Services.AddVxFormGenerator();` like shown here below.
+
+````C#
+public static async Task Main(string[] args)
+        {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.RootComponents.Add<App>("#app");
+
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddVxFormGenerator(); //<-- Add line
+
+            await builder.Build().RunAsync();
+        }
+````
+
+##### Server
+
+Open `Startup.cs`, add one of the copied usage statements add the line `services.AddVxFormGenerator();` like shown here below.
 
 ````C#
 public IConfiguration Configuration { get; }
@@ -85,7 +105,7 @@ public void ConfigureServices(IServiceCollection services)
 {
 	services.AddRazorPages();
 	services.AddServerSideBlazor();
-	services.AddVxFormGenerator();
+	services.AddVxFormGenerator(); //<-- Add line
 }
 ````
 
@@ -105,7 +125,8 @@ You can have a model that renders inputs for the properties. All that's required
 <EditForm Model="Model" 
 		  OnValidSubmit="HandleValidSubmit"
 		  OnInvalidSubmit="HandleInValidSubmit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
+  // complex type validator replacing DataAnnotationValidator
+    <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
     <RenderFormElements></RenderFormElements>		
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
@@ -151,7 +172,8 @@ You can render a form that is based on a dynamic `ExpandoObject`. The developer 
 <EditForm Model="Model" 
 		  OnValidSubmit="HandleValidSubmit"
 		  OnInvalidSubmit="HandleInValidSubmit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
+      // complex type validator replacing DataAnnotationValidator
+    <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
     <RenderFormElements></RenderFormElements>		
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
