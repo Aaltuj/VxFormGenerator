@@ -38,7 +38,7 @@ namespace VxFormGenerator.Core.Tests
 
             var resolver = attribute.GetResolver().LookupKeyValue;
             Assert.Equal("COUNTRY_LOOKUP", resolver.Name);
-            var result = await resolver.GetLookupValues(null);
+            var result = await resolver.GetLookupValues();
 
             Assert.Contains("NL", result.Values);
 

@@ -8,6 +8,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using VxFormGenerator.Core.Attributes;
 using VxFormGenerator.Core.Layout;
 using VxFormGenerator.Core.Repository;
 
@@ -147,6 +148,22 @@ namespace VxFormGenerator.Core
                 var method = elementType.GetMethod(nameof(IRenderChildren.RenderChildren), BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
 
                 method.Invoke(null, new object[] { builder, indexBuilder, dataContext, fieldIdentifier });
+            }
+            // Check if the component has the IRenderChildren and renderen them in the form control
+            if (VxHelpers.TypeImplementsInterface(elementType, typeof(IRenderChildrenVxLookupValueKey)))
+            {
+                var method = elementType
+                    .GetMethod(nameof(IRenderChildrenVxLookupValueKey.RenderLookupKeyValueChildren)
+                    , BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
+
+                var attribute = target.GetType().GetProperty(fieldIdentifier).GetCustomAttribute(typeof(VxLookupAttribute), true) as VxLookupAttribute;
+
+                var resolver = attribute.GetResolver().LookupKeyValue;
+
+                method.Invoke(null, new object[] { builder, indexBuilder
+                    , dataContext
+                    , fieldIdentifier
+                    , resolver          });
             }
         }
 

@@ -11,7 +11,9 @@ using VxFormGenerator.Core.Render;
 
 namespace VxFormGenerator.Form.Components.Plain
 {
-    public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildren, IRenderChildrenVxLookupValueKey
+    public class InputSelectWithOptions<TValue> : InputSelect<TValue>,
+        IRenderChildren,
+        IRenderChildrenVxLookupValueKey
     {
         public static Type TypeOfChildToRender => typeof(InputSelectOption<string>);
 
@@ -54,7 +56,7 @@ namespace VxFormGenerator.Form.Components.Plain
 
         }
 
-        public static void RenderChildren(RenderTreeBuilder _builder, int index, object dataContext,
+        public static void RenderLookupKeyValueChildren(RenderTreeBuilder _builder, int index, object dataContext,
             string fieldIdentifier, VxLookupResult<string> vxLookup)
         {
             foreach (var val in vxLookup.Values)
