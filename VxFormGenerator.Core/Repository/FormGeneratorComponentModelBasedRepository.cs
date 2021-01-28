@@ -6,7 +6,7 @@ namespace VxFormGenerator.Core.Repository
 {
     public class FormGeneratorComponentModelBasedRepository : FormGeneratorComponentsRepository<Type>
     {
-        protected override Type GetComponent(Type key)
+        protected override Type GetComponent(Type key, Layout.VxFormElementDefinition formElementDefinition)
         {
             var type = key;
             // When the type is an ENUM use Enum as type instead of property

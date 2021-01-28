@@ -36,7 +36,7 @@ namespace VxFormGenerator.Core.Repository
             _ComponentDict.Remove(key);
         }
 
-        protected virtual Type GetComponent(TKey key)
+        protected virtual Type GetComponent(TKey key, Layout.VxFormElementDefinition formColumnDefinition)
         {
             var found = _ComponentDict.TryGetValue(key, out Type outVar);
 

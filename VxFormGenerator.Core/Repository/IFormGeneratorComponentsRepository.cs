@@ -9,7 +9,7 @@ namespace VxFormGenerator.Core.Repository
     {
         public void RegisterComponent(object key, Type component);
         public void RemoveComponent(object key);
-        public Type GetComponent(object key);
+        public Type GetComponent(object key, Layout.VxFormElementDefinition formColumnDefinition);
     }
 
 }

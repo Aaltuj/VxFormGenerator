@@ -73,7 +73,7 @@ namespace VxFormGenerator.Core
         public RenderFragment CreateComponent() => builder =>
         {
             // Get the mapped control based on the property type
-            var componentType = Repo.GetComponent(typeof(TFormElement));
+            var componentType = Repo.GetComponent(typeof(TFormElement), FormColumnDefinition);
 
             // TODO: add the dynamic version for getting a component
 
@@ -156,7 +156,11 @@ namespace VxFormGenerator.Core
                     .GetMethod(nameof(IRenderChildrenVxLookupValueKey.RenderLookupKeyValueChildren)
                     , BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
 
-                var attribute = target.GetType().GetProperty(fieldIdentifier).GetCustomAttribute(typeof(VxLookupAttribute), true) as VxLookupAttribute;
+                var prop = dataContext.GetType().GetProperty(fieldIdentifier);
+                var attribute = prop.GetCustomAttribute(typeof(VxLookupAttribute), true) as VxLookupAttribute;
+                
+                if (attribute == null)
+                    return;
 
                 var resolver = attribute.GetResolver().LookupKeyValue;
 
