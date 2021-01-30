@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using VxFormGenerator.Core.Layout;
 
 namespace VxFormGenerator.Core.Repository
 {
@@ -50,18 +51,20 @@ namespace VxFormGenerator.Core.Repository
 
         public void RegisterComponent(object key, Type component)
         {
-            RegisterComponent((TKey) key, component);
+            RegisterComponent((TKey)key, component);
         }
 
         public void RemoveComponent(object key)
         {
-            RemoveComponent((TKey) key);
+            RemoveComponent((TKey)key);
         }
 
-        public Type GetComponent(object key)
+        public Type GetComponent(object key, Layout.VxFormElementDefinition formColumnDefinition)
         {
-            return GetComponent((TKey) key);
+            return GetComponent((TKey)key, formColumnDefinition);
         }
+
+
     }
 
 

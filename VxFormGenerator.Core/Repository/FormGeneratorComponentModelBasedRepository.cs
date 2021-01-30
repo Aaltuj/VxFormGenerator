@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VxFormGenerator.Core.Render;
 
 namespace VxFormGenerator.Core.Repository
 {
@@ -9,8 +10,12 @@ namespace VxFormGenerator.Core.Repository
         protected override Type GetComponent(Type key, Layout.VxFormElementDefinition formElementDefinition)
         {
             var type = key;
+            if (formElementDefinition.HasLookup)
+            {
+                type = formElementDefinition.GetLookup.LookupKeyValue != null ? formElementDefinition.GetLookup.LookupKeyValue.GetType().BaseType : null;
+            }
             // When the type is an ENUM use Enum as type instead of property
-            if (key.IsEnum)
+            else if (key.IsEnum)
             {
                 type = typeof(Enum);
             }
@@ -25,7 +30,7 @@ namespace VxFormGenerator.Core.Repository
                 type = Nullable.GetUnderlyingType(key);
             }
 
-            return base.GetComponent(type);
+            return base.GetComponent(type, formElementDefinition);
         }
     }
 }

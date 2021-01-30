@@ -6,8 +6,7 @@ using VxFormGenerator.Models;
 using VxFormGenerator.Core.Repository;
 using VxFormGenerator.Core;
 using VxFormGenerator.Form.Components.Plain;
-
-
+using VxFormGenerator.Core.Render;
 
 namespace VxFormGenerator.Repository.Bootstrap
 {
@@ -23,6 +22,7 @@ namespace VxFormGenerator.Repository.Bootstrap
                     { typeof(bool),            typeof(BootstrapInputCheckbox) },
                     { typeof(Enum),            typeof(BootstrapInputSelectWithOptions<>) },
                     { typeof(ValueReferences), typeof(BootstrapInputCheckboxMultiple<>) },
+                    { typeof(VxLookupKeyValue),typeof(BootstrapInputSelectWithOptions<>) },
                     { typeof(decimal),         typeof(InputNumber<>) },
                     { typeof(int),             typeof(InputNumber<>) },
                     { typeof(VxColor),         typeof(InputColor) }
