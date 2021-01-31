@@ -56,21 +56,28 @@ namespace VxFormGenerator.Form.Components.Plain
 
         }
 
-        public static void RenderLookupKeyValueChildren(RenderTreeBuilder _builder, int index, object dataContext,
+        public static void RenderLookupKeyValueChildren(RenderTreeBuilder 
+            _builder, int index, object dataContext,
             string fieldIdentifier, VxLookupResult<string> vxLookup)
         {
-            foreach (var val in vxLookup.Values)
-            {
-                //  Open the InputSelectOption component
-                _builder.OpenComponent(0, TypeOfChildToRender);
+            _builder.AddAttribute(index + 1, nameof(ChildContent),
+                new RenderFragment(_builder =>
+                {
+                    foreach (var val in vxLookup.Values)
+                    {
+                        //  Open the InputSelectOption component
+                        _builder.OpenComponent(0, TypeOfChildToRender);
 
-                // Set the value of the enum as a value and key parameter
-                _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.Value);
-                _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), val.Key);
+                        // Set the value of the enum as a value and key parameter
+                        _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.Value);
+                        _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), val.Key);
 
-                // Close the component
-                _builder.CloseComponent();
-            }
+                        // Close the component
+                        _builder.CloseComponent();
+                    }
+
+
+                }));
         }
 
     }

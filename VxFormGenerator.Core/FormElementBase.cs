@@ -8,6 +8,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using VxFormGenerator.Core.Attributes;
 using VxFormGenerator.Core.Layout;
 using VxFormGenerator.Core.Repository;
@@ -70,7 +71,7 @@ namespace VxFormGenerator.Core
         /// </summary>
         /// <param name="propInfoValue"></param>
         /// <returns></returns>
-        public RenderFragment CreateComponent() => builder =>
+        public RenderFragment CreateComponent() => async builder =>
         {
             // Get the mapped control based on the property type
             var componentType = Repo.GetComponent(typeof(TFormElement), FormColumnDefinition);
@@ -95,7 +96,7 @@ namespace VxFormGenerator.Core
             /*   // Activate the the Type so that the methods can be called
                var instance = Activator.CreateInstance(elementType);*/
 
-            this.CreateFormComponent(this, FormColumnDefinition.Model, FormColumnDefinition.Name, builder, elementType);
+            await this.CreateFormComponent(this, FormColumnDefinition.Model, FormColumnDefinition.Name, builder, elementType);
         };
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace VxFormGenerator.Core
         /// <param name="propInfoValue">The property that is being rendered</param>
         /// <param name="builder">The render tree of this element</param>
         /// <param name="instance">THe control instance</param>
-        public void CreateFormComponent(object target,
+        public async Task CreateFormComponent(object target,
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, Type elementType)
         {
@@ -131,14 +132,13 @@ namespace VxFormGenerator.Core
             // Set the class for the the formelement.
             builder.AddAttribute(treeIndex++, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
 
-            CheckForInterfaceActions(this, FormColumnDefinition.Model, fieldIdentifier, builder, treeIndex++, elementType);
-
+            await CheckForInterfaceActions(this, FormColumnDefinition.Model, fieldIdentifier, builder, treeIndex++, elementType);
 
             builder.CloseComponent();
 
         }
 
-        private void CheckForInterfaceActions(object target,
+        private async Task CheckForInterfaceActions(object target,
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, int indexBuilder, Type elementType)
         {
@@ -163,11 +163,11 @@ namespace VxFormGenerator.Core
                     return;
 
                 var resolver = attribute.GetResolver().LookupKeyValue;
-
+                var result = await resolver.GetLookupValues();
                 method.Invoke(null, new object[] { builder, indexBuilder
                     , dataContext
                     , fieldIdentifier
-                    , resolver          });
+                    , result          });
             }
         }
 

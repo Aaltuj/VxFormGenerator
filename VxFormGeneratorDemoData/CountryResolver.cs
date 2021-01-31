@@ -11,7 +11,8 @@ namespace VxFormGeneratorDemoData
 
         public override Task<VxLookupResult<string>> GetLookupValues(object param)
         {
-            return Task.FromResult(new VxLookupResult<string>() { Name = Name, Values = new Dictionary<string, string>() { { "NL", "Netherlands" } } });
+            return Task.FromResult(new VxLookupResult<string>() { Name = Name, 
+                Values = new Dictionary<string, string>() { { "NL", "Netherlands" }, { "DE", "Germany" } } });
         }
     }
 }

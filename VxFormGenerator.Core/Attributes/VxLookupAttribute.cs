@@ -13,7 +13,7 @@ namespace VxFormGenerator.Core.Attributes
         public VxLookupKeyValue LookupKeyValue { get; private set; }
         public VxLookupResolverResult(object result)
         {
-            if (result.GetType().BaseType.Equals(typeof(VxLookupKeyValue)))
+            if (result.GetType().IsSubclassOf(typeof(VxLookupKeyValue)))
             {
                 LookupKeyValue = (VxLookupKeyValue)(object)result;
             }

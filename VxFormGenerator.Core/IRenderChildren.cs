@@ -60,7 +60,9 @@ namespace VxFormGenerator.Core
         /// <param name="dataContext">The model for the form</param>
         /// <param name="propInfoValue">The property that is filled by the <see cref="FormElement"/></param>
         /// <param name="typeOfChildToRender">The type of the child that should be rendered</param>
-        public static void RenderLookupKeyValueChildren(RenderTreeBuilder builder, int index, object dataContext,
+        public static void RenderLookupKeyValueChildren(RenderTreeBuilder builder, 
+            int index, 
+            object dataContext,
             string fieldIdentifier,
             VxLookupKeyValue vxLookup) => throw new NotImplementedException();
  
