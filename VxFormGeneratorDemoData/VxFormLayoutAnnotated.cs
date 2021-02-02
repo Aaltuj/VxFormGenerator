@@ -11,7 +11,7 @@ namespace VxFormGeneratorDemoData
     public class VxFormLayoutOptionsAnnotated
     {
         [VxFormElementLayout(Label = "Complexity of the form")]
-        public TypeOfForm FormRenderKind { get; set; }
+        public TypeOfForm FormRenderKind { get; set; } = TypeOfForm.ADVANCED;
         [VxFormElementLayout(Label = "Label Orientation")]
         public LabelOrientationAnnotated LabelOrientation { get; set; }
         [VxFormElementLayout(Label = "Placeholder Policy")]

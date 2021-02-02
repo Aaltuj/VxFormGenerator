@@ -8,9 +8,11 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using VxFormGenerator.Core.Attributes;
 using VxFormGenerator.Core.Layout;
+using VxFormGenerator.Core.Render;
 using VxFormGenerator.Core.Repository;
 
 namespace VxFormGenerator.Core
@@ -71,7 +73,7 @@ namespace VxFormGenerator.Core
         /// </summary>
         /// <param name="propInfoValue"></param>
         /// <returns></returns>
-        public RenderFragment CreateComponent() => async builder =>
+        public RenderFragment CreateComponent() => builder =>
         {
             // Get the mapped control based on the property type
             var componentType = Repo.GetComponent(typeof(TFormElement), FormColumnDefinition);
@@ -96,7 +98,7 @@ namespace VxFormGenerator.Core
             /*   // Activate the the Type so that the methods can be called
                var instance = Activator.CreateInstance(elementType);*/
 
-            await this.CreateFormComponent(this, FormColumnDefinition.Model, FormColumnDefinition.Name, builder, elementType);
+            this.CreateFormComponent(this, FormColumnDefinition.Model, FormColumnDefinition.Name, builder, elementType);
         };
 
         /// <summary>
@@ -109,65 +111,78 @@ namespace VxFormGenerator.Core
         /// <param name="propInfoValue">The property that is being rendered</param>
         /// <param name="builder">The render tree of this element</param>
         /// <param name="instance">THe control instance</param>
-        public async Task CreateFormComponent(object target,
+        public void CreateFormComponent(object target,
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, Type elementType)
         {
-            var treeIndex = 0;
 
+
+            builder.OpenRegion(100);
             // Create the component based on the mapped Element Type
-            builder.OpenComponent(treeIndex, elementType);
+            builder.OpenComponent(0, elementType);
 
             // Bind the value of the input base the the propery of the model instance
-            builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.Value), Value);
+            builder.AddAttribute(1, nameof(InputBase<TFormElement>.Value), Value);
 
             // Create the handler for ValueChanged. This wil update the model instance with the input
-            builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.ValueChanged), ValueChanged);
+            builder.AddAttribute(2, nameof(InputBase<TFormElement>.ValueChanged), ValueChanged);
 
-            builder.AddAttribute(treeIndex++, nameof(InputBase<TFormElement>.ValueExpression), ValueExpression);
+            builder.AddAttribute(3, nameof(InputBase<TFormElement>.ValueExpression), ValueExpression);
 
             if (FormColumnDefinition.RenderOptions.Placeholder != null)
-                builder.AddAttribute(treeIndex++, "placeholder", FormColumnDefinition.RenderOptions.Placeholder);
+                builder.AddAttribute(4, "placeholder", FormColumnDefinition.RenderOptions.Placeholder);
 
             // Set the class for the the formelement.
-            builder.AddAttribute(treeIndex++, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
+            builder.AddAttribute(5, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
 
-            await CheckForInterfaceActions(this, FormColumnDefinition.Model, fieldIdentifier, builder, treeIndex++, elementType);
+            CheckForInterfaceActions(this, FormColumnDefinition.Model, fieldIdentifier, builder, 6, elementType);
 
             builder.CloseComponent();
 
+            builder.CloseRegion();
+
         }
 
-        private async Task CheckForInterfaceActions(object target,
+        private void CheckForInterfaceActions(object target,
             object dataContext,
             string fieldIdentifier, RenderTreeBuilder builder, int indexBuilder, Type elementType)
         {
-            // Check if the component has the IRenderChildren and renderen them in the form control
-            if (VxHelpers.TypeImplementsInterface(elementType, typeof(IRenderChildren)))
-            {
-                var method = elementType.GetMethod(nameof(IRenderChildren.RenderChildren), BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
 
-                method.Invoke(null, new object[] { builder, indexBuilder, dataContext, fieldIdentifier });
-            }
             // Check if the component has the IRenderChildren and renderen them in the form control
             if (VxHelpers.TypeImplementsInterface(elementType, typeof(IRenderChildrenVxLookupValueKey)))
-            {
+            {/*
                 var method = elementType
                     .GetMethod(nameof(IRenderChildrenVxLookupValueKey.RenderLookupKeyValueChildren)
-                    , BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);
+                    , BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Static);*/
 
                 var prop = dataContext.GetType().GetProperty(fieldIdentifier);
-                var attribute = prop.GetCustomAttribute(typeof(VxLookupAttribute), true) as VxLookupAttribute;
-                
-                if (attribute == null)
-                    return;
 
-                var resolver = attribute.GetResolver().LookupKeyValue;
-                var result = await resolver.GetLookupValues();
-                method.Invoke(null, new object[] { builder, indexBuilder
-                    , dataContext
-                    , fieldIdentifier
-                    , result          });
+                if (prop.PropertyType.IsEnum)
+                {
+                    builder.AddAttribute(indexBuilder++, nameof(IRenderChildrenVxLookupValueKey.KeyValueLookup), new VxEnumLookup() { Enum = prop.PropertyType });
+                }
+                else
+                {
+                    var attribute = prop.GetCustomAttribute(typeof(VxLookupAttribute), true) as VxLookupAttribute;
+
+                    if (attribute == null)
+                        return;
+
+
+                    var resolver = attribute.GetResolver().LookupKeyValue;
+
+                    if (resolver == null)
+                        throw new Exception("Check lookup, this shouldn't be empty");
+
+                    builder.AddAttribute(indexBuilder++, nameof(IRenderChildrenVxLookupValueKey.KeyValueLookup), resolver);
+                }
+
+
+
+                /* method.Invoke(null, new object[] { builder, indexBuilder
+                     , dataContext
+                     , fieldIdentifier
+                     , resolver          });*/
             }
         }
 

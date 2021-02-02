@@ -21,7 +21,7 @@ namespace VxFormGenerator.Repository.Bootstrap
                     { typeof(DateTime),        typeof(InputDate<>) },
                     { typeof(bool),            typeof(BootstrapInputCheckbox) },
                     { typeof(Enum),            typeof(BootstrapInputSelectWithOptions<>) },
-                    { typeof(ValueReferences), typeof(BootstrapInputCheckboxMultiple<>) },
+                    { typeof(IDictionary<bool, Enum>), typeof(BootstrapInputCheckboxMultiple<>) },
                     { typeof(VxLookupKeyValue),typeof(BootstrapInputSelectWithOptions<>) },
                     { typeof(decimal),         typeof(InputNumber<>) },
                     { typeof(int),             typeof(InputNumber<>) },

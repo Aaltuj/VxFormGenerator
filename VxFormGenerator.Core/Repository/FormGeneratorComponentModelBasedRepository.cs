@@ -24,8 +24,17 @@ namespace VxFormGenerator.Core.Repository
             {
                 type = typeof(ValueReferences);
             }
+            // the type is an dictionary
+            else if (key.IsGenericType && key.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+            {
+                Type keyType = key.GetGenericArguments()[0];
+                Type valueType = key.GetGenericArguments()[1];
+
+                if (keyType == typeof(bool) && valueType.IsEnum)
+                    type = typeof(IDictionary<bool, Enum>);
+            }
             // When it's a Nullable type use the underlying type for matching
-            else if(Nullable.GetUnderlyingType(key) != null )
+            else if (Nullable.GetUnderlyingType(key) != null)
             {
                 type = Nullable.GetUnderlyingType(key);
             }

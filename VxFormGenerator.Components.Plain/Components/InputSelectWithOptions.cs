@@ -1,83 +1,72 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using VxFormGenerator.Components.Plain.Models;
+using System.Threading.Tasks;
 using VxFormGenerator.Core;
 using VxFormGenerator.Core.Attributes;
 using VxFormGenerator.Core.Render;
 
 namespace VxFormGenerator.Form.Components.Plain
 {
-    public class InputSelectWithOptions<TValue> : InputSelect<TValue>,
-        IRenderChildren,
-        IRenderChildrenVxLookupValueKey
+    public class InputSelectWithOptions<TValue> : InputSelect<TValue>, IRenderChildrenVxLookupValueKey
     {
         public static Type TypeOfChildToRender => typeof(InputSelectOption<string>);
 
-        public static void RenderChildren(RenderTreeBuilder builder, int index, object dataContext,
-            string fieldIdentifier)
+        [Parameter]
+        public VxLookupKeyValue KeyValueLookup { get; set; }
+
+        public VxLookupResult<string> LookupValues { get; set; }
+
+
+        protected override async Task OnInitializedAsync()
         {
-            // the builder position is between the builder.OpenComponent() and builder.CloseComponent()
-            // This means that the component of InputSelect is added en stil open for changes.
-            // We can create a new RenderFragment and set the ChildContent attribute of the InputSelect component
-            builder.AddAttribute(index + 1, nameof(ChildContent),
-                new RenderFragment(_builder =>
-                {
-                    // check if the type of the propery is an Enum
-                    if (typeof(TValue).IsEnum)
-                    {
-                        // when type is a enum present them as an <option> element 
-                        // by leveraging the component InputSelectOption
-                        var values = typeof(TValue).GetEnumValues();
+            await base.OnInitializedAsync();
 
+            if (KeyValueLookup != null)
+            {
+                LookupValues = await KeyValueLookup.GetLookupValues();
+            }
 
-                        foreach (var val in values)
-                        {
-                            var value = VxSelectItem.ToSelectItem(val as Enum);
-
-                            //  Open the InputSelectOption component
-                            _builder.OpenComponent(0, TypeOfChildToRender);
-
-                            // Set the value of the enum as a value and key parameter
-                            _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), value.Label);
-                            _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), value.Key);
-
-                            // Close the component
-                            _builder.CloseComponent();
-                        }
-                   
-                    }
-                   
-
-                }));
-
+            RenderChildren();
         }
 
-        public static void RenderLookupKeyValueChildren(RenderTreeBuilder 
-            _builder, int index, object dataContext,
-            string fieldIdentifier, VxLookupResult<string> vxLookup)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            _builder.AddAttribute(index + 1, nameof(ChildContent),
-                new RenderFragment(_builder =>
-                {
-                    foreach (var val in vxLookup.Values)
-                    {
-                        //  Open the InputSelectOption component
-                        _builder.OpenComponent(0, TypeOfChildToRender);
-
-                        // Set the value of the enum as a value and key parameter
-                        _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.Value);
-                        _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), val.Key);
-
-                        // Close the component
-                        _builder.CloseComponent();
-                    }
+            await base.OnAfterRenderAsync(firstRender);
+        }
 
 
-                }));
+        public void RenderChildren()
+        {
+            ChildContent =
+                   new RenderFragment(_builder =>
+                   {
+                       if (LookupValues == null)
+                           return;
+
+                       foreach (var val in LookupValues.Values)
+                       {
+                           _builder.OpenRegion(200);
+                           //  Open the InputSelectOption component
+                           _builder.OpenComponent(0, TypeOfChildToRender);
+
+                           // Set the value of the enum as a value and key parameter
+                           _builder.AddAttribute(1, nameof(InputSelectOption<string>.Value), val.Value);
+                           _builder.AddAttribute(2, nameof(InputSelectOption<string>.Key), val.Key);
+
+                           // Close the component
+                           _builder.CloseComponent();
+                           _builder.CloseRegion();
+                       }
+
+
+
+                   });
+            // this.StateHasChanged();
         }
 
     }
