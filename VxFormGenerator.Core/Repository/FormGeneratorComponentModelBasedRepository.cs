@@ -30,8 +30,10 @@ namespace VxFormGenerator.Core.Repository
                 Type keyType = key.GetGenericArguments()[0];
                 Type valueType = key.GetGenericArguments()[1];
 
-                if (keyType == typeof(bool) && valueType.IsEnum)
-                    type = typeof(IDictionary<bool, Enum>);
+                if (keyType.IsEnum && valueType == typeof(bool))
+                    type = typeof(IDictionary<Enum, bool>);
+                if (keyType.IsSubclassOf(typeof(string)) && valueType == typeof(bool))
+                    type = typeof(IDictionary<string, bool>);
             }
             // When it's a Nullable type use the underlying type for matching
             else if (Nullable.GetUnderlyingType(key) != null)

@@ -42,7 +42,9 @@ namespace VxFormGenerator.Form.Components.Plain
 
                    if (LookupValues == null)
                        return;
-
+                   
+                   // adding a Class attribute containing the supported data-types this allow 
+                   // the component to call a function that ties the properties type to the supported type, and returns the ValueChanged and ValueExpression
                    
                    foreach (var val in VxSelectItem.ToSelectItems(LookupValues.Values))
                    {
