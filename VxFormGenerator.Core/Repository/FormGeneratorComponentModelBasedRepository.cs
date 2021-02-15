@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using VxFormGenerator.Core.Render;
+using VxFormGenerator.Core.Attributes;
 
 namespace VxFormGenerator.Core.Repository
 {
-    public class FormGeneratorComponentModelBasedRepository : FormGeneratorComponentsRepository<Type>
+    public class FormGeneratorComponentModelBasedRepository : FormGeneratorComponentsRepository<Type, VxDataTypeRegistrationAttribute>
     {
         protected override Type GetComponent(Type key, Layout.VxFormElementDefinition formElementDefinition)
         {
@@ -43,5 +42,7 @@ namespace VxFormGenerator.Core.Repository
 
             return base.GetComponent(type, formElementDefinition);
         }
+
+
     }
 }

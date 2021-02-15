@@ -7,6 +7,7 @@ using VxFormGenerator.Core.Repository;
 using VxFormGenerator.Core;
 using VxFormGenerator.Form.Components.Plain;
 using VxFormGenerator.Core.Render;
+using System.Reflection;
 
 namespace VxFormGenerator.Repository.Bootstrap
 {
@@ -15,7 +16,10 @@ namespace VxFormGenerator.Repository.Bootstrap
         public VxBootstrapRepository()
         {
 
-            _ComponentDict = new Dictionary<Type, Type>()
+            var assemblies = Assembly.GetAssembly(typeof(VxBootstrapRepository));
+            this.RegisterAllDiscoverableFormElements(new[] { assemblies });
+
+            _ComponentDict = new Dictionary<Type, IList<VxDataTypeComponentRegistration>>()
                   {
                     { typeof(string),          typeof(InputText) },
                     { typeof(DateTime),        typeof(InputDate<>) },

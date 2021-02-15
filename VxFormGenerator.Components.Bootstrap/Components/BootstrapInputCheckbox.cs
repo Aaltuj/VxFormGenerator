@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using VxFormGenerator.Core.Attributes;
 using VxFormGenerator.Form.Components.Plain;
 
 namespace VxFormGenerator.Form.Components.Bootstrap
 {
+    [VxDataTypeRegistration(SupportedDataType = typeof(bool))]
     public class BootstrapInputCheckbox : VxInputCheckbox
     {
         public BootstrapInputCheckbox()

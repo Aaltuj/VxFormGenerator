@@ -16,7 +16,7 @@ namespace VxFormGenerator.Repository.Plain
 
             _ComponentDict = new Dictionary<Type, Type>()
                   {
-                        {typeof(string), typeof(VxInputText) },
+                        {typeof(string), typeof(InputText) },
                         {typeof(DateTime), typeof(InputDate<>) },
                         {typeof(int), typeof(InputNumber<>) },
                         {typeof(bool), typeof(VxInputCheckbox) },
