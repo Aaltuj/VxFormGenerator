@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Core.Repository
 {
-    public class FormGeneratorComponentDynamicRepository: FormGeneratorComponentsRepository<string>
+    public class FormGeneratorComponentDynamicRepository : FormGeneratorComponentsRepository<string, VxStringBasedRegistrationAttribute>
     {
-     
+
     }
 }

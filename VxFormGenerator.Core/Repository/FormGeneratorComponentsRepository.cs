@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using VxFormGenerator.Core.Layout;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Core.Repository
 {
@@ -31,7 +32,7 @@ namespace VxFormGenerator.Core.Repository
 
         protected void RegisterComponent(TKey key, Type component)
         {
-            var registration = new VxDataTypeComponentRegistration() { Component = component, SupportedDataType = typeof(TKey) };
+            var registration = new VxDataTypeComponentRegistration(typeof(TKey), component);
             if (_ComponentDict.ContainsKey(key))
             {
                 var dataRegistration = _ComponentDict.GetValueOrDefault(key);

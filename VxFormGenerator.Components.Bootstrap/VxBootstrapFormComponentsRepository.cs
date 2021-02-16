@@ -19,7 +19,7 @@ namespace VxFormGenerator.Repository.Bootstrap
             var assemblies = Assembly.GetAssembly(typeof(VxBootstrapRepository));
             this.RegisterAllDiscoverableFormElements(new[] { assemblies });
 
-            _ComponentDict = new Dictionary<Type, IList<VxDataTypeComponentRegistration>>()
+            var registrationDict = new Dictionary<Type, Type>()
                   {
                     { typeof(string),          typeof(InputText) },
                     { typeof(DateTime),        typeof(InputDate<>) },
@@ -31,6 +31,9 @@ namespace VxFormGenerator.Repository.Bootstrap
                     { typeof(int),             typeof(InputNumber<>) },
                     { typeof(VxColor),         typeof(InputColor) }
                   };
+
+
+            _ComponentDict = VxDataTypeComponentRegistration.CreateRegistrationList(registrationDict);
 
             _DefaultComponent = null;
 

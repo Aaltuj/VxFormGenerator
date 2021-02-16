@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using VxFormGenerator.Core.Attributes;
+using VxFormGenerator.Core.Repository.Registration;
 using VxFormGenerator.Form.Components.Plain;
 
 namespace VxFormGenerator.Form.Components.Bootstrap

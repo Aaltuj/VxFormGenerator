@@ -6,6 +6,9 @@ using VxFormGenerator.Core.Layout;
 using VxFormGeneratorDemoData;
 using Xunit;
 using System.Reflection;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Components.Forms;
+using VxFormGenerator.Core.Repository;
 
 namespace VxFormGenerator.Core.Tests
 {
@@ -41,6 +44,34 @@ namespace VxFormGenerator.Core.Tests
             var result = await resolver.GetLookupValues();
 
             Assert.Contains("NL", result.Values);
+
+        }
+
+        [Fact]
+        public void ConvertOldRegistrionList()
+        {
+
+            var registrationDict = new Dictionary<Type, Type>()
+                  {
+                    { typeof(string),          typeof(InputText) },
+                    { typeof(DateTime),        typeof(InputDate<>) }
+            };
+
+            var result = VxDataTypeComponentRegistration.CreateRegistrationList(registrationDict);
+
+            var stringRegistration = result.GetValueOrDefault(typeof(string));
+            var stringRegistrationValue = stringRegistration[0];
+
+            var dateRegistration = result.GetValueOrDefault(typeof(DateTime));
+            var dateRegistrationValue = dateRegistration[0];
+
+            Assert.Equal(1, stringRegistration.Count);
+            Assert.Equal(typeof(string), stringRegistrationValue.SupportedDataType);
+            Assert.Equal(typeof(InputText), stringRegistrationValue.Component);
+
+            Assert.Equal(1, dateRegistration.Count);
+            Assert.Equal(typeof(DateTime), dateRegistrationValue.SupportedDataType);
+            Assert.Equal(typeof(InputDate<>), dateRegistrationValue.Component);
 
         }
     }

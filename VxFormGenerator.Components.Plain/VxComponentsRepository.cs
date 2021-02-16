@@ -14,7 +14,7 @@ namespace VxFormGenerator.Repository.Plain
         public VxComponentsRepository()
         {
 
-            _ComponentDict = new Dictionary<Type, Type>()
+            var registrationDict = new Dictionary<Type, Type>()
                   {
                         {typeof(string), typeof(InputText) },
                         {typeof(DateTime), typeof(InputDate<>) },
@@ -26,10 +26,14 @@ namespace VxFormGenerator.Repository.Plain
                         {typeof(decimal), typeof(InputNumber<>) },
                         {typeof(VxColor), typeof(InputColor) }
                   };
+
+
+            _ComponentDict = VxDataTypeComponentRegistration.CreateRegistrationList(registrationDict);
+
             _DefaultComponent = null;
-         
-            
+
+
         }
-     
+
     }
 }
