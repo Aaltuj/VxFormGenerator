@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using VxFormGenerator.Core.Attributes;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Core.Repository
 {

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace VxFormGenerator.Core.Repository.Registration
 {
-    public class VxStringBasedComponentRegistration : IVxComponentRegistration<string>
+    public class VxStringBasedComponentRegistration : IVxComponentAttributeRegistration<string>
     {
         public string SupportedDataType { get; set; }
         public Func<object, bool>? IsSupported { get; set; }

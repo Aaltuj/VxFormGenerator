@@ -6,6 +6,7 @@ using VxFormGenerator.Core;
 using VxFormGenerator.Models;
 using VxFormGenerator.Core.Repository;
 using VxFormGenerator.Core.Render;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Repository.Plain
 {
@@ -13,13 +14,23 @@ namespace VxFormGenerator.Repository.Plain
     {
         public VxComponentsRepository()
         {
+            Setup(new[] { System.Reflection.Assembly.GetAssembly(typeof(VxComponentsRepository)) });
+        }
+
+        public VxComponentsRepository(System.Reflection.Assembly[] assemblies)
+        {
+            Setup(assemblies);
+        }
+
+        private void Setup(System.Reflection.Assembly[] assemblies)
+        {
 
             var registrationDict = new Dictionary<Type, Type>()
                   {
                         {typeof(string), typeof(InputText) },
                         {typeof(DateTime), typeof(InputDate<>) },
                         {typeof(int), typeof(InputNumber<>) },
-                        {typeof(bool), typeof(VxInputCheckbox) },
+                       // {typeof(bool), typeof(VxInputCheckbox) },
                         {typeof(Enum), typeof(InputSelectWithOptions<>) },
                         {typeof(VxLookupKeyValue), typeof(InputSelectWithOptions<>) },
                         {typeof(ValueReferences), typeof(InputCheckboxMultiple<>) },
@@ -32,8 +43,8 @@ namespace VxFormGenerator.Repository.Plain
 
             _DefaultComponent = null;
 
-
+            this.RegisterAllDiscoverableFormElements(assemblies,
+                (item, componentType) => new VxDataTypeComponentRegistration(item.SupportedDataType, componentType, item.IsSupported));
         }
-
     }
 }

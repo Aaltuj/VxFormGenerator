@@ -8,7 +8,7 @@ using Xunit;
 using System.Reflection;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components.Forms;
-using VxFormGenerator.Core.Repository;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Core.Tests
 {
@@ -72,6 +72,14 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal(1, dateRegistration.Count);
             Assert.Equal(typeof(DateTime), dateRegistrationValue.SupportedDataType);
             Assert.Equal(typeof(InputDate<>), dateRegistrationValue.Component);
+
+        }
+
+
+        [Fact]
+        public void GetAllRegisteredFormElements()
+        {
+            var repo = new VxFormGenerator.Repository.Plain.VxComponentsRepository();
 
         }
     }

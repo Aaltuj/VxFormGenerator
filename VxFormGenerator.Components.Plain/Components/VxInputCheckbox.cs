@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using VxFormGenerator.Core;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Form.Components.Plain
 {
+    [VxDataTypeRegistration(SupportedDataType = typeof(bool))]
     public class VxInputCheckbox : VxInputBase<bool>, IDisposable
     {
         [Parameter] public string Label { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Core.Repository
 {
@@ -7,9 +8,14 @@ namespace VxFormGenerator.Core.Repository
     /// </summary>
     public interface IFormGeneratorComponentsRepository
     {
-        public void RegisterComponent(object key, Type component);
-        public void RemoveComponent(object key);
+      
         public Type GetComponent(object key, Layout.VxFormElementDefinition formColumnDefinition);
+    }
+
+    public interface IChangeFormGeneratorComponentsRepository<TKey>
+    {
+        public void RegisterComponent(object key, IVxComponentRegistration<TKey> registration);
+        public void RemoveComponent(object key);
     }
 
 }
