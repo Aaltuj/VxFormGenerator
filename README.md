@@ -126,7 +126,7 @@ You can have a model that renders inputs for the properties. All that's required
         // save your changes
     }
 
-    private void HandleInValidSubmit(VEditContext context)
+    private void HandleInValidSubmit(EditContext context)
     {
         // Do something
     }
