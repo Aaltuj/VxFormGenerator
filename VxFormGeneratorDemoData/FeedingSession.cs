@@ -26,7 +26,7 @@ namespace VxFormGeneratorDemoData
         public bool ThrowingUp { get; set; }
 
         [Display(Name = "Throwing up dict")]
-        public IDictionary<bool, FoodKind> ThrowingUpDict { get; set; } = new Dictionary<bool, FoodKind>();
+        public IDictionary<bool, string> ThrowingUpDict { get; set; } = new Dictionary<bool, string>();
 
         [Display(Name = "Color")]
         public VxColor Color { get; set; }

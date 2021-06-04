@@ -2,13 +2,17 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using VxFormGenerator.Core;
 using VxFormGenerator.Core.Render;
+using VxFormGenerator.Core.Repository.Registration;
 
 namespace VxFormGenerator.Form.Components.Plain
 {
+    [VxDataTypeRegistration(SupportedDataType = typeof(IEnumerable))]
     public class InputCheckboxMultipleWithChildren<TValue> : InputCheckboxMultiple<TValue>, IRenderChildrenVxLookupValueKey
     {
         [Parameter]
@@ -42,7 +46,9 @@ namespace VxFormGenerator.Form.Components.Plain
 
                    if (LookupValues == null)
                        return;
-                   
+
+                  
+
                    // adding a Class attribute containing the supported data-types this allow 
                    // the component to call a function that ties the properties type to the supported type, and returns the ValueChanged and ValueExpression
                    
@@ -60,8 +66,9 @@ namespace VxFormGenerator.Form.Components.Plain
                        _builder.AddAttribute(_index++, nameof(ValueChanged),
                               Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck(
                                   EventCallback.Factory.Create<bool>(
-                                      EditContext.Model, EventCallback.Factory.
+                                      val, EventCallback.Factory.
                                       CreateInferred(val.Selected, __value => val.Selected = __value, val.Selected))));
+                      
 
                        // Create an expression to set the ValueExpression-attribute.
                        var constant = Expression.Constant(val, val.GetType());
