@@ -9,7 +9,7 @@
     <Company>Codershop</Company>
     <Description>A dynamic form generator based on POCO and ExpandoObjects. Easily create and validate your forms based on a model and validation attributes. Works with built-in Blazor Input components. Works with all InputBase inherited components out of the box.</Description>
     <PackageLicenseExpression />
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Aaltuj/VxFormGenerator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Aaltuj/VxFormGenerator</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
@@ -25,14 +25,14 @@
 
 
   <ItemGroup>
-    <None Include="LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
 	  <None Include="README.md">
 		  <Pack>True</Pack>
 		  <PackagePath></PackagePath>
 	  </None>
+	  <Content Include="..\LICENSE.txt"
+			  Link="LICENSE.txt"
+			  Pack="true"
+			  PackagePath="LICENSE.txt"/>
   </ItemGroup>
 
 </Project>

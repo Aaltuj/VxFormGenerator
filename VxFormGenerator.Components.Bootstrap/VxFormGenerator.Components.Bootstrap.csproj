@@ -8,7 +8,7 @@
 	  <Copyright>Alex Knijf</Copyright>
     <Company>Codershop</Company>
     <Description>The Bootstrap styled form components for the VxFormGenerator</Description>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Aaltuj/VxFormGenerator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Aaltuj/VxFormGenerator</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
@@ -23,14 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\VxFormGenerator.Core\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
 	  <None Include="..\VxFormGenerator.Core\README.md">
 		  <Pack>True</Pack>
 		  <PackagePath></PackagePath>
 	  </None>
+	  <Content Include="..\LICENSE.txt"
+			  Link="LICENSE.txt"
+			  Pack="true"
+			  PackagePath="LICENSE.txt"/>
   </ItemGroup>
 
   <ItemGroup>
