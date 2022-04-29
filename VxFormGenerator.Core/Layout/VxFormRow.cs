@@ -8,6 +8,7 @@ namespace VxFormGenerator.Core.Layout
     {
 
         public string Label { get; set; }
+        public string Description { get; set; }
         public string Id { get; set; }
 
         public List<VxFormElementDefinition> Columns { get; set; } = new List<VxFormElementDefinition>();
@@ -36,6 +37,11 @@ namespace VxFormGenerator.Core.Layout
 
             if (options.LabelOrientation == LabelOrientation.LEFT && output.RowLayoutAttribute?.Label != null)
                 output.Label = vxFormRowLayoutAttribute.Label;
+            // If row has Description attribute set - pass it to output.Description
+            if (vxFormRowLayoutAttribute is {Description: { }})
+            {
+                output.Description = vxFormRowLayoutAttribute.Description;
+            }
 
             return output;
         }

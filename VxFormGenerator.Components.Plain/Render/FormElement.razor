@@ -1,12 +1,20 @@
 ﻿@namespace VxFormGenerator.Form
-
+@using VxFormGenerator.Core.Components
 @typeparam TFormElement
 @inherits  FormElementComponent<TFormElement>
 
 <div>
     @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
     {
-        <label class="col-form-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+        <label class="col-form-label" for="@Id">
+            <span>@FormColumnDefinition.RenderOptions.Label</span>
+            @if (!String.IsNullOrEmpty(FormColumnDefinition.RenderOptions.Description))
+            {
+                <Tooltip Text="@FormColumnDefinition.RenderOptions.Description">
+                    <div>(<i class="oi oi-info small"></i>)</div>
+                </Tooltip>
+            }
+        </label>
     }
 
     @CreateComponent()

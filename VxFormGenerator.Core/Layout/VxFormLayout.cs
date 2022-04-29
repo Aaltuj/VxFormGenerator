@@ -34,6 +34,7 @@ namespace VxFormGenerator.Core.Layout
     public class VxFormRowLayoutAttribute : Attribute
     {
         public string Label { get; set; }
+        public string Description { get; set; }
         public int Order { get; set; }
         public int Id { get; set; }
     }

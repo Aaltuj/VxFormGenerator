@@ -8,10 +8,8 @@ using System.Text;
 
 namespace VxFormGenerator.Core.Layout
 {
-
     public class VxFormGroup
     {
-
         public string Label { get; set; }
 
         public string Id { get; set; }
@@ -52,7 +50,8 @@ namespace VxFormGenerator.Core.Layout
             return rootGroup;
         }
 
-        internal static void Add(string fieldIdentifier, VxFormGroup group, object modelInstance, VxFormLayoutOptions options)
+        internal static void Add(string fieldIdentifier, VxFormGroup group, object modelInstance,
+            VxFormLayoutOptions options)
         {
             // TODO: EXPANDO switch
             var prop = modelInstance.GetType().GetProperty(fieldIdentifier);
@@ -74,8 +73,10 @@ namespace VxFormGenerator.Core.Layout
 
             if (foundRow == null)
             {
-                foundRow = VxFormRow.Create(layoutAttr, allRowLayoutAttributes.Find(x => x.Id == layoutAttr.RowId), options);
-                group.Rows.Add(foundRow); ;
+                foundRow = VxFormRow.Create(layoutAttr, allRowLayoutAttributes.Find(x => x.Id == layoutAttr.RowId),
+                    options);
+                group.Rows.Add(foundRow);
+                ;
             }
 
             var formColumn = VxFormElementDefinition.Create(fieldIdentifier, layoutAttr, modelInstance, options);
@@ -85,7 +86,18 @@ namespace VxFormGenerator.Core.Layout
             if (options.LabelOrientation == LabelOrientation.LEFT && foundRow.RowLayoutAttribute?.Label == null)
                 foundRow.Label = string.Join(", ", foundRow.Columns.ConvertAll(x => x.RenderOptions.Label));
 
+            //If row description hasn't already been set
+            //Merge all row properties descriptions into a string and set row description if at least one found
+            if (foundRow.RowLayoutAttribute == null)
+            {
+                var descriptions = foundRow.Columns.ConvertAll(x => x.RenderOptions.Description);
+                descriptions.RemoveAll(x => x == null);
+                var description = string.Join(", ", descriptions);
+                if (!String.IsNullOrEmpty(description))
+                    foundRow.Description = description;
+            }
         }
+
         /// <summary>
         /// Get the values of built-in attributes like <see cref="DisplayAttribute"/> and patch it to a <see cref="VxFormLayoutAttribute"/>
         /// </summary>
@@ -94,12 +106,13 @@ namespace VxFormGenerator.Core.Layout
         private static void PatchLayoutWithBuiltInAttributes(VxFormElementLayoutAttribute layoutAttr, PropertyInfo prop)
         {
             var displayAttribute = prop
-                   .GetCustomAttributes(typeof(DisplayAttribute), false)
-                   .FirstOrDefault() as DisplayAttribute;
+                .GetCustomAttributes(typeof(DisplayAttribute), false)
+                .FirstOrDefault() as DisplayAttribute;
 
             if (displayAttribute != null)
             {
                 layoutAttr.Label = displayAttribute.GetName();
+                layoutAttr.Description = displayAttribute.GetDescription();
                 layoutAttr.Order = displayAttribute.GetOrder().GetValueOrDefault();
             }
         }
@@ -115,8 +128,8 @@ namespace VxFormGenerator.Core.Layout
             else
             {
                 var prop = modelInstance
-                .GetType()
-                .GetProperty(fieldIdentifier);
+                    .GetType()
+                    .GetProperty(fieldIdentifier);
 
                 var displayAttribute = prop
                     .GetCustomAttributes(typeof(DisplayAttribute), false)
@@ -124,7 +137,6 @@ namespace VxFormGenerator.Core.Layout
 
                 return displayAttribute != null ? displayAttribute.Name : fieldIdentifier;
             }
-
         }
 
         internal static VxFormGroup Create()

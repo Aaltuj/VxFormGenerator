@@ -8,7 +8,7 @@ namespace VxFormGeneratorDemoData
 {
     public class FeedingSession
     {
-        [Display(Name = "Kind of food")]
+        [Display(Name = "Kind of food", Description = "This is a food kind")]
         public FoodKind KindOfFood { get; set; }
         
         [Display(Name = "Note")]

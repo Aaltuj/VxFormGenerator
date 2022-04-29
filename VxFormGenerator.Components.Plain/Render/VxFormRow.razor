@@ -1,12 +1,22 @@
 ﻿@namespace VxFormGenerator.Render.Plain
 @inherits VxFormGenerator.Render.Plain.VxFormRowComponent
-
-
+@using VxFormGenerator.Core.Components
 
 <div class="form-row">
     @if (FormRowDefinition.Label != null)
     {
-        <label class="col-sm-3 col-form-label">@FormRowDefinition.Label</label>
+        <label class="col-sm-3 col-form-label">
+            <span>
+                @FormRowDefinition.Label
+            </span>
+            @if (!String.IsNullOrEmpty(FormRowDefinition.Description))
+            {
+                <Tooltip Text="@FormRowDefinition.Description">
+                    <div>(<i class="oi oi-info small"></i>)</div>
+                </Tooltip>
+            }
+
+        </label>
     }
 
     @foreach (var column in FormRowDefinition.Columns)
@@ -16,4 +26,3 @@
         </VxFormGenerator.Render.Plain.VxFormColumn>
     }
 </div>
-
