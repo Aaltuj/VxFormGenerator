@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Bunit;
 using Microsoft.AspNetCore.Components;
@@ -7,7 +8,7 @@ using Xunit;
 
 namespace VxFormGenerator.Core.Tests
 {
-    public class DynamicFormRouteTests : TestContext
+    public class DynamicFormRouteTests : BunitContext
     {
         [Fact]
         public void DynamicForm_HasWasmDiscoverableRoute()
@@ -23,7 +24,7 @@ namespace VxFormGenerator.Core.Tests
         [Fact]
         public void DynamicForm_RendersMetadataGeneratedForm()
         {
-            var component = RenderComponent<DynamicForm>();
+            var component = Render<DynamicForm>();
 
             Assert.Contains("Dynamic Metadata Form Demo", component.Markup);
             Assert.Contains("Name: String", component.Markup);
@@ -56,9 +57,12 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal(decimal.Zero, metadata.Values["Amount"]);
             Assert.Equal(VxFormFieldKind.Select, metadata.Fields[2].FieldKind);
             Assert.Equal("Bottle", metadata.Values["FoodKind"]);
-            Assert.Equal(typeof(int?), metadata.Fields[3].FieldType);
+            var servings = metadata.Fields.Single(field => field.Name == "Servings");
+            var servedOn = metadata.Fields.Single(field => field.Name == "ServedOn");
+
+            Assert.Equal(typeof(int?), servings.FieldType);
             Assert.Null(metadata.Values["Servings"]);
-            Assert.Equal(typeof(DateTime?), metadata.Fields[4].FieldType);
+            Assert.Equal(typeof(DateTime?), servedOn.FieldType);
             Assert.Null(metadata.Values["ServedOn"]);
         }
 
@@ -67,7 +71,7 @@ namespace VxFormGenerator.Core.Tests
         {
             var metadata = VxFormMetadataBuilder.Build(CreateDefinition());
 
-            var component = RenderComponent<RenderVxFormMetadata>(parameters => parameters
+            var component = Render<RenderVxFormMetadata>(parameters => parameters
                 .Add(value => value.Model, metadata));
 
             var nameInput = component.Find("input[name='Name']");

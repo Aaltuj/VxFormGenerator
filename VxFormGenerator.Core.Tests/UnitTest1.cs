@@ -24,7 +24,7 @@ namespace VxFormGenerator.Core.Tests
         public void EnumExtentionGetAttribute()
         {
 
-            var value = VisualFeedbackValidationPolicy.VALID_AND_INVALID;
+            var value = VisualFeedbackValidationPolicyAnnotated.VALID_AND_INVALID;
             var attribute = value.GetAttribute<DisplayAttribute>();
             Assert.Equal("When valid or invalid", attribute.Name);
 
