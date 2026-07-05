@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace VxFormGenerator.Core.Dynamic
 {
@@ -19,6 +20,7 @@ namespace VxFormGenerator.Core.Dynamic
                 var field = new VxFormFieldMetadata
                 {
                     Name = property.Name,
+                    Id = string.IsNullOrWhiteSpace(property.Id) ? CreateFieldId(property.Name) : property.Id,
                     FieldType = fieldType,
                     Label = property.Label,
                     Placeholder = property.Placeholder,
@@ -48,6 +50,23 @@ namespace VxFormGenerator.Core.Dynamic
             }
 
             return type.IsValueType ? Activator.CreateInstance(type) : null;
+        }
+
+        private static string CreateFieldId(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "vx-field";
+            }
+
+            var id = new StringBuilder("vx-");
+
+            foreach (var character in name.Trim())
+            {
+                id.Append(char.IsLetterOrDigit(character) || character == '_' || character == '-' ? char.ToLowerInvariant(character) : '-');
+            }
+
+            return id.ToString();
         }
     }
 }

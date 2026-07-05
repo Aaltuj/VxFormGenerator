@@ -45,6 +45,7 @@ namespace VxFormGenerator.Core.Tests
 
             Assert.Equal(2, metadata.Fields.Count);
             Assert.Equal("Name", metadata.Fields[0].Name);
+            Assert.Equal("customer-name", metadata.Fields[0].Id);
             Assert.Equal(typeof(string), metadata.Fields[0].FieldType);
             Assert.True(metadata.Fields[0].IsRequired);
             Assert.Equal(2, metadata.Fields[0].MinLength);
@@ -66,6 +67,8 @@ namespace VxFormGenerator.Core.Tests
             var amountInput = component.Find("input[name='Amount']");
 
             Assert.Equal("text", nameInput.GetAttribute("type"));
+            Assert.Equal("customer-name", nameInput.GetAttribute("id"));
+            Assert.Equal("customer-name", component.Find("label").GetAttribute("for"));
             Assert.Equal("Session name", nameInput.GetAttribute("placeholder"));
             Assert.NotNull(nameInput.GetAttribute("required"));
             Assert.Equal("2", nameInput.GetAttribute("minlength"));
@@ -92,6 +95,7 @@ namespace VxFormGenerator.Core.Tests
             definition.Properties.Add(new VxFormModelPropertyDefinition
             {
                 Name = "Name",
+                Id = "customer-name",
                 TypeName = "string",
                 Label = "Name",
                 Placeholder = "Session name",

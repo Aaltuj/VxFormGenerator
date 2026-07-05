@@ -5,6 +5,7 @@ namespace VxFormGenerator.Core.Dynamic
     public sealed class VxFormFieldMetadata
     {
         public string Name { get; set; }
+        public string Id { get; set; }
         public Type FieldType { get; set; } = typeof(string);
         public string Label { get; set; }
         public string Placeholder { get; set; }

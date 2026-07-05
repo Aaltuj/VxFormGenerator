@@ -25,7 +25,7 @@ namespace VxFormGenerator.Core.Dynamic
                 builder.AddAttribute(sequence++, "class", GetFieldClass(field));
 
                 builder.OpenElement(sequence++, "label");
-                builder.AddAttribute(sequence++, "for", field.Name);
+                builder.AddAttribute(sequence++, "for", field.Id);
                 builder.AddContent(sequence++, string.IsNullOrWhiteSpace(field.Label) ? field.Name : field.Label);
                 builder.CloseElement();
 
@@ -46,7 +46,7 @@ namespace VxFormGenerator.Core.Dynamic
         private void RenderInput(RenderTreeBuilder builder, ref int sequence, VxFormFieldMetadata field)
         {
             builder.OpenElement(sequence++, "input");
-            builder.AddAttribute(sequence++, "id", field.Name);
+            builder.AddAttribute(sequence++, "id", field.Id);
             builder.AddAttribute(sequence++, "name", field.Name);
             builder.AddAttribute(sequence++, "class", field.FieldType == typeof(bool) ? "form-check-input" : "form-control");
             builder.AddAttribute(sequence++, "type", GetInputType(field));

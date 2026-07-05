@@ -151,6 +151,7 @@ var definition = new VxFormModelDefinition
 definition.Properties.Add(new VxFormModelPropertyDefinition
 {
     Name = "FirstName",
+    Id = "customer-first-name",
     TypeName = "string",
     Label = "First name",
     Placeholder = "Your first name",
@@ -170,6 +171,8 @@ var metadataModel = VxFormMetadataBuilder.Build(definition);
 ````
 
 The metadata renderer does not require runtime CLR type generation. It renders fields directly from the definition and stores submitted values in `VxFormMetadataModel.Values`.
+
+Set `Id` when you need stable accessible label/input associations or predictable selectors. When `Id` is omitted, the metadata builder generates one from the field name.
 
 For server-side scenarios that specifically require a real runtime CLR type with reflected attributes, use `VxFormRuntimeModelBuilder.BuildType(definition)` or `VxFormRuntimeModelBuilder.CreateInstance(definition)`. This uses `Reflection.Emit` and should not be used as the portable Blazor WebAssembly path.
 

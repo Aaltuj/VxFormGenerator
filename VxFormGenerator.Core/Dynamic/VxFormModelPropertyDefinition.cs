@@ -7,6 +7,8 @@ namespace VxFormGenerator.Core.Dynamic
     {
         public string Name { get; set; }
 
+        public string Id { get; set; }
+
         public string TypeName { get; set; } = "string";
 
         public Type RuntimeType { get; set; }
