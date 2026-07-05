@@ -199,6 +199,8 @@ var metadataModel = VxFormMetadataBuilder.Build(definition);
 
 The metadata renderer does not require runtime CLR type generation. It renders fields directly from the definition and stores submitted values in `VxFormMetadataModel.Values`.
 
+The demo route `/dynamic-form` uses this metadata renderer intentionally, so the same dynamic form path works in the Blazor WebAssembly demo and the Blazor Server demo.
+
 Set `Id` when you need stable accessible label/input associations or predictable selectors. When `Id` is omitted, the metadata builder generates one from the field name.
 
 Set `RowId`, `RowLabel`, `ColSpan`, and `Order` to control Bootstrap-style row and column layout in metadata-rendered forms.

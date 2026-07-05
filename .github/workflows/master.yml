@@ -21,6 +21,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: Build WASM demo
+      run: dotnet build VxFormGeneratorDemo.Wasm/VxFormGeneratorDemo.Wasm.csproj --configuration Release --no-restore
     - name: Publish
       continue-on-error: true
       env:
