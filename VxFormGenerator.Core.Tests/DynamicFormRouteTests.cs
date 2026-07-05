@@ -43,7 +43,7 @@ namespace VxFormGenerator.Core.Tests
 
             var metadata = VxFormMetadataBuilder.Build(definition);
 
-            Assert.Equal(2, metadata.Fields.Count);
+            Assert.Equal(3, metadata.Fields.Count);
             Assert.Equal("Name", metadata.Fields[0].Name);
             Assert.Equal("customer-name", metadata.Fields[0].Id);
             Assert.Equal(typeof(string), metadata.Fields[0].FieldType);
@@ -53,6 +53,8 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal("", metadata.Values["Name"]);
             Assert.Equal(typeof(decimal), metadata.Fields[1].FieldType);
             Assert.Equal(decimal.Zero, metadata.Values["Amount"]);
+            Assert.Equal(VxFormFieldKind.Select, metadata.Fields[2].FieldKind);
+            Assert.Equal("Bottle", metadata.Values["FoodKind"]);
         }
 
         [Fact]
@@ -65,6 +67,7 @@ namespace VxFormGenerator.Core.Tests
 
             var nameInput = component.Find("input[name='Name']");
             var amountInput = component.Find("input[name='Amount']");
+            var foodKindSelect = component.Find("select[name='FoodKind']");
 
             Assert.Equal("text", nameInput.GetAttribute("type"));
             Assert.Equal("customer-name", nameInput.GetAttribute("id"));
@@ -76,12 +79,17 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal("number", amountInput.GetAttribute("type"));
             Assert.Equal("0", amountInput.GetAttribute("min"));
             Assert.Equal("1000", amountInput.GetAttribute("max"));
+            Assert.Equal("food-kind", foodKindSelect.GetAttribute("id"));
+            Assert.Equal(3, foodKindSelect.QuerySelectorAll("option").Length);
+            Assert.NotNull(foodKindSelect.QuerySelector("option[value='Other']").GetAttribute("disabled"));
 
             nameInput.Change("Runtime name");
             amountInput.Change("12.5");
+            foodKindSelect.Change("Solid");
 
             Assert.Equal("Runtime name", metadata.Values["Name"]);
             Assert.Equal(12.5m, metadata.Values["Amount"]);
+            Assert.Equal("Solid", metadata.Values["FoodKind"]);
         }
 
         private static VxFormModelDefinition CreateDefinition()
@@ -117,6 +125,20 @@ namespace VxFormGenerator.Core.Tests
                 RangeMinimum = "0",
                 RangeMaximum = "1000"
             });
+
+            var foodKind = new VxFormModelPropertyDefinition
+            {
+                Name = "FoodKind",
+                Id = "food-kind",
+                TypeName = "string",
+                Label = "Food kind",
+                FieldKind = VxFormFieldKind.Select
+            };
+
+            foodKind.Options.Add(new VxFormLookupOption { Value = "Bottle", Label = "Bottle", IsSelected = true });
+            foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
+            foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other", IsDisabled = true });
+            definition.Properties.Add(foodKind);
 
             return definition;
         }

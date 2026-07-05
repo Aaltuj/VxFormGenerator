@@ -62,6 +62,22 @@
             RangeMaximum = "1000"
         });
 
+        var foodKind = new VxFormModelPropertyDefinition
+        {
+            Name = "FoodKind",
+            Id = "food-kind",
+            TypeName = "string",
+            Label = "Food kind",
+            FieldKind = VxFormFieldKind.Select,
+            RowId = 2,
+            ColSpan = 6
+        };
+
+        foodKind.Options.Add(new VxFormLookupOption { Value = "Bottle", Label = "Bottle", IsSelected = true });
+        foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
+        foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other", IsDisabled = true });
+        definition.Properties.Add(foodKind);
+
         MetadataModel = VxFormMetadataBuilder.Build(definition);
         GeneratedPropertyList = string.Join(", ", MetadataModel.Fields.Select(field => $"{field.Name}: {field.FieldType.Name}"));
         GeneratedSource = VxFormModelSourceGenerator.Generate(definition);

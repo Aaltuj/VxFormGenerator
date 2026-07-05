@@ -13,6 +13,8 @@ namespace VxFormGenerator.Core.Dynamic
 
         public Type RuntimeType { get; set; }
 
+        public VxFormFieldKind FieldKind { get; set; } = VxFormFieldKind.Auto;
+
         public string Label { get; set; }
 
         public string Placeholder { get; set; }
@@ -34,5 +36,7 @@ namespace VxFormGenerator.Core.Dynamic
         public string DefaultValueExpression { get; set; }
 
         public IList<string> Attributes { get; } = new List<string>();
+
+        public IList<VxFormLookupOption> Options { get; } = new List<VxFormLookupOption>();
     }
 }

@@ -22,6 +22,7 @@ namespace VxFormGenerator.Core.Dynamic
                     Name = property.Name,
                     Id = string.IsNullOrWhiteSpace(property.Id) ? CreateFieldId(property.Name) : property.Id,
                     FieldType = fieldType,
+                    FieldKind = property.FieldKind,
                     Label = property.Label,
                     Placeholder = property.Placeholder,
                     Description = property.Description,
@@ -35,21 +36,44 @@ namespace VxFormGenerator.Core.Dynamic
                     RangeMaximum = property.RangeMaximum
                 };
 
+                foreach (var option in property.Options)
+                {
+                    field.Options.Add(option);
+                }
+
                 model.Fields.Add(field);
-                model.Values[field.Name] = GetDefaultValue(fieldType);
+                model.Values[field.Name] = GetDefaultValue(field, fieldType);
             }
 
             return model;
         }
 
-        private static object GetDefaultValue(Type type)
+        private static object GetDefaultValue(VxFormFieldMetadata field, Type type)
         {
+            foreach (var option in field.Options)
+            {
+                if (option.IsSelected)
+                {
+                    return ConvertValue(type, option.Value);
+                }
+            }
+
             if (type == typeof(string))
             {
                 return string.Empty;
             }
 
             return type.IsValueType ? Activator.CreateInstance(type) : null;
+        }
+
+        private static object ConvertValue(Type type, string value)
+        {
+            if (type == typeof(string))
+            {
+                return value;
+            }
+
+            return string.IsNullOrWhiteSpace(value) ? Activator.CreateInstance(type) : Convert.ChangeType(value, type);
         }
 
         private static string CreateFieldId(string name)

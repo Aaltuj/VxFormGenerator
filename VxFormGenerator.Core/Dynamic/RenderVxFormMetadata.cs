@@ -29,7 +29,14 @@ namespace VxFormGenerator.Core.Dynamic
                 builder.AddContent(sequence++, string.IsNullOrWhiteSpace(field.Label) ? field.Name : field.Label);
                 builder.CloseElement();
 
-                RenderInput(builder, ref sequence, field);
+                if (GetFieldKind(field) == VxFormFieldKind.Select)
+                {
+                    RenderSelect(builder, ref sequence, field);
+                }
+                else
+                {
+                    RenderInput(builder, ref sequence, field);
+                }
 
                 if (!string.IsNullOrWhiteSpace(field.Description))
                 {
@@ -43,12 +50,40 @@ namespace VxFormGenerator.Core.Dynamic
             }
         }
 
+        private void RenderSelect(RenderTreeBuilder builder, ref int sequence, VxFormFieldMetadata field)
+        {
+            var value = Convert.ToString(Model.Values[field.Name], CultureInfo.InvariantCulture);
+
+            builder.OpenElement(sequence++, "select");
+            builder.AddAttribute(sequence++, "id", field.Id);
+            builder.AddAttribute(sequence++, "name", field.Name);
+            builder.AddAttribute(sequence++, "class", "form-control");
+            builder.AddAttribute(sequence++, "value", value);
+            builder.AddAttribute(sequence++, "onchange", EventCallback.Factory.CreateBinder<string>(this, selectedValue => SetValue(field, ConvertValue(field, selectedValue)), value));
+
+            foreach (var option in field.Options)
+            {
+                builder.OpenElement(sequence++, "option");
+                builder.AddAttribute(sequence++, "value", option.Value);
+
+                if (option.IsDisabled)
+                {
+                    builder.AddAttribute(sequence++, "disabled", true);
+                }
+
+                builder.AddContent(sequence++, string.IsNullOrWhiteSpace(option.Label) ? option.Value : option.Label);
+                builder.CloseElement();
+            }
+
+            builder.CloseElement();
+        }
+
         private void RenderInput(RenderTreeBuilder builder, ref int sequence, VxFormFieldMetadata field)
         {
             builder.OpenElement(sequence++, "input");
             builder.AddAttribute(sequence++, "id", field.Id);
             builder.AddAttribute(sequence++, "name", field.Name);
-            builder.AddAttribute(sequence++, "class", field.FieldType == typeof(bool) ? "form-check-input" : "form-control");
+            builder.AddAttribute(sequence++, "class", GetFieldKind(field) == VxFormFieldKind.Checkbox ? "form-check-input" : "form-control");
             builder.AddAttribute(sequence++, "type", GetInputType(field));
 
             if (!string.IsNullOrWhiteSpace(field.Placeholder))
@@ -81,7 +116,7 @@ namespace VxFormGenerator.Core.Dynamic
                 builder.AddAttribute(sequence++, "max", field.RangeMaximum);
             }
 
-            if (field.FieldType == typeof(bool))
+            if (GetFieldKind(field) == VxFormFieldKind.Checkbox)
             {
                 builder.AddAttribute(sequence++, "checked", GetValue<bool>(field));
                 builder.AddAttribute(sequence++, "onchange", EventCallback.Factory.CreateBinder<bool>(this, value => SetValue(field, value), GetValue<bool>(field)));
@@ -103,7 +138,9 @@ namespace VxFormGenerator.Core.Dynamic
 
         private static string GetInputType(VxFormFieldMetadata field)
         {
-            if (field.FieldType == typeof(bool))
+            var fieldKind = GetFieldKind(field);
+
+            if (fieldKind == VxFormFieldKind.Checkbox)
             {
                 return "checkbox";
             }
@@ -113,12 +150,37 @@ namespace VxFormGenerator.Core.Dynamic
                 return "date";
             }
 
-            if (field.FieldType == typeof(decimal) || field.FieldType == typeof(double) || field.FieldType == typeof(float) || field.FieldType == typeof(int) || field.FieldType == typeof(long))
+            if (fieldKind == VxFormFieldKind.Number)
             {
                 return "number";
             }
 
             return "text";
+        }
+
+        private static VxFormFieldKind GetFieldKind(VxFormFieldMetadata field)
+        {
+            if (field.FieldKind != VxFormFieldKind.Auto)
+            {
+                return field.FieldKind;
+            }
+
+            if (field.Options.Count > 0)
+            {
+                return VxFormFieldKind.Select;
+            }
+
+            if (field.FieldType == typeof(bool))
+            {
+                return VxFormFieldKind.Checkbox;
+            }
+
+            if (field.FieldType == typeof(decimal) || field.FieldType == typeof(double) || field.FieldType == typeof(float) || field.FieldType == typeof(int) || field.FieldType == typeof(long))
+            {
+                return VxFormFieldKind.Number;
+            }
+
+            return VxFormFieldKind.Text;
         }
 
         private T GetValue<T>(VxFormFieldMetadata field)
