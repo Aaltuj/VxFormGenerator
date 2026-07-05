@@ -1,6 +1,6 @@
 # VxFormGenerator
 
-The library contains a component, that nests itself into the Blazor EditForm instead of a wrapper around the EditForm. The component is able to generate a form based on a POCO or a ExpandoObject. Because of this architecture the library provides the developer flexibility and direct usage of the EditForm. 
+The library contains a component, that nests itself into the Blazor EditForm instead of a wrapper around the EditForm. The component is able to generate a form based on a typed POCO model. Because of this architecture the library provides the developer flexibility and direct usage of the EditForm.
 
 # TLDR
 
@@ -100,8 +100,6 @@ You can have a model that renders inputs for the properties. All that's required
 
 @using VxFormGenerator.Core
 @using FormGeneratorDemo.Data
-@using System.Dynamic
-
 <EditForm Model="Model" 
 		  OnValidSubmit="HandleValidSubmit"
 		  OnInvalidSubmit="HandleInValidSubmit">
@@ -137,61 +135,45 @@ You can have a model that renders inputs for the properties. All that's required
 
 
 
-### Dynamic based
+### Dynamic metadata models
 
-You can render a form that is based on a dynamic `ExpandoObject`. The developer is that able to create a model based at runtime. All that's required is adding a `RenderFormElements` component to the `EditForm`. The inputs can **NOT** **YET** be validated by Data Annotations. This is a feature yet to be completed.
+`ExpandoObject` rendering is no longer the dynamic path. For dynamic forms, build metadata at runtime and render it directly. This is the default dynamic strategy because it works in Blazor Server, Blazor WebAssembly, AOT, and restricted runtimes.
+
+````C#
+using VxFormGenerator.Core.Dynamic;
+
+var definition = new VxFormModelDefinition
+{
+    Namespace = "MyApp.GeneratedForms",
+    ClassName = "CustomerForm"
+};
+
+definition.Properties.Add(new VxFormModelPropertyDefinition
+{
+    Name = "FirstName",
+    TypeName = "string",
+    Label = "First name",
+    Placeholder = "Your first name",
+    RowId = 1,
+    ColSpan = 6,
+    IsRequired = true,
+    MinLength = 2,
+    MaxLength = 40,
+    DefaultValueExpression = "string.Empty"
+});
+
+var metadataModel = VxFormMetadataBuilder.Build(definition);
+````
 
 ````html
-@page "/"
-
-@using VxFormGenerator.Core
-@using FormGeneratorDemo.Data
-@using System.Dynamic
-
-<EditForm Model="Model" 
-		  OnValidSubmit="HandleValidSubmit"
-		  OnInvalidSubmit="HandleInValidSubmit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <RenderFormElements></RenderFormElements>		
-    <button class="btn btn-primary" type="submit">Submit</button>
-</EditForm>
-
-@code{
-
-    /// <summary>
-    /// Model that is used for the form
-    /// </summary>
-    private dynamic Model = new ExpandoObject();
-
-	/// <summary>
-	/// Create a dynamic object 
-	/// </summary>
-    protected override void OnInitialized()
-    {
-        var dict = (IDictionary<String, Object>) Model;
-        dict.Add("Name", "add");
-        dict.Add("Note", "This is a note");
-        dict.Add("Date", DateTime.Now);
-        dict.Add("Amount", 1);
-    }
-
-    /// <summary>
-    /// Will handle the submit action of the form
-    /// </summary>
-    /// <param name="context">The model with values as entered in the form</param>
-    private void HandleValidSubmit(EditContext context)
-    {
-        // save your changes
-    }
-
-    private void HandleInValidSubmit(VEditContext context)
-    {
-        // Do something
-    }
-
-}
-
+<RenderVxFormMetadata Model="metadataModel" />
 ````
+
+The metadata renderer does not require runtime CLR type generation. It renders fields directly from the definition and stores submitted values in `VxFormMetadataModel.Values`.
+
+For server-side scenarios that specifically require a real runtime CLR type with reflected attributes, use `VxFormRuntimeModelBuilder.BuildType(definition)` or `VxFormRuntimeModelBuilder.CreateInstance(definition)`. This uses `Reflection.Emit` and should not be used as the portable Blazor WebAssembly path.
+
+If you need source text for diagnostics, persistence, or build-time generation, use `VxFormModelSourceGenerator.Generate(definition)`.
 
 
 
@@ -326,4 +308,3 @@ Run the demo so you can see the options and effects interactively:
 ### Contact
 
 <img src="https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/discord-logo.png" alt="Discord" /> [Server](https://discord.gg/pyCtvFdTdV)
-

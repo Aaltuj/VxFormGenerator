@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,7 +15,11 @@ namespace VxFormGenerator.Core.Layout
 
         internal static VxFormDefinition CreateFromModel(object model, VxFormLayoutOptions options)
         {
-            // TODO: EXPANDO SWITCH
+            if (model is ExpandoObject)
+            {
+                throw new NotSupportedException("ExpandoObject forms are not supported. Build a VxFormMetadataModel with VxFormMetadataBuilder and render it with RenderVxFormMetadata instead.");
+            }
+
             var allProperties = VxHelpers.GetModelProperties(model.GetType());
 
             var rootFormDefinition = model.GetType().GetCustomAttribute<VxFormDefinition>();

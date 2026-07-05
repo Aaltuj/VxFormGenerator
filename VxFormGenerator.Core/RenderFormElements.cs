@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -28,7 +27,7 @@ namespace VxFormGenerator.Core
 
         /// <summary>
         /// Override the default render method, determining if the <see cref="EditContext.Model"/> 
-        /// is a regular class or a dynamic <see cref="ExpandoObject"/>
+        /// is a typed model class.
         /// </summary>
         /// <param name="builder">Instance of the page builder</param>
         protected override void BuildRenderTree(RenderTreeBuilder builder)

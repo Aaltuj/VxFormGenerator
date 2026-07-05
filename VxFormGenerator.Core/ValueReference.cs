@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace VxFormGenerator.Core
 {
@@ -37,33 +34,15 @@ namespace VxFormGenerator.Core
         public static void SetValue(object model, string key, TValue value)
         {
             var modelType = model.GetType();
-
-            if (modelType == typeof(ExpandoObject))
-            {
-                var accessor = ((IDictionary<string, object>)model);
-                accessor[key] = value;
-            }
-            else
-            {
-                var propertyInfo = modelType.GetProperty(key);
-                propertyInfo.SetValue(model, value);
-            }
+            var propertyInfo = modelType.GetProperty(key);
+            propertyInfo.SetValue(model, value);
         }
 
         public static TValue GetValue(object model, string key)
         {
             var modelType = model.GetType();
-
-            if (modelType == typeof(ExpandoObject))
-            {
-                var accessor = ((IDictionary<string, object>)model);
-                return (TValue)accessor[key];
-            }
-            else
-            {
-                var propertyInfo = modelType.GetProperty(key);
-                return (TValue) propertyInfo.GetValue(model);
-            }
+            var propertyInfo = modelType.GetProperty(key);
+            return (TValue) propertyInfo.GetValue(model);
 
         }
 

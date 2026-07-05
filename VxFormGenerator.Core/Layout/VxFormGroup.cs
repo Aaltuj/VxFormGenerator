@@ -54,7 +54,11 @@ namespace VxFormGenerator.Core.Layout
 
         internal static void Add(string fieldIdentifier, VxFormGroup group, object modelInstance, VxFormLayoutOptions options)
         {
-            // TODO: EXPANDO switch
+            if (modelInstance is ExpandoObject)
+            {
+                throw new NotSupportedException("ExpandoObject forms are not supported. Build a VxFormMetadataModel with VxFormMetadataBuilder and render it with RenderVxFormMetadata instead.");
+            }
+
             var prop = modelInstance.GetType().GetProperty(fieldIdentifier);
             var layoutAttr = prop.GetCustomAttribute<VxFormElementLayoutAttribute>();
             var allRowLayoutAttributes = VxHelpers.GetAllAttributes<VxFormRowLayoutAttribute>(prop.DeclaringType);
@@ -106,24 +110,15 @@ namespace VxFormGenerator.Core.Layout
 
         private static string GetLabel(string fieldIdentifier, object modelInstance)
         {
-            var modelType = modelInstance.GetType();
+            var prop = modelInstance
+            .GetType()
+            .GetProperty(fieldIdentifier);
 
-            if (modelType == typeof(ExpandoObject))
-            {
-                return fieldIdentifier;
-            }
-            else
-            {
-                var prop = modelInstance
-                .GetType()
-                .GetProperty(fieldIdentifier);
+            var displayAttribute = prop
+                .GetCustomAttributes(typeof(DisplayAttribute), false)
+                .FirstOrDefault() as DisplayAttribute;
 
-                var displayAttribute = prop
-                    .GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .FirstOrDefault() as DisplayAttribute;
-
-                return displayAttribute != null ? displayAttribute.Name : fieldIdentifier;
-            }
+            return displayAttribute != null ? displayAttribute.Name : fieldIdentifier;
 
         }
 
