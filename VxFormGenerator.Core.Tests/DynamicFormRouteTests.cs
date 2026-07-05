@@ -43,7 +43,7 @@ namespace VxFormGenerator.Core.Tests
 
             var metadata = VxFormMetadataBuilder.Build(definition);
 
-            Assert.Equal(3, metadata.Fields.Count);
+            Assert.Equal(5, metadata.Fields.Count);
             Assert.Equal("Name", metadata.Fields[0].Name);
             Assert.Equal("customer-name", metadata.Fields[0].Id);
             Assert.Equal("Feeding", metadata.Fields[0].RowLabel);
@@ -56,6 +56,10 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal(decimal.Zero, metadata.Values["Amount"]);
             Assert.Equal(VxFormFieldKind.Select, metadata.Fields[2].FieldKind);
             Assert.Equal("Bottle", metadata.Values["FoodKind"]);
+            Assert.Equal(typeof(int?), metadata.Fields[3].FieldType);
+            Assert.Null(metadata.Values["Servings"]);
+            Assert.Equal(typeof(DateTime?), metadata.Fields[4].FieldType);
+            Assert.Null(metadata.Values["ServedOn"]);
         }
 
         [Fact]
@@ -69,6 +73,8 @@ namespace VxFormGenerator.Core.Tests
             var nameInput = component.Find("input[name='Name']");
             var amountInput = component.Find("input[name='Amount']");
             var foodKindSelect = component.Find("select[name='FoodKind']");
+            var servingsInput = component.Find("input[name='Servings']");
+            var servedOnInput = component.Find("input[name='ServedOn']");
             var firstRow = component.Find(".vx-form-row[data-row-id='1']");
 
             Assert.Contains("Feeding", firstRow.TextContent);
@@ -87,14 +93,26 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal("food-kind", foodKindSelect.GetAttribute("id"));
             Assert.Equal(3, foodKindSelect.QuerySelectorAll("option").Length);
             Assert.NotNull(foodKindSelect.QuerySelector("option[value='Other']").GetAttribute("disabled"));
+            Assert.Equal("number", servingsInput.GetAttribute("type"));
+            Assert.Equal("date", servedOnInput.GetAttribute("type"));
 
             nameInput.Change("Runtime name");
             amountInput.Change("12.5");
             foodKindSelect.Change("Solid");
+            servingsInput.Change("4");
+            servedOnInput.Change("2026-07-05");
 
             Assert.Equal("Runtime name", metadata.Values["Name"]);
             Assert.Equal(12.5m, metadata.Values["Amount"]);
             Assert.Equal("Solid", metadata.Values["FoodKind"]);
+            Assert.Equal(4, metadata.Values["Servings"]);
+            Assert.Equal(new System.DateTime(2026, 7, 5), metadata.Values["ServedOn"]);
+
+            servingsInput.Change("");
+            servedOnInput.Change("");
+
+            Assert.Null(metadata.Values["Servings"]);
+            Assert.Null(metadata.Values["ServedOn"]);
         }
 
         private static VxFormModelDefinition CreateDefinition()
@@ -148,6 +166,24 @@ namespace VxFormGenerator.Core.Tests
             foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
             foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other", IsDisabled = true });
             definition.Properties.Add(foodKind);
+
+            definition.Properties.Add(new VxFormModelPropertyDefinition
+            {
+                Name = "Servings",
+                TypeName = "int?",
+                Label = "Servings",
+                RowId = 2,
+                ColSpan = 3
+            });
+
+            definition.Properties.Add(new VxFormModelPropertyDefinition
+            {
+                Name = "ServedOn",
+                TypeName = "datetime?",
+                Label = "Served on",
+                RowId = 2,
+                ColSpan = 3
+            });
 
             return definition;
         }

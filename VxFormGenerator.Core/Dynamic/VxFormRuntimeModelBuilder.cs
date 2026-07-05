@@ -21,6 +21,15 @@ namespace VxFormGenerator.Core.Dynamic
             ["int"] = typeof(int),
             ["int32"] = typeof(int),
             ["long"] = typeof(long),
+            ["bool?"] = typeof(bool?),
+            ["boolean?"] = typeof(bool?),
+            ["datetime?"] = typeof(DateTime?),
+            ["decimal?"] = typeof(decimal?),
+            ["double?"] = typeof(double?),
+            ["float?"] = typeof(float?),
+            ["int?"] = typeof(int?),
+            ["int32?"] = typeof(int?),
+            ["long?"] = typeof(long?),
             ["string"] = typeof(string)
         };
 

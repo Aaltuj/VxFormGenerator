@@ -193,6 +193,8 @@ Set `RowId`, `RowLabel`, `ColSpan`, and `Order` to control Bootstrap-style row a
 
 Set `FieldKind = VxFormFieldKind.Select` and add `Options` to render lookup/dropdown fields. Options support display labels, selected defaults, and disabled choices.
 
+Nullable primitive aliases such as `int?`, `decimal?`, `datetime?`, and `bool?` are supported. Empty metadata input values are stored as `null` for nullable fields.
+
 For server-side scenarios that specifically require a real runtime CLR type with reflected attributes, use `VxFormRuntimeModelBuilder.BuildType(definition)` or `VxFormRuntimeModelBuilder.CreateInstance(definition)`. This uses `Reflection.Emit` and should not be used as the portable Blazor WebAssembly path.
 
 If you need source text for diagnostics, persistence, or build-time generation, use `VxFormModelSourceGenerator.Generate(definition)`.

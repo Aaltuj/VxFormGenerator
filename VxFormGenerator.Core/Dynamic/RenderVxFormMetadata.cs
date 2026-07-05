@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
@@ -74,7 +73,7 @@ namespace VxFormGenerator.Core.Dynamic
 
         private void RenderSelect(RenderTreeBuilder builder, ref int sequence, VxFormFieldMetadata field)
         {
-            var value = Convert.ToString(Model.Values[field.Name], CultureInfo.InvariantCulture);
+            var value = VxFormValueConverter.FormatValue(Model.Values[field.Name], field.FieldType);
 
             builder.OpenElement(sequence++, "select");
             builder.AddAttribute(sequence++, "id", field.Id);
@@ -145,7 +144,7 @@ namespace VxFormGenerator.Core.Dynamic
             }
             else
             {
-                var value = Convert.ToString(Model.Values[field.Name], CultureInfo.InvariantCulture);
+                var value = VxFormValueConverter.FormatValue(Model.Values[field.Name], field.FieldType);
                 builder.AddAttribute(sequence++, "value", value);
                 builder.AddAttribute(sequence++, "onchange", EventCallback.Factory.CreateBinder<string>(this, value => SetValue(field, ConvertValue(field, value)), value));
             }
@@ -167,7 +166,7 @@ namespace VxFormGenerator.Core.Dynamic
                 return "checkbox";
             }
 
-            if (field.FieldType == typeof(DateTime))
+            if (VxFormValueConverter.GetValueType(field.FieldType) == typeof(DateTime))
             {
                 return "date";
             }
@@ -192,12 +191,13 @@ namespace VxFormGenerator.Core.Dynamic
                 return VxFormFieldKind.Select;
             }
 
-            if (field.FieldType == typeof(bool))
+            if (VxFormValueConverter.GetValueType(field.FieldType) == typeof(bool))
             {
                 return VxFormFieldKind.Checkbox;
             }
 
-            if (field.FieldType == typeof(decimal) || field.FieldType == typeof(double) || field.FieldType == typeof(float) || field.FieldType == typeof(int) || field.FieldType == typeof(long))
+            var valueType = VxFormValueConverter.GetValueType(field.FieldType);
+            if (valueType == typeof(decimal) || valueType == typeof(double) || valueType == typeof(float) || valueType == typeof(int) || valueType == typeof(long))
             {
                 return VxFormFieldKind.Number;
             }
@@ -217,17 +217,7 @@ namespace VxFormGenerator.Core.Dynamic
 
         private static object ConvertValue(VxFormFieldMetadata field, string value)
         {
-            if (field.FieldType == typeof(string))
-            {
-                return value;
-            }
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return field.FieldType.IsValueType ? Activator.CreateInstance(field.FieldType) : null;
-            }
-
-            return Convert.ChangeType(value, field.FieldType, CultureInfo.InvariantCulture);
+            return VxFormValueConverter.ConvertValue(field.FieldType, value);
         }
     }
 }

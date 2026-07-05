@@ -91,7 +91,7 @@ namespace VxFormGenerator.Core.Tests
             definition.Properties.Add(new VxFormModelPropertyDefinition
             {
                 Name = "Amount",
-                RuntimeType = typeof(decimal),
+                RuntimeType = typeof(decimal?),
                 Label = "Amount",
                 RangeMinimum = "0",
                 RangeMaximum = "1000"
@@ -106,7 +106,7 @@ namespace VxFormGenerator.Core.Tests
 
             Assert.Equal("Demo.Generated.CustomerForm", modelType.FullName);
             Assert.Equal("Alex", firstNameProperty.GetValue(instance));
-            Assert.Equal(typeof(decimal), amountProperty.PropertyType);
+            Assert.Equal(typeof(decimal?), amountProperty.PropertyType);
             Assert.Equal("First name", firstNameProperty.GetCustomAttribute<DisplayAttribute>().GetName());
             Assert.NotNull(firstNameProperty.GetCustomAttribute<RequiredAttribute>());
             Assert.Equal(2, firstNameProperty.GetCustomAttribute<StringLengthAttribute>().MinimumLength);

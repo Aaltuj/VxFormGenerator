@@ -83,6 +83,24 @@
         foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other", IsDisabled = true });
         definition.Properties.Add(foodKind);
 
+        definition.Properties.Add(new VxFormModelPropertyDefinition
+        {
+            Name = "Servings",
+            TypeName = "int?",
+            Label = "Servings",
+            RowId = 2,
+            ColSpan = 3
+        });
+
+        definition.Properties.Add(new VxFormModelPropertyDefinition
+        {
+            Name = "ServedOn",
+            TypeName = "datetime?",
+            Label = "Served on",
+            RowId = 2,
+            ColSpan = 3
+        });
+
         MetadataModel = VxFormMetadataBuilder.Build(definition);
         GeneratedPropertyList = string.Join(", ", MetadataModel.Fields.Select(field => $"{field.Name}: {field.FieldType.Name}"));
         GeneratedSource = VxFormModelSourceGenerator.Generate(definition);

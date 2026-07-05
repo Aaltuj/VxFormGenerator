@@ -55,26 +55,11 @@ namespace VxFormGenerator.Core.Dynamic
             {
                 if (option.IsSelected)
                 {
-                    return ConvertValue(type, option.Value);
+                    return VxFormValueConverter.ConvertValue(type, option.Value);
                 }
             }
 
-            if (type == typeof(string))
-            {
-                return string.Empty;
-            }
-
-            return type.IsValueType ? Activator.CreateInstance(type) : null;
-        }
-
-        private static object ConvertValue(Type type, string value)
-        {
-            if (type == typeof(string))
-            {
-                return value;
-            }
-
-            return string.IsNullOrWhiteSpace(value) ? Activator.CreateInstance(type) : Convert.ChangeType(value, type);
+            return VxFormValueConverter.GetDefaultValue(type);
         }
 
         private static string CreateFieldId(string name)
