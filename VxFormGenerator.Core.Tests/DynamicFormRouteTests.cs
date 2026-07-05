@@ -46,6 +46,7 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal(3, metadata.Fields.Count);
             Assert.Equal("Name", metadata.Fields[0].Name);
             Assert.Equal("customer-name", metadata.Fields[0].Id);
+            Assert.Equal("Feeding", metadata.Fields[0].RowLabel);
             Assert.Equal(typeof(string), metadata.Fields[0].FieldType);
             Assert.True(metadata.Fields[0].IsRequired);
             Assert.Equal(2, metadata.Fields[0].MinLength);
@@ -68,10 +69,12 @@ namespace VxFormGenerator.Core.Tests
             var nameInput = component.Find("input[name='Name']");
             var amountInput = component.Find("input[name='Amount']");
             var foodKindSelect = component.Find("select[name='FoodKind']");
+            var firstRow = component.Find(".vx-form-row[data-row-id='1']");
 
+            Assert.Contains("Feeding", firstRow.TextContent);
             Assert.Equal("text", nameInput.GetAttribute("type"));
             Assert.Equal("customer-name", nameInput.GetAttribute("id"));
-            Assert.Equal("customer-name", component.Find("label").GetAttribute("for"));
+            Assert.Equal("Name", component.Find("label[for='customer-name']").TextContent);
             Assert.Equal("Session name", nameInput.GetAttribute("placeholder"));
             Assert.NotNull(nameInput.GetAttribute("required"));
             Assert.Equal("2", nameInput.GetAttribute("minlength"));
@@ -79,6 +82,8 @@ namespace VxFormGenerator.Core.Tests
             Assert.Equal("number", amountInput.GetAttribute("type"));
             Assert.Equal("0", amountInput.GetAttribute("min"));
             Assert.Equal("1000", amountInput.GetAttribute("max"));
+            Assert.Contains("col-6", amountInput.ParentElement.GetAttribute("class"));
+            Assert.True(firstRow.InnerHtml.IndexOf("Amount") < firstRow.InnerHtml.IndexOf("Name"));
             Assert.Equal("food-kind", foodKindSelect.GetAttribute("id"));
             Assert.Equal(3, foodKindSelect.QuerySelectorAll("option").Length);
             Assert.NotNull(foodKindSelect.QuerySelector("option[value='Other']").GetAttribute("disabled"));
@@ -108,7 +113,9 @@ namespace VxFormGenerator.Core.Tests
                 Label = "Name",
                 Placeholder = "Session name",
                 RowId = 1,
+                RowLabel = "Feeding",
                 ColSpan = 6,
+                Order = 20,
                 IsRequired = true,
                 MinLength = 2,
                 MaxLength = 80,
@@ -121,7 +128,9 @@ namespace VxFormGenerator.Core.Tests
                 TypeName = "decimal",
                 Label = "Amount",
                 RowId = 1,
+                RowLabel = "Feeding",
                 ColSpan = 6,
+                Order = 10,
                 RangeMinimum = "0",
                 RangeMaximum = "1000"
             });

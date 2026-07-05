@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Linq;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
@@ -19,30 +20,51 @@ namespace VxFormGenerator.Core.Dynamic
 
             var sequence = 0;
 
-            foreach (var field in Model.Fields)
+            foreach (var row in Model.Fields
+                .OrderBy(field => field.RowId.GetValueOrDefault())
+                .ThenBy(field => field.Order.GetValueOrDefault())
+                .GroupBy(field => field.RowId.GetValueOrDefault()))
             {
                 builder.OpenElement(sequence++, "div");
-                builder.AddAttribute(sequence++, "class", GetFieldClass(field));
+                builder.AddAttribute(sequence++, "class", "vx-form-row row");
+                builder.AddAttribute(sequence++, "data-row-id", row.Key);
 
-                builder.OpenElement(sequence++, "label");
-                builder.AddAttribute(sequence++, "for", field.Id);
-                builder.AddContent(sequence++, string.IsNullOrWhiteSpace(field.Label) ? field.Name : field.Label);
-                builder.CloseElement();
-
-                if (GetFieldKind(field) == VxFormFieldKind.Select)
+                var rowLabel = row.Select(field => field.RowLabel).FirstOrDefault(label => !string.IsNullOrWhiteSpace(label));
+                if (!string.IsNullOrWhiteSpace(rowLabel))
                 {
-                    RenderSelect(builder, ref sequence, field);
-                }
-                else
-                {
-                    RenderInput(builder, ref sequence, field);
+                    builder.OpenElement(sequence++, "div");
+                    builder.AddAttribute(sequence++, "class", "vx-form-row-label col-12");
+                    builder.AddContent(sequence++, rowLabel);
+                    builder.CloseElement();
                 }
 
-                if (!string.IsNullOrWhiteSpace(field.Description))
+                foreach (var field in row.OrderBy(field => field.Order.GetValueOrDefault()).ThenBy(field => field.Name))
                 {
-                    builder.OpenElement(sequence++, "small");
-                    builder.AddAttribute(sequence++, "class", "form-text text-muted");
-                    builder.AddContent(sequence++, field.Description);
+                    builder.OpenElement(sequence++, "div");
+                    builder.AddAttribute(sequence++, "class", GetFieldClass(field));
+
+                    builder.OpenElement(sequence++, "label");
+                    builder.AddAttribute(sequence++, "for", field.Id);
+                    builder.AddContent(sequence++, string.IsNullOrWhiteSpace(field.Label) ? field.Name : field.Label);
+                    builder.CloseElement();
+
+                    if (GetFieldKind(field) == VxFormFieldKind.Select)
+                    {
+                        RenderSelect(builder, ref sequence, field);
+                    }
+                    else
+                    {
+                        RenderInput(builder, ref sequence, field);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(field.Description))
+                    {
+                        builder.OpenElement(sequence++, "small");
+                        builder.AddAttribute(sequence++, "class", "form-text text-muted");
+                        builder.AddContent(sequence++, field.Description);
+                        builder.CloseElement();
+                    }
+
                     builder.CloseElement();
                 }
 

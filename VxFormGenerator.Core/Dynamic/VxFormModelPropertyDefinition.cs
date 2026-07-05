@@ -23,6 +23,8 @@ namespace VxFormGenerator.Core.Dynamic
 
         public int? RowId { get; set; }
 
+        public string RowLabel { get; set; }
+
         public int? ColSpan { get; set; }
 
         public int? Order { get; set; }

@@ -13,6 +13,7 @@ namespace VxFormGenerator.Core.Dynamic
         public string Placeholder { get; set; }
         public string Description { get; set; }
         public int? RowId { get; set; }
+        public string RowLabel { get; set; }
         public int? ColSpan { get; set; }
         public int? Order { get; set; }
         public bool IsRequired { get; set; }

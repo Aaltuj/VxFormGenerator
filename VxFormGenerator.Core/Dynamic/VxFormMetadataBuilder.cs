@@ -27,6 +27,7 @@ namespace VxFormGenerator.Core.Dynamic
                     Placeholder = property.Placeholder,
                     Description = property.Description,
                     RowId = property.RowId,
+                    RowLabel = property.RowLabel,
                     ColSpan = property.ColSpan,
                     Order = property.Order,
                     IsRequired = property.IsRequired,

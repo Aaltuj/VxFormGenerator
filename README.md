@@ -156,7 +156,9 @@ definition.Properties.Add(new VxFormModelPropertyDefinition
     Label = "First name",
     Placeholder = "Your first name",
     RowId = 1,
+    RowLabel = "Customer",
     ColSpan = 6,
+    Order = 10,
     IsRequired = true,
     MinLength = 2,
     MaxLength = 40,
@@ -186,6 +188,8 @@ var metadataModel = VxFormMetadataBuilder.Build(definition);
 The metadata renderer does not require runtime CLR type generation. It renders fields directly from the definition and stores submitted values in `VxFormMetadataModel.Values`.
 
 Set `Id` when you need stable accessible label/input associations or predictable selectors. When `Id` is omitted, the metadata builder generates one from the field name.
+
+Set `RowId`, `RowLabel`, `ColSpan`, and `Order` to control Bootstrap-style row and column layout in metadata-rendered forms.
 
 Set `FieldKind = VxFormFieldKind.Select` and add `Options` to render lookup/dropdown fields. Options support display labels, selected defaults, and disabled choices.
 
