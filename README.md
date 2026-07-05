@@ -178,6 +178,18 @@ foodKind.Options.Add(new VxFormLookupOption { Value = "Bottle", Label = "Bottle"
 foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
 definition.Properties.Add(foodKind);
 
+definition.Properties.Add(new VxFormModelPropertyDefinition
+{
+    Name = "OtherFood",
+    TypeName = "string",
+    Label = "Other food",
+    VisibilityRule = new VxFormVisibilityRule
+    {
+        SourceField = "FoodKind",
+        EqualsValue = "Other"
+    }
+});
+
 var metadataModel = VxFormMetadataBuilder.Build(definition);
 ````
 
@@ -194,6 +206,8 @@ Set `RowId`, `RowLabel`, `ColSpan`, and `Order` to control Bootstrap-style row a
 Set `FieldKind = VxFormFieldKind.Select` and add `Options` to render lookup/dropdown fields. Options support display labels, selected defaults, and disabled choices.
 
 Nullable primitive aliases such as `int?`, `decimal?`, `datetime?`, and `bool?` are supported. Empty metadata input values are stored as `null` for nullable fields.
+
+Set `VisibilityRule` for simple conditional display. The initial implementation supports equality checks against another field value.
 
 For server-side scenarios that specifically require a real runtime CLR type with reflected attributes, use `VxFormRuntimeModelBuilder.BuildType(definition)` or `VxFormRuntimeModelBuilder.CreateInstance(definition)`. This uses `Reflection.Emit` and should not be used as the portable Blazor WebAssembly path.
 

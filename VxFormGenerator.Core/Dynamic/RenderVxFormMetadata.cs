@@ -20,6 +20,7 @@ namespace VxFormGenerator.Core.Dynamic
             var sequence = 0;
 
             foreach (var row in Model.Fields
+                .Where(IsVisible)
                 .OrderBy(field => field.RowId.GetValueOrDefault())
                 .ThenBy(field => field.Order.GetValueOrDefault())
                 .GroupBy(field => field.RowId.GetValueOrDefault()))
@@ -213,6 +214,11 @@ namespace VxFormGenerator.Core.Dynamic
         private void SetValue(VxFormFieldMetadata field, object value)
         {
             Model.Values[field.Name] = value;
+        }
+
+        private bool IsVisible(VxFormFieldMetadata field)
+        {
+            return field.VisibilityRule == null || field.VisibilityRule.IsVisible(Model);
         }
 
         private static object ConvertValue(VxFormFieldMetadata field, string value)

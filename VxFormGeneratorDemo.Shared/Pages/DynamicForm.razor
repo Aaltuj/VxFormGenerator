@@ -80,8 +80,22 @@
 
         foodKind.Options.Add(new VxFormLookupOption { Value = "Bottle", Label = "Bottle", IsSelected = true });
         foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
-        foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other", IsDisabled = true });
+        foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other" });
         definition.Properties.Add(foodKind);
+
+        definition.Properties.Add(new VxFormModelPropertyDefinition
+        {
+            Name = "OtherFood",
+            TypeName = "string",
+            Label = "Other food",
+            RowId = 2,
+            ColSpan = 6,
+            VisibilityRule = new VxFormVisibilityRule
+            {
+                SourceField = "FoodKind",
+                EqualsValue = "Other"
+            }
+        });
 
         definition.Properties.Add(new VxFormModelPropertyDefinition
         {

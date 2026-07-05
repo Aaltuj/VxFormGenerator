@@ -37,6 +37,8 @@ namespace VxFormGenerator.Core.Dynamic
 
         public string DefaultValueExpression { get; set; }
 
+        public VxFormVisibilityRule VisibilityRule { get; set; }
+
         public IList<string> Attributes { get; } = new List<string>();
 
         public IList<VxFormLookupOption> Options { get; } = new List<VxFormLookupOption>();

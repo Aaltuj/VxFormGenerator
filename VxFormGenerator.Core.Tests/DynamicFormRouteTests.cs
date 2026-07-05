@@ -43,7 +43,7 @@ namespace VxFormGenerator.Core.Tests
 
             var metadata = VxFormMetadataBuilder.Build(definition);
 
-            Assert.Equal(5, metadata.Fields.Count);
+            Assert.Equal(6, metadata.Fields.Count);
             Assert.Equal("Name", metadata.Fields[0].Name);
             Assert.Equal("customer-name", metadata.Fields[0].Id);
             Assert.Equal("Feeding", metadata.Fields[0].RowLabel);
@@ -92,7 +92,7 @@ namespace VxFormGenerator.Core.Tests
             Assert.True(firstRow.InnerHtml.IndexOf("Amount") < firstRow.InnerHtml.IndexOf("Name"));
             Assert.Equal("food-kind", foodKindSelect.GetAttribute("id"));
             Assert.Equal(3, foodKindSelect.QuerySelectorAll("option").Length);
-            Assert.NotNull(foodKindSelect.QuerySelector("option[value='Other']").GetAttribute("disabled"));
+            Assert.Empty(component.FindAll("input[name='OtherFood']"));
             Assert.Equal("number", servingsInput.GetAttribute("type"));
             Assert.Equal("date", servedOnInput.GetAttribute("type"));
 
@@ -113,6 +113,14 @@ namespace VxFormGenerator.Core.Tests
 
             Assert.Null(metadata.Values["Servings"]);
             Assert.Null(metadata.Values["ServedOn"]);
+
+            foodKindSelect.Change("Other");
+
+            var otherFoodInput = component.Find("input[name='OtherFood']");
+            otherFoodInput.Change("Warm milk");
+
+            Assert.Equal("Other", metadata.Values["FoodKind"]);
+            Assert.Equal("Warm milk", metadata.Values["OtherFood"]);
         }
 
         private static VxFormModelDefinition CreateDefinition()
@@ -164,8 +172,22 @@ namespace VxFormGenerator.Core.Tests
 
             foodKind.Options.Add(new VxFormLookupOption { Value = "Bottle", Label = "Bottle", IsSelected = true });
             foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
-            foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other", IsDisabled = true });
+            foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other" });
             definition.Properties.Add(foodKind);
+
+            definition.Properties.Add(new VxFormModelPropertyDefinition
+            {
+                Name = "OtherFood",
+                TypeName = "string",
+                Label = "Other food",
+                RowId = 2,
+                ColSpan = 6,
+                VisibilityRule = new VxFormVisibilityRule
+                {
+                    SourceField = "FoodKind",
+                    EqualsValue = "Other"
+                }
+            });
 
             definition.Properties.Add(new VxFormModelPropertyDefinition
             {

@@ -21,6 +21,7 @@ namespace VxFormGenerator.Core.Dynamic
         public int? MaxLength { get; set; }
         public string RangeMinimum { get; set; }
         public string RangeMaximum { get; set; }
+        public VxFormVisibilityRule VisibilityRule { get; set; }
         public IList<VxFormLookupOption> Options { get; } = new List<VxFormLookupOption>();
     }
 }

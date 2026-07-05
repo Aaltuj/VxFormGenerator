@@ -34,7 +34,8 @@ namespace VxFormGenerator.Core.Dynamic
                     MinLength = property.MinLength,
                     MaxLength = property.MaxLength,
                     RangeMinimum = property.RangeMinimum,
-                    RangeMaximum = property.RangeMaximum
+                    RangeMaximum = property.RangeMaximum,
+                    VisibilityRule = property.VisibilityRule
                 };
 
                 foreach (var option in property.Options)
