@@ -1,6 +1,8 @@
 using Bunit;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using VxFormGenerator.Core.Dynamic;
 using VxFormGenerator.Core.Layout;
@@ -28,6 +30,57 @@ namespace VxFormGenerator.Core.Tests
             var attribute = value.GetAttribute<DisplayAttribute>();
             Assert.Equal("When valid or invalid", attribute.Name);
 
+        }
+
+        [Theory]
+        [InlineData("en", "Firstname", "Street must be at least 5 characters long.")]
+        [InlineData("nl", "Voornaam", "Straat moet minimaal 5 tekens zijn.")]
+        public void CreateVxColumn_UsesLocalizedDisplayAndValidationResources(string cultureName, string expectedLabel, string expectedValidationMessage)
+        {
+            var originalCulture = CultureInfo.CurrentCulture;
+            var originalUiCulture = CultureInfo.CurrentUICulture;
+
+            try
+            {
+                var culture = new CultureInfo(cultureName);
+                CultureInfo.CurrentCulture = culture;
+                CultureInfo.CurrentUICulture = culture;
+
+                var definition = VxFormDefinition.CreateFromModel(new AddressViewModel(), new VxFormLayoutOptions());
+                var surnameColumn = definition.Groups
+                    .SelectMany(group => group.Rows)
+                    .SelectMany(row => row.Columns)
+                    .Single(column => column.Name == nameof(AddressViewModel.SurName));
+                var streetProperty = typeof(AddressViewModel).GetProperty(nameof(AddressViewModel.Street));
+                var minLengthAttribute = streetProperty.GetCustomAttribute<MinLengthAttribute>();
+
+                Assert.Equal(expectedLabel, surnameColumn.RenderOptions.Label);
+                Assert.Equal(expectedValidationMessage, minLengthAttribute.FormatErrorMessage(nameof(AddressViewModel.Street)));
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = originalCulture;
+                CultureInfo.CurrentUICulture = originalUiCulture;
+            }
+        }
+
+        [Theory]
+        [InlineData("en-US", "Firstname")]
+        [InlineData("nl-NL", "Voornaam")]
+        public void AddressResources_FallBackFromSpecificCultureToSupportedLanguage(string cultureName, string expectedLabel)
+        {
+            var originalUiCulture = CultureInfo.CurrentUICulture;
+
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo(cultureName);
+
+                Assert.Equal(expectedLabel, VxFormGeneratorDemoData.Resources.Address.FIRSTNAME_LABEL);
+            }
+            finally
+            {
+                CultureInfo.CurrentUICulture = originalUiCulture;
+            }
         }
 
         [Fact]
