@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using VxFormGenerator.Core.Layout;
 using VxFormGenerator.Core.Repository;
+using VxFormGenerator.Core.Validation;
 
 namespace VxFormGenerator.Core
 {
@@ -55,6 +56,8 @@ namespace VxFormGenerator.Core
 
         [CascadingParameter] public VxFormLayoutOptions FormLayoutOptions { get; set; }
 
+        [CascadingParameter] public RenderFragment<VxFormFieldTemplateContext> FieldTemplate { get; set; }
+
 
         protected override void OnInitialized()
         {
@@ -94,6 +97,33 @@ namespace VxFormGenerator.Core
                var instance = Activator.CreateInstance(elementType);*/
 
             this.CreateFormComponent(this, FormColumnDefinition.Model, FormColumnDefinition.Name, builder, elementType);
+        };
+
+        protected VxFormFieldTemplateContext CreateFieldTemplateContext(string validationMessageClass = null)
+        {
+            return new VxFormFieldTemplateContext
+            {
+                Name = FormColumnDefinition.Name,
+                Id = string.IsNullOrWhiteSpace(Id) ? FormColumnDefinition.Name : Id,
+                Label = FormColumnDefinition.RenderOptions.Label,
+                ShowLabel = FormColumnDefinition.RenderOptions.ShowLabel,
+                FieldDefinition = FormColumnDefinition,
+                Input = CreateComponent(),
+                ValidationMessage = CreateValidationMessage(validationMessageClass)
+            };
+        }
+
+        private RenderFragment CreateValidationMessage(string cssClass = null) => builder =>
+        {
+            builder.OpenComponent(0, typeof(VxValidationMessage<TFormElement>));
+            builder.AddAttribute(1, nameof(VxValidationMessage<TFormElement>.For), ValueExpression);
+
+            if (!string.IsNullOrWhiteSpace(cssClass))
+            {
+                builder.AddAttribute(2, nameof(VxValidationMessage<TFormElement>.Class), cssClass);
+            }
+
+            builder.CloseComponent();
         };
 
         /// <summary>

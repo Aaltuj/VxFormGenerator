@@ -1,0 +1,73 @@
+@page "/custom-field-template"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using VxFormGenerator.Core
+@using VxFormGenerator.Core.Layout
+@using VxFormGeneratorDemoData
+
+<h1>Custom Field Template Demo</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Generated inputs, custom HTML</h5>
+        <p class="card-text">
+            Field templates let the app own the field wrapper markup while VxFormGenerator still creates the input,
+            binding, and validation message.
+        </p>
+
+        <EditForm Model="Model" OnValidSubmit="HandleValidSubmit">
+            <VxFormGenerator.Core.Validation.ObjectGraphDataAnnotationsValidator />
+            <RenderFormElements FormLayoutOptions="Options">
+                <FieldTemplate Context="field">
+                    <div class="border rounded p-3 mb-3 bg-light" data-field-name="@field.Name">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            @if (field.ShowLabel)
+                            {
+                                <label class="fw-bold mb-0" for="@field.Id">@field.Label</label>
+                            }
+                            <small class="text-muted">@field.Name</small>
+                        </div>
+
+                        <div class="input-shell">
+                            @field.Input
+                        </div>
+
+                        <div class="small mt-1">
+                            @field.ValidationMessage
+                        </div>
+                    </div>
+                </FieldTemplate>
+            </RenderFormElements>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">Model snapshot</h5>
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Surname</dt>
+            <dd class="col-sm-9">@Model.SurName</dd>
+            <dt class="col-sm-3">Lastname</dt>
+            <dd class="col-sm-9">@Model.LastName</dd>
+            <dt class="col-sm-3">Street</dt>
+            <dd class="col-sm-9">@Model.Street</dd>
+        </dl>
+    </div>
+</div>
+
+@code {
+    private AddressViewModel Model { get; } = new AddressViewModel();
+
+    private VxFormLayoutOptions Options { get; } = new VxFormLayoutOptions
+    {
+        LabelOrientation = LabelOrientation.TOP,
+        ShowPlaceholder = PlaceholderPolicy.EXPLICIT_LABEL_FALLBACK
+    };
+
+    private void HandleValidSubmit(EditContext context)
+    {
+        // The generated inputs update Model even though the field wrapper is custom markup.
+    }
+}
