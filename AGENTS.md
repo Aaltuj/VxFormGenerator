@@ -31,6 +31,7 @@ You work on the VxFormGenerator Blazor/.NET solution.
 
 ## Build And Test Notes
 
+- Prefer the included devcontainer for builds/tests so the project runs with an isolated .NET SDK and ICU installed.
 - `dotnet` may not be on `PATH` in this workspace.
 - Use the local SDK directly: `/workspace/.dotnet/dotnet`.
 - The Alpine/container environment may lack ICU. If the SDK fails with missing ICU, run commands with `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1`.
