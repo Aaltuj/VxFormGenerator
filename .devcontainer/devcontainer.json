@@ -1,0 +1,30 @@
+{
+  "name": "VxFormGenerator",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/workspaces/VxFormGenerator",
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit"
+      ]
+    }
+  },
+  "containerEnv": {
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_NOLOGO": "1"
+  },
+  "mounts": [
+    "source=vxformgenerator-nuget,target=/home/vscode/.nuget/packages,type=volume"
+  ],
+  "postCreateCommand": "dotnet restore FormGeneratorDemo.sln",
+  "forwardPorts": [
+    5000,
+    5001,
+    5173
+  ]
+}
