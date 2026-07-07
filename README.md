@@ -162,6 +162,8 @@ When a form needs custom HTML for CSS or business layout requirements, provide a
 
 `FieldTemplate` is intentionally field-scoped for the first customization layer. Use `FormLayoutOptions` and layout attributes for row/group structure.
 
+Visual Studio users who want an editable Razor component workflow can follow the copy/paste guide in [`Docs/visual-studio-field-template.md`](Docs/visual-studio-field-template.md).
+
 ## Layout
 
 Use layout attributes when field order, rows, columns, labels, or placeholders need to be controlled from the model.
