@@ -164,6 +164,8 @@ When a form needs custom HTML for CSS or business layout requirements, provide a
 
 Visual Studio users who want an editable Razor component workflow can follow the copy/paste guide in [`Docs/visual-studio-field-template.md`](Docs/visual-studio-field-template.md).
 
+The same guide also shows the `vxform scaffold` CLI workflow for generating a physical `.razor` file from a compiled model assembly.
+
 ## Layout
 
 Use layout attributes when field order, rows, columns, labels, or placeholders need to be controlled from the model.

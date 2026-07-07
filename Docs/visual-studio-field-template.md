@@ -2,9 +2,41 @@
 
 Issue #29 asked for a Visual Studio-friendly way to start from an annotated POCO and get editable Razor markup.
 
-VxFormGenerator does not generate a physical `.razor` file from the IDE. Instead, use `FieldTemplate` to create a normal Razor component that you can edit in Visual Studio while the library still generates the field input, binding, and validation message.
+VxFormGenerator supports two practical workflows:
 
-## Workflow
+- Use the CLI scaffolder to generate a physical `.razor` file that Visual Studio users can edit.
+- Use `FieldTemplate` manually in a normal Razor component when you want to write the component yourself.
+
+The generated component still uses VxFormGenerator for field discovery, input creation, binding, and validation messages.
+
+## CLI Scaffold Workflow
+
+1. Build the project that contains the annotated model.
+2. Run the `vxform scaffold` command against the compiled assembly.
+3. Add the generated `.razor` file to your app and customize the markup in Visual Studio.
+
+```bash
+dotnet run --project VxFormGenerator.Tools/VxFormGenerator.Tools.csproj -- scaffold \
+  --assembly ./VxFormGeneratorDemoData/bin/Debug/net10.0/VxFormGeneratorDemoData.dll \
+  --type VxFormGeneratorDemoData.AddressViewModel \
+  --output ./VxFormGeneratorDemo.Shared/Pages/AddressGeneratedForm.razor
+```
+
+To generate the smaller default form without a field template:
+
+```bash
+dotnet run --project VxFormGenerator.Tools/VxFormGenerator.Tools.csproj -- scaffold \
+  --assembly ./VxFormGeneratorDemoData/bin/Debug/net10.0/VxFormGeneratorDemoData.dll \
+  --type VxFormGeneratorDemoData.AddressViewModel \
+  --output ./VxFormGeneratorDemo.Shared/Pages/AddressGeneratedForm.razor \
+  --no-field-template
+```
+
+The generated file is intentionally normal Razor code. It is not overwritten unless you run the command again for the same output path.
+
+## Manual Visual Studio Workflow
+
+If you do not want to use the CLI, create the component yourself:
 
 1. Add annotations to the POCO model.
 2. In Visual Studio, right-click the target folder and choose `Add` > `Razor Component`.
@@ -34,7 +66,7 @@ public class CustomerFormModel
 }
 ```
 
-## Visual Studio Razor Component
+## Manual Razor Component
 
 Create `CustomerForm.razor`:
 
