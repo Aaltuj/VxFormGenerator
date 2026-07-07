@@ -9,6 +9,10 @@
 
 .navbar-brand {
     font-size: 1.1rem;
+    max-width: calc(100vw - 5rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .oi {
@@ -48,6 +52,32 @@
 .nav-item ::deep a:hover {
     background-color: rgba(255,255,255,0.1);
     color: white;
+}
+
+@media (max-width: 640.98px) {
+    .top-row {
+        padding-left: 1rem !important;
+        padding-right: 0.75rem;
+    }
+
+    .navbar-toggler {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav {
+        padding-bottom: 0.5rem;
+    }
+
+    .nav-item {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .nav-item ::deep a {
+        height: 2.75rem;
+        line-height: 2.75rem;
+    }
 }
 
 @media (min-width: 641px) {

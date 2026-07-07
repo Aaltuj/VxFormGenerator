@@ -6,6 +6,7 @@
 
 .main {
     flex: 1;
+    min-width: 0;
 }
 
 .sidebar {
@@ -32,6 +33,16 @@
     }
 
 @media (max-width: 640.98px) {
+    .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .main {
+        width: 100%;
+    }
+
     .top-row:not(.auth) {
         display: none;
     }

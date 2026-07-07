@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    min-width: 0;
 }
 
 a, .btn-link {
@@ -32,6 +33,41 @@ a, .btn-link {
 
 #app {
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 0;
+}
+
+.main {
+    min-width: 0;
+}
+
+.content {
+    overflow-x: hidden;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.card-body {
+    min-width: 0;
+}
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+.btn {
+    min-height: 44px;
+}
+
+.form-control,
+.form-select,
+.form-control-plain {
+    min-height: 44px;
 }
 
 #blazor-error-ui {
@@ -92,4 +128,43 @@ fieldset:not(:last-child) {
 }
 
 .form-group-plain {
+}
+
+@media (max-width: 640.98px) {
+    h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    h5 {
+        font-size: 1.05rem;
+    }
+
+    .content {
+        padding: 1rem !important;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    dl.row > dt,
+    dl.row > dd {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    dl.row > dd {
+        margin-bottom: 0.75rem;
+    }
+}
+
+@media (min-width: 641px) {
+    #app {
+        flex-direction: row;
+    }
 }
