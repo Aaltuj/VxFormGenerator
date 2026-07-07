@@ -1,0 +1,19 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using VxFormGenerator.Core
+@using VxFormGeneratorDemoData
+
+<EditForm Model="Model">
+    <RenderFormElements>
+        <FieldTemplate Context="field">
+            <div class="custom-field" data-field-name="@field.Name" data-show-label="@field.ShowLabel">
+                <label class="custom-label" for="@field.Id">@field.Label</label>
+                <div class="custom-input">@field.Input</div>
+                <div class="custom-validation">@field.ValidationMessage</div>
+            </div>
+        </FieldTemplate>
+    </RenderFormElements>
+</EditForm>
+
+@code {
+    public AddressViewModel Model { get; } = new AddressViewModel();
+}

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>vxform</ToolCommandName>
+    <PackageId>VxFormGenerator.Tools</PackageId>
+    <Version>0.4.0</Version>
+    <Authors>Alex Knijf</Authors>
+    <Description>Command line tools for scaffolding VxFormGenerator Razor components.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VxFormGenerator.Core\VxFormGenerator.Core.csproj" />
+  </ItemGroup>
+
+</Project>

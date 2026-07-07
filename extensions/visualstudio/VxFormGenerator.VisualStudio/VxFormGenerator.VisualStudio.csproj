@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>VxFormGenerator.VisualStudio</RootNamespace>
+    <AssemblyName>VxFormGenerator.VisualStudio</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Sdk" Version="17.10.2186" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.10.2186" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VxFormGenerator.VisualStudio.Shared\VxFormGenerator.VisualStudio.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <VSCTCompile Include="VxFormGenerator.VisualStudio.vsct" />
+    <Content Include="source.extension.vsixmanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+
+</Project>

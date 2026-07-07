@@ -1,0 +1,10 @@
+FROM node:20
+
+WORKDIR /work
+
+COPY package.json ./
+RUN npm install
+
+COPY . ./
+
+CMD ["npm", "test"]

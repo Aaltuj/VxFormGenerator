@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidVxFormGeneratorPackage">
+    <Groups>
+      <Group guid="guidVxFormGeneratorCommandSet" id="VxFormGeneratorToolsGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidVxFormGeneratorCommandSet" id="ScaffoldFormCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidVxFormGeneratorCommandSet" id="VxFormGeneratorToolsGroup" />
+        <Strings>
+          <ButtonText>VxFormGenerator: Scaffold Razor Form...</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidVxFormGeneratorPackage" value="{6e721f2d-5238-4787-9306-a80cd406d592}" />
+    <GuidSymbol name="guidVxFormGeneratorCommandSet" value="{720d45e0-1647-4543-9c64-b35c509c8c31}">
+      <IDSymbol name="VxFormGeneratorToolsGroup" value="0x1020" />
+      <IDSymbol name="ScaffoldFormCommandId" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

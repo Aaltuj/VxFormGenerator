@@ -4,16 +4,22 @@
 @inherits BootstrapFormElementComponent<TFormElement>
 
 
-<div class="@CssClass">
-    @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
-    {        
-            <label class="col-form-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>       
-    }
+@if (FieldTemplate != null)
+{
+    @FieldTemplate(CreateFieldTemplateContext("form-text"))
+}
+else
+{
+    <div class="@CssClass">
+        @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
+        {
+            <label class="col-form-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+        }
 
-    @CreateComponent()
+        @CreateComponent()
 
-    <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression" Class="form-text">
-    </VxFormGenerator.Core.Validation.VxValidationMessage>
+        <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression" Class="form-text">
+        </VxFormGenerator.Core.Validation.VxValidationMessage>
 
-</div>
-
+    </div>
+}
