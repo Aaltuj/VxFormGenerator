@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="VxFormGenerator.VisualStudio" Version="0.1.0" Language="en-US" Publisher="Aaltuj" />
+    <DisplayName>VxFormGenerator Scaffold</DisplayName>
+    <Description xml:space="preserve">Scaffold editable Razor form components from annotated POCO models.</Description>
+    <Tags>Blazor;Razor;Forms;Scaffolding</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,18.0)" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName=".NET Framework" Version="[4.7.2,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="VxFormGenerator.VisualStudio" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011" />
+  </Assets>
+</PackageManifest>

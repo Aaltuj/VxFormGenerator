@@ -1,0 +1,56 @@
+{
+  "name": "vxformgenerator-scaffold",
+  "displayName": "VxFormGenerator Scaffold",
+  "description": "Scaffold editable Razor form components from annotated POCO models using VxFormGenerator.Tools.",
+  "version": "0.1.0",
+  "publisher": "aaltuj",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vxformGenerator.scaffoldForm"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vxformGenerator.scaffoldForm",
+        "title": "VxFormGenerator: Scaffold Razor Form Component"
+      }
+    ],
+    "configuration": {
+      "title": "VxFormGenerator Scaffold",
+      "properties": {
+        "vxFormGenerator.dotnetCommand": {
+          "type": "string",
+          "default": "dotnet",
+          "description": "dotnet executable used to run VxFormGenerator.Tools from source."
+        },
+        "vxFormGenerator.toolProjectPath": {
+          "type": "string",
+          "default": "VxFormGenerator.Tools/VxFormGenerator.Tools.csproj",
+          "description": "Workspace-relative path to VxFormGenerator.Tools.csproj. If missing, the extension falls back to 'vxform'."
+        },
+        "vxFormGenerator.vxformCommand": {
+          "type": "string",
+          "default": "vxform",
+          "description": "Installed vxform tool command used when toolProjectPath is not found."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "test": "npm run compile && node --test test/*.test.js",
+    "test:container": "docker build -f Dockerfile.test -t vxformgenerator-vscode-extension-test . && docker run --rm vxformgenerator-vscode-extension-test",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.5.2"
+  }
+}

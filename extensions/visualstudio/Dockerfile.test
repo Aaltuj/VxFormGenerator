@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+WORKDIR /work
+
+COPY . ./
+
+CMD ["dotnet", "test", "VxFormGenerator.VisualStudio.Tests/VxFormGenerator.VisualStudio.Tests.csproj", "-m:1"]
