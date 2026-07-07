@@ -1,10 +1,87 @@
 # VxFormGenerator
 
-The library contains a component, that nests itself into the Blazor EditForm instead of a wrapper around the EditForm. The component is able to generate a form based on a typed POCO model. Because of this architecture the library provides the developer flexibility and direct usage of the EditForm.
+VxFormGenerator is a Blazor form-generation library. It renders form fields inside a normal Blazor `EditForm` instead of wrapping the `EditForm`, so applications keep control over submit handling, validation, buttons, layout, and surrounding markup.
 
-# TLDR
+The current codebase targets `net10.0` and supports two form-generation paths:
 
-Turns an annotated object....
+- Model-based forms from annotated POCO models.
+- Dynamic metadata forms from `VxFormModelDefinition`, designed to work in Blazor Server, Blazor WebAssembly, AOT, and restricted runtimes.
+
+`ExpandoObject` rendering is no longer the dynamic form path. Use metadata rendering for portable dynamic forms.
+
+## Packages
+
+Choose one component package for your app:
+
+```bash
+dotnet add package VxFormGenerator.Components.Plain
+```
+
+```bash
+dotnet add package VxFormGenerator.Components.Bootstrap
+```
+
+The Bootstrap package assumes Bootstrap is already loaded by the host app.
+
+## Setup
+
+Register VxFormGenerator in the app service collection.
+
+Plain components:
+
+```csharp
+using VxFormGenerator.Settings.Plain;
+
+builder.Services.AddVxFormGenerator();
+```
+
+Bootstrap components:
+
+```csharp
+using VxFormGenerator.Settings.Bootstrap;
+
+builder.Services.AddVxFormGenerator();
+```
+
+Blazor WebAssembly example:
+
+```csharp
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+});
+
+builder.Services.AddVxFormGenerator();
+
+await builder.Build().RunAsync();
+```
+
+Blazor Server example:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddVxFormGenerator();
+
+var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
+
+app.Run();
+```
+
+## Model-Based Forms
+
+Annotate a model with standard data annotations and optional VxFormGenerator layout attributes.
 
 ```csharp
 public class FeedingSession
@@ -15,152 +92,121 @@ public class FeedingSession
     [Display(Name = "Note")]
     [MinLength(5)]
     public string Note { get; set; }
-    
+
     [Display(Name = "Amount")]
     public decimal Amount { get; set; }
-    
+
     [Display(Name = "Start")]
     public DateTime Start { get; set; }
-    
-    [Display(Name = "End")]
-    public DateTime End { get; set; }
-    
+
     [Display(Name = "Throwing up")]
     public bool ThrowingUp { get; set; }
 
-    [Display(Name = "Throwing up dict")]
-    public ValueReferences<FoodKind> ThrowingUpDict { get; set; } = new ValueReferences<FoodKind>();
-    
     [Display(Name = "Color")]
     public VxColor Color { get; set; }
 }
 ```
 
-... into a nice Blazor form:
+Render the generated inputs inside an `EditForm`:
 
-![A nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/sample_form.png)
-
-### Setup
-
-Add the NuGet package.
-
-Open a terminal in the project folder where you want to add the **VxFormGenerator**. Pick one of the options below:
-
-###### Plain components
-
-The unstyled version of the input components for the **VxFormGenerator**
-
-`dotnet add package VxFormGenerator.Components.Plain`
-
-###### Bootstrap components
-
-> The assumption made by the library is that you already added  Bootstrap (4.5.0 and up) setup in your Blazor app
-
-The Bootstrap styled form components for the **VxFormGenerator**
-
-`dotnet add package VxFormGenerator.Components.Bootstrap`
-
-### Initialize
-
-Copy one of the following usage statements:
-
-###### Plain components
-
-`using VxFormGenerator.Settings.Plain;`
-
-###### Bootstrap components
-
-`using VxFormGenerator.Settings.Bootstrap;`
-
-##### Webassembly (WASM)
-
-Open `Program.cs`, add one of the copied usage statements add the line `builder.Services.AddVxFormGenerator();` like shown here below.
-
-````C#
-public static async Task Main(string[] args)
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("#app");
-
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-            builder.Services.AddVxFormGenerator(); //<-- Add line
-
-            await builder.Build().RunAsync();
-        }
-````
-
-##### Server
-
-Open `Startup.cs`, add one of the copied usage statements add the line `services.AddVxFormGenerator();` like shown here below.
-
-````C#
-public IConfiguration Configuration { get; }
-
-// This method gets called by the runtime. 
-// Use this method to add services to the container.
-// For more information on how to configure your application, 
-// visit https://go.microsoft.com/fwlink/?LinkID=398940
-public void ConfigureServices(IServiceCollection services)
-{
-	services.AddRazorPages();
-	services.AddServerSideBlazor();
-	services.AddVxFormGenerator(); //<-- Add line
-}
-````
-
-
-
-### Model based
-
-You can have a model that renders inputs for the properties. All that's required is adding a `RenderFormElements` component to the `EditForm`. The inputs can be validated by the attached Data Annotations on the property. Just add the built-in `DataAnnotationsValidator` component.
-
-````html
-@page "/"
-
+```razor
 @using VxFormGenerator.Core
-@using FormGeneratorDemo.Data
-<EditForm Model="Model" 
-		  OnValidSubmit="HandleValidSubmit"
-		  OnInvalidSubmit="HandleInValidSubmit">
-  // complex type validator replacing DataAnnotationValidator
-    <ObjectGraphDataAnnotationsValidator></ObjectGraphDataAnnotationsValidator>
-    <RenderFormElements></RenderFormElements>		
+@using VxFormGeneratorDemoData
+
+<EditForm Model="Model" OnValidSubmit="HandleValidSubmit">
+    <ObjectGraphDataAnnotationsValidator />
+    <RenderFormElements />
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
 
-@code{
+@code {
+    private FeedingSession Model { get; } = new FeedingSession();
 
-    /// <summary>
-    /// Model that is used for the form
-    /// </summary>
-    private FeedingSession Model = new FeedingSession();
-
-    /// <summary>
-    /// Will handle the submit action of the form
-    /// </summary>
-    /// <param name="context">The model with values as entered in the form</param>
     private void HandleValidSubmit(EditContext context)
     {
-        // save your changes
+        // Save the form data.
     }
-
-    private void HandleInValidSubmit(VEditContext context)
-    {
-        // Do something
-    }
-
 }
+```
 
-````
+Use `ObjectGraphDataAnnotationsValidator` when the model contains nested objects or collections that need recursive validation.
 
+## Layout
 
+Use layout attributes when field order, rows, columns, labels, or placeholders need to be controlled from the model.
 
-### Dynamic metadata models
+```csharp
+[VxFormRowLayout(Id = 2, Label = "Address")]
+public class AddressViewModel
+{
+    [Display(Name = "Firstname")]
+    [VxFormElementLayout(RowId = 1)]
+    public string SurName { get; set; }
 
-`ExpandoObject` rendering is no longer the dynamic path. For dynamic forms, build metadata at runtime and render it directly. This is the default dynamic strategy because it works in Blazor Server, Blazor WebAssembly, AOT, and restricted runtimes.
+    [Display(Name = "Lastname")]
+    [VxFormElementLayout(RowId = 1, Placeholder = "Your lastname")]
+    public string LastName { get; set; }
 
-````C#
+    [Display(Name = "Street")]
+    [VxFormElementLayout(RowId = 2, ColSpan = 9)]
+    [MinLength(5)]
+    public string Street { get; set; }
+
+    [Display(Name = "Number")]
+    [VxFormElementLayout(RowId = 2, ColSpan = 3)]
+    public string Number { get; set; }
+}
+```
+
+Global layout options:
+
+```csharp
+builder.Services.AddVxFormGenerator(new VxFormLayoutOptions
+{
+    LabelOrientation = LabelOrientation.TOP,
+    ShowPlaceholder = PlaceholderPolicy.EXPLICIT_LABEL_FALLBACK,
+    VisualValidationPolicy = VisualFeedbackValidationPolicy.ONLY_INVALID
+});
+```
+
+Component-level options override the global defaults:
+
+```razor
+<RenderFormElements FormLayoutOptions="OptionsForForm" />
+
+@code {
+    private VxFormLayoutOptions OptionsForForm { get; } = new VxFormLayoutOptions
+    {
+        LabelOrientation = LabelOrientation.LEFT
+    };
+}
+```
+
+## Nested Models
+
+Mark nested model properties with `VxFormGroup` and validation attributes.
+
+```csharp
+public class OrderViewModel
+{
+    [VxFormGroup(Label = "Delivery")]
+    [ValidateComplexType]
+    public AddressViewModel Address { get; set; } = new AddressViewModel();
+
+    [VxFormGroup(Label = "Invoice")]
+    [ValidateComplexType]
+    public AddressViewModel BillingAddress { get; set; } = new AddressViewModel();
+
+    [Display(Name = "Send insured")]
+    public bool SendInsured { get; set; }
+}
+```
+
+## Dynamic Metadata Forms
+
+For dynamic forms, build a `VxFormModelDefinition` at runtime and render it with `RenderVxFormMetadata`.
+
+```csharp
 using VxFormGenerator.Core.Dynamic;
 
 var definition = new VxFormModelDefinition
@@ -186,186 +232,172 @@ definition.Properties.Add(new VxFormModelPropertyDefinition
     DefaultValueExpression = "string.Empty"
 });
 
+definition.Properties.Add(new VxFormModelPropertyDefinition
+{
+    Name = "Servings",
+    TypeName = "int?",
+    Label = "Servings",
+    RowId = 1,
+    ColSpan = 3
+});
+```
+
+Add lookup/dropdown options:
+
+```csharp
 var foodKind = new VxFormModelPropertyDefinition
 {
     Name = "FoodKind",
     Id = "food-kind",
     TypeName = "string",
     Label = "Food kind",
-    FieldKind = VxFormFieldKind.Select
+    FieldKind = VxFormFieldKind.Select,
+    RowId = 2,
+    ColSpan = 6
 };
 
 foodKind.Options.Add(new VxFormLookupOption { Value = "Bottle", Label = "Bottle", IsSelected = true });
 foodKind.Options.Add(new VxFormLookupOption { Value = "Solid", Label = "Solid food" });
-definition.Properties.Add(foodKind);
+foodKind.Options.Add(new VxFormLookupOption { Value = "Other", Label = "Other" });
 
+definition.Properties.Add(foodKind);
+```
+
+Add conditional visibility:
+
+```csharp
 definition.Properties.Add(new VxFormModelPropertyDefinition
 {
     Name = "OtherFood",
     TypeName = "string",
     Label = "Other food",
+    RowId = 2,
+    ColSpan = 6,
     VisibilityRule = new VxFormVisibilityRule
     {
         SourceField = "FoodKind",
         EqualsValue = "Other"
     }
 });
+```
 
+Build and render the metadata model:
+
+```csharp
 var metadataModel = VxFormMetadataBuilder.Build(definition);
-````
+```
 
-````html
+```razor
 <RenderVxFormMetadata Model="metadataModel" />
-````
-
-The metadata renderer does not require runtime CLR type generation. It renders fields directly from the definition and stores submitted values in `VxFormMetadataModel.Values`.
-
-The demo route `/dynamic-form` uses this metadata renderer intentionally, so the same dynamic form path works in the Blazor WebAssembly demo and the Blazor Server demo.
-
-Set `Id` when you need stable accessible label/input associations or predictable selectors. When `Id` is omitted, the metadata builder generates one from the field name.
-
-Set `RowId`, `RowLabel`, `ColSpan`, and `Order` to control Bootstrap-style row and column layout in metadata-rendered forms.
-
-Set `FieldKind = VxFormFieldKind.Select` and add `Options` to render lookup/dropdown fields. Options support display labels, selected defaults, and disabled choices.
-
-Nullable primitive aliases such as `int?`, `decimal?`, `datetime?`, and `bool?` are supported. Empty metadata input values are stored as `null` for nullable fields.
-
-Set `VisibilityRule` for simple conditional display. The initial implementation supports equality checks against another field value.
-
-For server-side scenarios that specifically require a real runtime CLR type with reflected attributes, use `VxFormRuntimeModelBuilder.BuildType(definition)` or `VxFormRuntimeModelBuilder.CreateInstance(definition)`. This uses `Reflection.Emit` and should not be used as the portable Blazor WebAssembly path.
-
-If you need source text for diagnostics, persistence, or build-time generation, use `VxFormModelSourceGenerator.Generate(definition)`.
-
-
-
-### Layout 
-
-The form generator supports layout structuring based on meta-data defined at model level.
-
-````C#
-        // Add label to row 2
-    [VxFormRowLayout(Id = 2, Label = "Adress")]
-    public class AddressViewModel
-    {
-        [Display(Name = "Firstname")]
-        // Add element to row 1 with automatic width based on number of items in a row
-        [VxFormElementLayout(RowId = 1)]
-        public string SurName { get; set; }
-        // Add element to row 1 with automatic width based on number of items in a row and define a placeholder
-        [VxFormElementLayout(RowId = 1, Placeholder = "Your Lastname")]
-        [Display(Name = "Lastname")]
-        public string LastName { get; set; }
-
-        [Display(Name = "Street")]
-        // Add element to row 2 and set the width to 9 of 12 columns
-        [VxFormElementLayout(RowId = 2, ColSpan = 9)]
-        [MinLength(5)]
-        public string Street { get; set; }
-
-        [Display(Name = "Number")]
-        // Add element to row 2 and set the width to 3 of 12 columns
-        [VxFormElementLayout(RowId = 2, ColSpan = 3)]
-        public string Number { get; set; }
-
-        [Display(Name = "Country"),
-         // Show Placeholder
-         VxFormElementLayout(Placeholder = "The country you live")]
-        public string Country { get; set; }
-
-        [Display(Name = "State")]
-        [MinLength(5)]
-        public string State { get; set; }
-
-    }
-````
-![Another nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/Advanced_sample_form.png)
-
-There is also support for nested models. 
-
-```C#
-  public class OrderViewModel
-    {
-         // Indicate that this property type should be rendered as a separate elements in the form and give it a label
-        [VxFormGroup(Label = "Delivery")]
-        // Use this to valdidate a complex object
-        [ValidateComplexType]
-        public AddressViewModel Address { get; set; } = new AddressViewModel();
-
-        // Indicate that this property type should be rendered as a separate elements in the form and give it a label
-        [VxFormGroup(Label = "Invoice")]
-        // Use this to valdidate a complex object
-        [ValidateComplexType]
-        public AddressViewModel BillingAddress { get; set; } = new AddressViewModel();
-
-        [Display(Name = "Send insured")]
-        public bool Valid { get; set; } = true;
-
-        [Display(Name = "What color box")]
-        public VxColor Color { get; set; }
-    }
-    }
-```
-![Another Another nice form!](https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/complex_sample_form.png)
-
-
-#### Layout options
-
-The form support multiple rendering options:
-
-Set options **Global**
-
-```
-  public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddVxFormGenerator(new VxFormLayoutOptions() { LabelOrientation = LabelOrientation.TOP });
-        }
 ```
 
-Set options at **Component** level, these options override the global one.
+Submitted values are stored in `VxFormMetadataModel.Values`.
 
-```html
- <RenderFormElements FormLayoutOptions="@OptionsForForm"></RenderFormElements>
+Supported metadata features include:
 
-@code{
-    private VxFormLayoutOptions OptionsForForm = new VxFormLayoutOptions();
+- Stable field ids for accessible label/input associations.
+- Row and column layout through `RowId`, `RowLabel`, `ColSpan`, and `Order`.
+- Text, number, date, checkbox, and select rendering.
+- Lookup options with labels, selected defaults, and disabled choices.
+- Nullable primitive aliases such as `int?`, `decimal?`, `datetime?`, and `bool?`.
+- Simple equality-based conditional visibility.
+
+The demo route `/dynamic-form` intentionally uses metadata rendering so the same dynamic form path works in both the Blazor Server and Blazor WebAssembly demos.
+
+## Runtime Types And Source Text
+
+Metadata rendering does not require runtime CLR type generation.
+
+When a server-side scenario specifically needs a reflected CLR type with attributes, use:
+
+```csharp
+var modelType = VxFormRuntimeModelBuilder.BuildType(definition);
+var instance = VxFormRuntimeModelBuilder.CreateInstance(definition);
+```
+
+`VxFormRuntimeModelBuilder` uses `Reflection.Emit`, so do not use it as the portable Blazor WebAssembly path.
+
+When source text is useful for diagnostics, persistence, or build-time generation, use:
+
+```csharp
+var source = VxFormModelSourceGenerator.Generate(definition);
+```
+
+## Localization
+
+Model-based forms honor localized `DisplayAttribute` and validation resources.
+
+```csharp
+public class AddressViewModel
+{
+    [Display(ResourceType = typeof(Resources.Address), Name = nameof(Resources.Address.FIRSTNAME_LABEL))]
+    [VxFormElementLayout(RowId = 1)]
+    public string SurName { get; set; }
+
+    [Display(Name = "Street")]
+    [MinLength(5,
+        ErrorMessageResourceType = typeof(Resources.Address),
+        ErrorMessageResourceName = nameof(Resources.Address.STREET_MIN_LENGTH))]
+    public string Street { get; set; }
 }
 ```
 
-#### Possible options
+Server-side localization setup example:
 
-*Set the label position for the form*
+```csharp
+builder.Services.AddLocalization();
 
-**Label position**:          Top | Left | None
+var supportedCultures = new[] { "en", "nl" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
 
-*Set the placeholder policy for the form*
+app.UseRequestLocalization(localizationOptions);
+```
 
-**Placeholder Policy**: Explicit | Implicit | None | ExplicitFallbackToLabels | ImplicitFallbackToLabels
+The demo data project includes English and Dutch address resources.
 
-*Set the trigger for showing validation state*
+## Development Container
 
-**Validation Policy**:     OnlyValid | OnlyInvalid | BothValidAndInvalid
+The repository includes a devcontainer under `.devcontainer/`. It uses the .NET 10 SDK image with ICU installed, so localization tests can run without `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1`.
 
+Open the repository in VS Code and choose `Dev Containers: Reopen in Container`, or build the image manually:
 
+```bash
+docker build -f .devcontainer/Dockerfile -t vxformgenerator-devcontainer .
+```
 
-### Run demo
+## Run Demos
 
-Run the demo so you can see the options and effects interactively:
+Server demo:
 
-1. `git clone https://github.com/Aaltuj/VxFormGenerator.git`
-2. `cd VxFormGenerator ` 
-3. `run.cmd` on Windows or `bash run.sh` on Linux/Mac
-4. navigate to `http://localhost:5000/definition-form`
+```bash
+dotnet run --project VxFormGeneratorDemo.Server/VxFormGeneratorDemo.Server.csproj
+```
 
+WebAssembly demo:
 
+```bash
+dotnet run --project VxFormGeneratorDemo.Wasm/VxFormGeneratorDemo.Wasm.csproj
+```
 
-### Apply your own styling
+Useful routes:
 
-> This is a work in progress
+- `/` for the model-based demo.
+- `/definition-form` for layout options.
+- `/dynamic-form` for metadata-rendered dynamic forms.
 
+## Tests
 
+Run the core test suite:
 
-### Contact
+```bash
+dotnet test VxFormGenerator.Core.Tests/VxFormGenerator.Core.Tests.csproj
+```
+
+The test suite covers metadata rendering, nullable values, lookup options, conditional visibility, source/runtime model generation, object-graph validation, and localization resources.
+
+## Contact
 
 <img src="https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/discord-logo.png" alt="Discord" /> [Server](https://discord.gg/pyCtvFdTdV)
