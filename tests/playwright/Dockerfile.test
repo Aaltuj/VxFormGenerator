@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    DOTNET_NOLOGO=1 \
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=0 \
+    CI=1
+
+WORKDIR /work
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends nodejs npm \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY tests/playwright/package.json tests/playwright/package.json
+RUN npm --prefix tests/playwright install \
+    && npx --prefix tests/playwright playwright install --with-deps chromium
+
+COPY . ./
+
+CMD ["npm", "--prefix", "tests/playwright", "test", "--", "--reporter=line"]

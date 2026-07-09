@@ -1,0 +1,14 @@
+{
+  "name": "vxformgenerator-demo-playwright-tests",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "pretest": "dotnet publish ../../VxFormGeneratorDemo.Wasm/VxFormGeneratorDemo.Wasm.csproj --configuration Release --output ../../artifacts/playwright-demo -p:PublishTrimmed=false",
+    "test": "playwright test",
+    "test:container": "docker build -f tests/playwright/Dockerfile.test -t vxformgenerator-playwright-tests . && docker run --rm vxformgenerator-playwright-tests"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "serve": "^14.2.5"
+  }
+}

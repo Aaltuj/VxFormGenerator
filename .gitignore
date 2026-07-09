@@ -4,5 +4,6 @@ bin/
 obj/
 
 Tools/
+artifacts/
 
 .DS_Store
