@@ -8,6 +8,7 @@ using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using VxFormGenerator.VisualStudio.Shared;
+using Process = System.Diagnostics.Process;
 using Task = System.Threading.Tasks.Task;
 
 namespace VxFormGenerator.VisualStudio
