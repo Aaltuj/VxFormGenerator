@@ -34,5 +34,18 @@ namespace VxFormGenerator.Core.Tests
 
             Assert.Equal("Custom markup value", component.Instance.Model.SurName);
         }
+
+        [Fact]
+        public void RenderFormElements_LeftOrientationAddsFieldLabelsAboveInputs()
+        {
+            var component = Render<LeftOrientationRenderFormElementsTestHost>();
+
+            Assert.NotNull(component.Find(".vx-form-left-row-label:not(.vx-form-explicit-row-label)"));
+            Assert.NotNull(component.Find(".vx-form-explicit-row-label"));
+            Assert.Contains(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Firstname");
+            Assert.Contains(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Lastname");
+            Assert.DoesNotContain(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Street");
+            Assert.DoesNotContain(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Number");
+        }
     }
 }

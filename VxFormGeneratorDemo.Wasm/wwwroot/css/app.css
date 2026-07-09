@@ -70,6 +70,11 @@ pre {
     min-height: 44px;
 }
 
+.vx-form-left-field-label {
+    display: block;
+    padding-bottom: 0.25rem;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -150,6 +155,11 @@ fieldset:not(:last-child) {
 
     .btn {
         width: 100%;
+    }
+
+    .vx-form-left-column {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
     }
 
     dl.row > dt,

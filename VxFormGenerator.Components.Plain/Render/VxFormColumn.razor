@@ -2,5 +2,10 @@
 @inherits VxFormGenerator.Render.Plain.VxFormColumnComponent
 
 <div class="@CssClass" style="@Style">
+    @if (ShowLeftFieldLabel)
+    {
+        <label class="vx-form-left-field-label col-form-label">@FormColumnDefinition.RenderOptions.Label</label>
+    }
+
     @CreateFormElement()
 </div>

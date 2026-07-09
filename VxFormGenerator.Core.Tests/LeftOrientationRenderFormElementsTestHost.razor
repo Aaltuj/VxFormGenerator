@@ -1,0 +1,17 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using VxFormGenerator.Core
+@using VxFormGenerator.Core.Layout
+@using VxFormGeneratorDemoData
+
+<EditForm Model="Model">
+    <RenderFormElements FormLayoutOptions="Options" />
+</EditForm>
+
+@code {
+    public AddressViewModel Model { get; } = new AddressViewModel();
+
+    private VxFormLayoutOptions Options { get; } = new VxFormLayoutOptions
+    {
+        LabelOrientation = LabelOrientation.LEFT
+    };
+}

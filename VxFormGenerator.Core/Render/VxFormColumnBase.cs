@@ -18,7 +18,10 @@ namespace VxFormGenerator.Core.Render
             {
 
                 if (FormLayoutOptions.LabelOrientation == LabelOrientation.TOP && this.FormColumnDefinition.RenderOptions.ColSpan > 0)
-                    return $"col-{this.FormColumnDefinition.RenderOptions.ColSpan}";
+                    return $"col-12 col-sm-{this.FormColumnDefinition.RenderOptions.ColSpan}";
+
+                if (FormLayoutOptions.LabelOrientation == LabelOrientation.LEFT && FormColumnDefinition.RenderOptions.ColSpan > 0)
+                    return "col vx-form-left-column";
                 else
                     return "col";
             }
@@ -38,7 +41,15 @@ namespace VxFormGenerator.Core.Render
                 return "";
             }
         }
+
+        public bool ShowLeftFieldLabel =>
+            FormLayoutOptions.LabelOrientation == LabelOrientation.LEFT &&
+            !SuppressLeftFieldLabel &&
+            !string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label);
+
         [Parameter] public Layout.VxFormElementDefinition FormColumnDefinition { get; set; }
+
+        [Parameter] public bool SuppressLeftFieldLabel { get; set; }
 
         public RenderFragment CreateFormElement() => builder =>
         {

@@ -10,6 +10,8 @@ namespace VxFormGenerator.Core.Layout
         public string Label { get; set; }
         public string Id { get; set; }
 
+        public bool HasExplicitLabel { get; set; }
+
         public List<VxFormElementDefinition> Columns { get; set; } = new List<VxFormElementDefinition>();
 
         internal VxFormRowLayoutAttribute RowLayoutAttribute { get; set; }
@@ -25,7 +27,7 @@ namespace VxFormGenerator.Core.Layout
 
         public object Clone()
         {
-            return new VxFormRow(this.Id) { Columns = this.Columns, RowLayoutAttribute = this.RowLayoutAttribute };
+            return new VxFormRow(this.Id) { Columns = this.Columns, RowLayoutAttribute = this.RowLayoutAttribute, HasExplicitLabel = this.HasExplicitLabel };
         }
 
         internal static VxFormRow Create(VxFormElementLayoutAttribute layoutAttr, VxFormRowLayoutAttribute vxFormRowLayoutAttribute, VxFormLayoutOptions options)
@@ -35,7 +37,10 @@ namespace VxFormGenerator.Core.Layout
             output.RowLayoutAttribute = vxFormRowLayoutAttribute;
 
             if (options.LabelOrientation == LabelOrientation.LEFT && output.RowLayoutAttribute?.Label != null)
+            {
                 output.Label = vxFormRowLayoutAttribute.Label;
+                output.HasExplicitLabel = true;
+            }
 
             return output;
         }
