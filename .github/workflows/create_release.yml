@@ -47,6 +47,7 @@ jobs:
           uses: softprops/action-gh-release@v2
           with:
             generate_release_notes: true
+            body_path: changelogs/${{ github.ref_name }}.md
             files: |
                VxFormGenerator.Core/bin/Release/*.nupkg
                VxFormGenerator.Components.Plain/bin/Release/*.nupkg
