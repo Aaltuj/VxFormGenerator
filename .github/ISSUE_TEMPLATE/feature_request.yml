@@ -1,0 +1,34 @@
+name: Feature request
+description: Propose a new capability or workflow improvement
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for product or API requests. For support questions, use the Discord server linked in the README.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the user need, not only the proposed implementation
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Describe the API, workflow, or UX you want
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What workarounds or competing approaches have you tried?
+  - type: textarea
+    id: impact
+    attributes:
+      label: Who benefits?
+      description: Explain the audience, use case, and expected value
+    validations:
+      required: true

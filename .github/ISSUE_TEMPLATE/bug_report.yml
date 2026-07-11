@@ -1,0 +1,52 @@
+name: Bug report
+description: Report a reproducible defect in VxFormGenerator
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for confirmed bugs. For support questions, use the Discord server linked in the README.
+  - type: input
+    id: package
+    attributes:
+      label: Affected package
+      description: Which package or demo project is affected?
+      placeholder: VxFormGenerator.Core
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package or commit version
+      description: NuGet version, branch, or commit SHA
+      placeholder: 0.4.0 or master
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe expected behavior and actual behavior
+      placeholder: Expected ..., but instead ...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide the smallest sample, steps, or stack trace that reproduces the problem
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Framework, hosting model, browser, OS, and anything else relevant
+      placeholder: net10.0, Blazor Server, Chrome 127, Ubuntu 24.04
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context
+      description: Screenshots, logs, and workarounds
