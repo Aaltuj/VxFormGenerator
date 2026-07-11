@@ -17,10 +17,21 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
-    - name: Install dependencies
-      run: dotnet restore
+    - name: Restore packages
+      run: |
+        dotnet restore VxFormGenerator.Core/VxFormGenerator.Core.csproj
+        dotnet restore VxFormGenerator.Components.Plain/VxFormGenerator.Components.Plain.csproj
+        dotnet restore VxFormGenerator.Components.Bootstrap/VxFormGenerator.Components.Bootstrap.csproj
+        dotnet restore VxFormGenerator.Tools/VxFormGenerator.Tools.csproj
+        dotnet restore VxFormGeneratorDemo.Wasm/VxFormGeneratorDemo.Wasm.csproj
+        dotnet restore VxFormGenerator.Core.Tests/VxFormGenerator.Core.Tests.csproj
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: |
+        dotnet build VxFormGenerator.Core/VxFormGenerator.Core.csproj --configuration Release --no-restore -m:1
+        dotnet build VxFormGenerator.Components.Plain/VxFormGenerator.Components.Plain.csproj --configuration Release --no-restore -m:1
+        dotnet build VxFormGenerator.Components.Bootstrap/VxFormGenerator.Components.Bootstrap.csproj --configuration Release --no-restore -m:1
+        dotnet build VxFormGenerator.Tools/VxFormGenerator.Tools.csproj --configuration Release --no-restore -m:1
+        dotnet build VxFormGenerator.Core.Tests/VxFormGenerator.Core.Tests.csproj --configuration Release --no-restore -m:1
     - name: Build WASM demo
       run: dotnet build VxFormGeneratorDemo.Wasm/VxFormGeneratorDemo.Wasm.csproj --configuration Release --no-restore
     - name: Publish
@@ -30,4 +41,4 @@ jobs:
       run: dotnet nuget push "**/VxFormGenerator.*.nupkg" -k ${{env.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
       
     - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      run: dotnet test VxFormGenerator.Core.Tests/VxFormGenerator.Core.Tests.csproj --configuration Release --no-build --verbosity normal
