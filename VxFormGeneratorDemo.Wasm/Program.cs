@@ -7,8 +7,12 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-#if BOOTSTRAP
- using VxFormGenerator.Settings.Bootstrap;
+#if BULMA
+using VxFormGenerator.Settings.Bulma;
+#elif TAILWIND
+using VxFormGenerator.Settings.Tailwind;
+#elif BOOTSTRAP
+using VxFormGenerator.Settings.Bootstrap;
 #else
 using VxFormGenerator.Settings.Plain;
 #endif

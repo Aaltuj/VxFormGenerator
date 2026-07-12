@@ -1,0 +1,77 @@
+.field:not(:last-child) {
+    margin-bottom: .75rem;
+}
+
+.label {
+    color: #363636;
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.control {
+    box-sizing: border-box;
+    clear: both;
+    font-size: 1rem;
+    position: relative;
+    text-align: inherit;
+}
+
+.input,
+.select {
+    appearance: none;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    box-shadow: inset 0 .0625em .125em rgba(10, 10, 10, .05);
+    color: #363636;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.5em;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding: calc(.5em - 1px) calc(.75em - 1px);
+    position: relative;
+    vertical-align: top;
+}
+
+.input:focus,
+.select:focus {
+    border-color: #485fc7;
+    box-shadow: 0 0 0 .125em rgba(72, 95, 199, .25);
+    outline: 0;
+}
+
+.select.is-fullwidth,
+.select.is-fullwidth select,
+.input {
+    width: 100%;
+}
+
+.checkbox {
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1.25;
+    position: relative;
+}
+
+.checkbox input {
+    cursor: pointer;
+    margin-right: .5em;
+}
+
+.help {
+    display: block;
+    font-size: .75rem;
+    margin-top: .25rem;
+}
+
+.is-success {
+    border-color: #48c78e;
+}
+
+.is-danger {
+    border-color: #f14668;
+}

@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Core", "VxF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Components.Bootstrap", "VxFormGenerator.Components.Bootstrap\VxFormGenerator.Components.Bootstrap.csproj", "{23AB5CD5-8FB4-43A5-9B7B-1E704C1A3909}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Components.Bulma", "VxFormGenerator.Components.Bulma\VxFormGenerator.Components.Bulma.csproj", "{7D2E174F-A7EC-44B0-BBDE-05213D32544D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Components.Tailwind", "VxFormGenerator.Components.Tailwind\VxFormGenerator.Components.Tailwind.csproj", "{9542DC6A-B03D-4F73-90E6-A4D0E217B278}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VxFormGenerator.Components.Plain", "VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj", "{5BB684AC-3B47-4492-9AE6-8FA93567E53A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{793D7184-2846-4E6D-A4C4-7B93D5EB276E}"
@@ -58,6 +62,14 @@ Global
 		{23AB5CD5-8FB4-43A5-9B7B-1E704C1A3909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23AB5CD5-8FB4-43A5-9B7B-1E704C1A3909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23AB5CD5-8FB4-43A5-9B7B-1E704C1A3909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D2E174F-A7EC-44B0-BBDE-05213D32544D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D2E174F-A7EC-44B0-BBDE-05213D32544D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D2E174F-A7EC-44B0-BBDE-05213D32544D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D2E174F-A7EC-44B0-BBDE-05213D32544D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9542DC6A-B03D-4F73-90E6-A4D0E217B278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9542DC6A-B03D-4F73-90E6-A4D0E217B278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9542DC6A-B03D-4F73-90E6-A4D0E217B278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9542DC6A-B03D-4F73-90E6-A4D0E217B278}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5BB684AC-3B47-4492-9AE6-8FA93567E53A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5BB684AC-3B47-4492-9AE6-8FA93567E53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BB684AC-3B47-4492-9AE6-8FA93567E53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
