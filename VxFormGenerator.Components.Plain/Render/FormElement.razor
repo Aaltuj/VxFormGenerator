@@ -12,7 +12,7 @@ else
     <div>
         @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
         {
-            <label class="col-form-label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+            <label class="col-form-label" for="@ElementId">@FormColumnDefinition.RenderOptions.Label</label>
         }
 
         @CreateComponent()

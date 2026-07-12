@@ -4,7 +4,7 @@
 <div class="@CssClass" style="@Style">
     @if (ShowLeftFieldLabel)
     {
-        <label class="vx-form-left-field-label col-form-label">@FormColumnDefinition.RenderOptions.Label</label>
+        <label class="vx-form-left-field-label col-form-label" for="@FormColumnDefinition.Name">@FormColumnDefinition.RenderOptions.Label</label>
     }
 
     @CreateFormElement()

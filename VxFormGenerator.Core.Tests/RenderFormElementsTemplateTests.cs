@@ -20,7 +20,9 @@ namespace VxFormGenerator.Core.Tests
             var surnameField = component.Find(".custom-field[data-field-name='SurName']");
 
             Assert.Equal("Firstname", surnameField.QuerySelector(".custom-label").TextContent);
-            Assert.NotNull(surnameField.QuerySelector(".custom-input input"));
+            var input = surnameField.QuerySelector(".custom-input input");
+            Assert.NotNull(input);
+            Assert.Equal(surnameField.QuerySelector(".custom-label").GetAttribute("for"), input.GetAttribute("id"));
             Assert.NotNull(surnameField.QuerySelector(".custom-validation"));
         }
 
@@ -46,6 +48,12 @@ namespace VxFormGenerator.Core.Tests
             Assert.Contains(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Lastname");
             Assert.DoesNotContain(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Street");
             Assert.DoesNotContain(component.FindAll(".vx-form-left-field-label"), label => label.TextContent == "Number");
+
+            var firstNameLabel = component.Find(".vx-form-left-field-label[for='SurName']");
+            var firstNameInput = component.Find("input#SurName");
+
+            Assert.Equal("Firstname", firstNameLabel.TextContent);
+            Assert.NotNull(firstNameInput);
         }
     }
 }
