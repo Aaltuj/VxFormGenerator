@@ -58,6 +58,8 @@ namespace VxFormGenerator.Core
 
         [CascadingParameter] public RenderFragment<VxFormFieldTemplateContext> FieldTemplate { get; set; }
 
+        protected string ElementId => string.IsNullOrWhiteSpace(Id) ? FormColumnDefinition.Name : Id;
+
 
         protected override void OnInitialized()
         {
@@ -104,7 +106,7 @@ namespace VxFormGenerator.Core
             return new VxFormFieldTemplateContext
             {
                 Name = FormColumnDefinition.Name,
-                Id = string.IsNullOrWhiteSpace(Id) ? FormColumnDefinition.Name : Id,
+                Id = ElementId,
                 Label = FormColumnDefinition.RenderOptions.Label,
                 ShowLabel = FormColumnDefinition.RenderOptions.ShowLabel,
                 FieldDefinition = FormColumnDefinition,
@@ -155,6 +157,8 @@ namespace VxFormGenerator.Core
 
             if (FormColumnDefinition.RenderOptions.Placeholder != null)
                 builder.AddAttribute(treeIndex++, "placeholder", FormColumnDefinition.RenderOptions.Placeholder);
+
+            builder.AddAttribute(treeIndex++, "id", ElementId);
 
             // Set the class for the the formelement.
             builder.AddAttribute(treeIndex++, "class", GetDefaultFieldClasses(Activator.CreateInstance(elementType) as InputBase<TFormElement>));
