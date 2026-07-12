@@ -1,5 +1,7 @@
 # Build a form-generator with Blazor
 
+> Current docs note: the actively maintained getting-started path lives in the repository root [`README.md`](../README.md). For schema-first dynamic forms, start with the `Schema-First Dynamic Forms` section there and run the local `/dynamic-form` demo route.
+
 My journey into Blazor started with the birth of my lovely daughter on 20-02-2020. The little dino-baby (one of her nicknames 😉) was eating, sleeping and being cute. As a new parent a lot of stuff is coming your way. You need to keep up with many things, especially the last time the baby had their milk. Looking at the apps that help you track these, any many other events, I had found  that a lot require me to create an account and were sharing my data. Because don't want to store that data somewhere other people could use it, I thought: let's built my own. 
 
 ### Babysteps

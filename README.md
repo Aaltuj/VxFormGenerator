@@ -9,6 +9,17 @@ The current codebase targets `net10.0` and supports two form-generation paths:
 
 `ExpandoObject` rendering is no longer the dynamic form path. Use metadata rendering for portable dynamic forms.
 
+## Choose A Form Path
+
+- Use model-based rendering when the form comes from a compiled POCO with data annotations and optional VxFormGenerator layout attributes.
+- Use schema-first dynamic rendering when the form shape is defined at runtime, loaded from configuration, shared across server and WebAssembly, or needs to stay compatible with AOT and restricted runtimes.
+- Migration note: if older code still relies on `ExpandoObject` as the dynamic path, move that workflow to `VxFormModelDefinition` plus `VxFormMetadataBuilder` and `RenderVxFormMetadata`.
+
+Start with the metadata demo route when evaluating the schema-first path:
+
+- `/dynamic-form` shows the portable runtime-metadata workflow.
+- `/definition-form` shows the compiled model/layout workflow.
+
 ## Packages
 
 Choose one component package for your app:
@@ -237,7 +248,35 @@ public class OrderViewModel
 }
 ```
 
-## Dynamic Metadata Forms
+## Schema-First Dynamic Forms
+
+If your application defines fields at runtime, start with `VxFormModelDefinition`, build a metadata model, and render it with `RenderVxFormMetadata`.
+
+Quick start:
+
+```csharp
+using VxFormGenerator.Core.Dynamic;
+
+var definition = new VxFormModelDefinition
+{
+    Namespace = "MyApp.GeneratedForms",
+    ClassName = "CustomerForm"
+};
+
+definition.Properties.Add(new VxFormModelPropertyDefinition
+{
+    Name = "FirstName",
+    TypeName = "string",
+    Label = "First name",
+    IsRequired = true
+});
+
+var metadataModel = VxFormMetadataBuilder.Build(definition);
+```
+
+```razor
+<RenderVxFormMetadata Model="metadataModel" />
+```
 
 For dynamic forms, build a `VxFormModelDefinition` at runtime and render it with `RenderVxFormMetadata`.
 
@@ -436,3 +475,9 @@ The test suite covers metadata rendering, nullable values, lookup options, condi
 ## Contact
 
 <img src="https://github.com/Aaltuj/VxFormGenerator/blob/master/Docs/images/discord-logo.png" alt="Discord" /> [Server](https://discord.gg/pyCtvFdTdV)
+
+## Community
+
+- [Contributing guide](CONTRIBUTING.md)
+- [Code of conduct](CODE_OF_CONDUCT.md)
+- [Security policy](SECURITY.md)
