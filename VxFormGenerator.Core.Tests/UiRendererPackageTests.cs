@@ -72,7 +72,7 @@ namespace VxFormGenerator.Core.Tests
 
             var component = Render<UiRendererTestHost>();
 
-            Assert.Contains("input", component.Find("input[type='text']").ClassList);
+            Assert.Contains("input", component.Find("input:not([type])").ClassList);
             Assert.Contains("input", component.Find("input[type='number']").ClassList);
             Assert.DoesNotContain("input", component.Find("input[type='checkbox']").ClassList);
             Assert.Contains("checkbox", component.Find("input[type='checkbox']").ClassList);
@@ -86,7 +86,7 @@ namespace VxFormGenerator.Core.Tests
 
             var component = Render<UiRendererTestHost>();
 
-            Assert.Contains("w-full", component.Find("input[type='text']").ClassList);
+            Assert.Contains("w-full", component.Find("input:not([type])").ClassList);
             Assert.Contains("w-full", component.Find("input[type='number']").ClassList);
             Assert.DoesNotContain("w-full", component.Find("input[type='checkbox']").ClassList);
             Assert.Contains("h-4", component.Find("input[type='checkbox']").ClassList);
