@@ -2,6 +2,30 @@
     margin-bottom: .75rem;
 }
 
+.box {
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 .5em 1em -.125em rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .02);
+    color: #4a4a4a;
+    display: block;
+    padding: 1.25rem;
+}
+
+.content:not(:last-child),
+.title:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.title {
+    color: #363636;
+    font-weight: 600;
+    line-height: 1.125;
+}
+
+.title.is-5 {
+    font-size: 1.25rem;
+}
+
 .label {
     color: #363636;
     display: block;
@@ -68,8 +92,49 @@
     margin-top: .25rem;
 }
 
+.button {
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #363636;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.5em;
+    justify-content: center;
+    line-height: 1.5;
+    padding: calc(.5em - 1px) 1em;
+    text-align: center;
+    vertical-align: top;
+}
+
+.button.is-primary {
+    background-color: #00d1b2;
+    border-color: transparent;
+    color: #fff;
+}
+
+.notification {
+    border-radius: 4px;
+    margin-top: 1rem;
+    padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+    position: relative;
+}
+
 .is-success {
     border-color: #48c78e;
+}
+
+.notification.is-success {
+    background-color: #48c78e;
+    color: #fff;
+}
+
+.notification.is-success.is-light {
+    background-color: #effaf5;
+    color: #257953;
 }
 
 .is-danger {

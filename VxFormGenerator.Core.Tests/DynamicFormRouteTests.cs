@@ -22,6 +22,47 @@ namespace VxFormGenerator.Core.Tests
         }
 
         [Fact]
+        public void HomePage_LinksToUiRendererDemos()
+        {
+            var component = Render<VxFormGeneratorDemo.Shared.Pages.Index>();
+
+            Assert.Contains("Bulma renderer", component.Markup);
+            Assert.Contains("href=\"bulma-form\"", component.Markup);
+            Assert.Contains("Tailwind renderer", component.Markup);
+            Assert.Contains("href=\"tailwind-form\"", component.Markup);
+        }
+
+        [Fact]
+        public void BulmaForm_RendersBulmaDemoStyles()
+        {
+            global::VxFormGenerator.Settings.Bulma.ServiceCollectionExtensions.AddVxFormGenerator(Services);
+
+            var component = Render<BulmaForm>();
+
+            Assert.Contains("Bulma Renderer Demo", component.Markup);
+            Assert.Contains("class=\"box\"", component.Markup);
+            Assert.Contains("class=\"button is-primary\"", component.Markup);
+            Assert.Contains("class=\"field\"", component.Markup);
+            Assert.Contains("input", component.Find("input:not([type])").ClassList);
+            Assert.Contains("select", component.Find("select").ClassList);
+        }
+
+        [Fact]
+        public void TailwindForm_RendersTailwindDemoStyles()
+        {
+            global::VxFormGenerator.Settings.Tailwind.ServiceCollectionExtensions.AddVxFormGenerator(Services);
+
+            var component = Render<TailwindForm>();
+
+            Assert.Contains("Tailwind Renderer Demo", component.Markup);
+            Assert.Contains("rounded-lg border border-gray-200 bg-white p-6 shadow-sm", component.Markup);
+            Assert.Contains("rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white", component.Markup);
+            Assert.Contains("mb-4", component.Find("input:not([type])").ParentElement.GetAttribute("class"));
+            Assert.Contains("w-full", component.Find("input:not([type])").ClassList);
+            Assert.Contains("w-full", component.Find("select").ClassList);
+        }
+
+        [Fact]
         public void DynamicForm_RendersMetadataGeneratedForm()
         {
             var component = Render<DynamicForm>();
