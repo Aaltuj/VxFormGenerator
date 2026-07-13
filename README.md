@@ -70,6 +70,14 @@ builder.Services.AddVxFormGenerator();
 await builder.Build().RunAsync();
 ```
 
+The repository includes a runnable Blazor WebAssembly demo in
+`VxFormGeneratorDemo.Wasm`. It uses the shared demo pages and the same
+component registration pattern shown above, so the model-based and
+metadata-rendered examples can be checked in a browser without a server-side
+Blazor host. For runtime-defined forms, use the `/dynamic-form` route; it
+renders from `VxFormModelDefinition` metadata and avoids `Reflection.Emit`, so
+it remains portable to WebAssembly, AOT, and restricted runtimes.
+
 Blazor Server example:
 
 ```csharp
@@ -455,6 +463,9 @@ WebAssembly demo:
 ```bash
 dotnet run --project VxFormGeneratorDemo.Wasm/VxFormGeneratorDemo.Wasm.csproj
 ```
+
+The WebAssembly demo serves the same useful routes listed below. Start with
+`/dynamic-form` when validating schema-first dynamic forms in the browser.
 
 Useful routes:
 
