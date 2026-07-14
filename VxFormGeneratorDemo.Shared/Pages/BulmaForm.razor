@@ -1,0 +1,68 @@
+@page "/bulma-form"
+
+@using System
+@using System.ComponentModel.DataAnnotations
+@using VxFormGenerator.Core
+
+<h1>Bulma Renderer Demo</h1>
+
+<div class="box">
+    <h5 class="title is-5">Package registration</h5>
+    <p class="content">
+        Compile the demo with the <code>BULMA</code> symbol to use <code>VxFormGenerator.Components.Bulma</code> for generated forms.
+    </p>
+
+    <EditForm Model="Model" OnValidSubmit="HandleValidSubmit">
+        <VxFormGenerator.Core.Validation.ObjectGraphDataAnnotationsValidator />
+        <RenderFormElements></RenderFormElements>
+        <button class="button is-primary" type="submit">Submit</button>
+    </EditForm>
+
+    @if (Submitted)
+    {
+        <p class="notification is-success is-light">Submitted @Model.Name for @Model.FoodKind.</p>
+    }
+</div>
+
+@code {
+    private BulmaDemoModel Model { get; } = new BulmaDemoModel();
+
+    private bool Submitted { get; set; }
+
+    private void HandleValidSubmit()
+    {
+        Submitted = true;
+    }
+
+    public class BulmaDemoModel
+    {
+        [Required]
+        [Display(Name = "Session name", Prompt = "Morning feeding")]
+        public string Name { get; set; }
+
+        [Display(Name = "Food kind")]
+        public BulmaFoodKind FoodKind { get; set; }
+
+        [Range(0, 1000)]
+        [Display(Name = "Amount")]
+        public decimal Amount { get; set; }
+
+        [Display(Name = "Served on")]
+        public DateTime ServedOn { get; set; } = DateTime.Today;
+
+        [Display(Name = "Options")]
+        public ValueReferences Options { get; set; } = new ValueReferences
+        {
+            new ValueReference<string, bool> { Key = "Warmed", Value = true },
+            new ValueReference<string, bool> { Key = "Prepared ahead", Value = false },
+            new ValueReference<string, bool> { Key = "Needs follow-up", Value = false }
+        };
+    }
+
+    public enum BulmaFoodKind
+    {
+        Bottle,
+        Solid,
+        Other
+    }
+}

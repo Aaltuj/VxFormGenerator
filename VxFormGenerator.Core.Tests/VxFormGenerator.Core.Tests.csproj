@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VxFormGenerator.Components.Bulma\VxFormGenerator.Components.Bulma.csproj" />
+    <ProjectReference Include="..\VxFormGenerator.Components.Tailwind\VxFormGenerator.Components.Tailwind.csproj" />
     <ProjectReference Include="..\VxFormGenerator.Core\VxFormGenerator.Core.csproj" />
     <ProjectReference Include="..\VxFormGeneratorDemo.Shared\VxFormGeneratorDemo.Shared.csproj" />
     <ProjectReference Include="..\VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj" />

@@ -202,7 +202,7 @@ namespace VxFormGenerator.Core
                   AdditionalAttributes.TryGetValue("class", out var @class) &&
                   !string.IsNullOrEmpty(Convert.ToString(@class)))
             {
-                return $"{@class} {output}";
+                return Convert.ToString(@class);
             }
 
             return output;

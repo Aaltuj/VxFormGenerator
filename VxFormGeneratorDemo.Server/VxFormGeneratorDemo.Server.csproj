@@ -14,6 +14,14 @@
     <DefineConstants>TRACE; BOOTSTRAP;</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='Bulma'">
+    <DefineConstants>TRACE; BULMA;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Tailwind'">
+    <DefineConstants>TRACE; TAILWIND;</DefineConstants>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <Compile Remove="Components\**" />
@@ -23,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VxFormGenerator.Components.Bulma\VxFormGenerator.Components.Bulma.csproj" />
     <ProjectReference Include="..\VxFormGenerator.Components.Bootstrap\VxFormGenerator.Components.Bootstrap.csproj" />
+    <ProjectReference Include="..\VxFormGenerator.Components.Tailwind\VxFormGenerator.Components.Tailwind.csproj" />
     <ProjectReference Include="..\VxFormGenerator.Components.Plain\VxFormGenerator.Components.Plain.csproj" />
     <ProjectReference Include="..\VxFormGeneratorDemo.Shared\VxFormGeneratorDemo.Shared.csproj" />
     <ProjectReference Include="..\VxFormGeneratorDemoData\VxFormGeneratorDemoData.csproj" />

@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-#if BOOTSTRAP
+#if BULMA
+using VxFormGenerator.Settings.Bulma;
+#elif TAILWIND
+using VxFormGenerator.Settings.Tailwind;
+#elif BOOTSTRAP
 using VxFormGenerator.Settings.Bootstrap;
 #else
 using VxFormGenerator.Settings.Plain;

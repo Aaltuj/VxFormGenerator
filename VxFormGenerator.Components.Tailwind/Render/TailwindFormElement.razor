@@ -1,0 +1,23 @@
+@namespace VxFormGenerator.Render.Tailwind
+
+@typeparam TFormElement
+@inherits TailwindFormElementComponent<TFormElement>
+
+@if (FieldTemplate != null)
+{
+    @FieldTemplate(CreateFieldTemplateContext("mt-1 text-sm text-red-600"))
+}
+else
+{
+    <div class="@CssClass">
+        @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
+        {
+            <label class="mb-1 block text-sm font-medium text-gray-700" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+        }
+
+        @CreateComponent()
+
+        <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression" Class="mt-1 text-sm text-red-600">
+        </VxFormGenerator.Core.Validation.VxValidationMessage>
+    </div>
+}

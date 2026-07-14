@@ -1,0 +1,29 @@
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using VxFormGenerator.Core
+
+<EditForm Model="Model">
+    <RenderFormElements />
+</EditForm>
+
+@code {
+    public UiRendererModel Model { get; } = new UiRendererModel();
+
+    public class UiRendererModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        public bool Enabled { get; set; }
+
+        public UiRendererChoice Choice { get; set; }
+
+        public int Quantity { get; set; }
+    }
+
+    public enum UiRendererChoice
+    {
+        First,
+        Second
+    }
+}

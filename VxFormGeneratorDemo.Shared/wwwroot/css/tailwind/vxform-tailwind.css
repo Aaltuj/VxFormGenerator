@@ -1,0 +1,67 @@
+/*
+   Prebuilt Tailwind demo CSS generated for the utility classes emitted by
+   VxFormGenerator.Components.Tailwind and the Tailwind demo page.
+*/
+*, ::before, ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+.mb-1 { margin-bottom: .25rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-1 { margin-top: .25rem; }
+.block { display: block; }
+.flex { display: flex; }
+.h-4 { height: 1rem; }
+.w-4 { width: 1rem; }
+.w-full { width: 100%; }
+.items-center { align-items: center; }
+.gap-2 { gap: .5rem; }
+.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: .5rem; }
+.rounded { border-radius: .25rem; }
+.rounded-lg { border-radius: .5rem; }
+.rounded-md { border-radius: .375rem; }
+.border { border-width: 1px; }
+.border-gray-200 { border-color: #e5e7eb; }
+.border-gray-300 { border-color: #d1d5db; }
+.border-green-500 { border-color: #22c55e; }
+.border-red-500 { border-color: #ef4444; }
+.bg-blue-600 { background-color: #2563eb; }
+.bg-green-50 { background-color: #f0fdf4; }
+.bg-white { background-color: #fff; }
+.p-3 { padding: .75rem; }
+.p-6 { padding: 1.5rem; }
+.px-3 { padding-left: .75rem; padding-right: .75rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-2 { padding-top: .5rem; padding-bottom: .5rem; }
+.text-sm { font-size: .875rem; line-height: 1.25rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.text-blue-600 { color: #2563eb; }
+.text-gray-600 { color: #4b5563; }
+.text-gray-700 { color: #374151; }
+.text-gray-900 { color: #111827; }
+.text-green-700 { color: #15803d; }
+.text-red-600 { color: #dc2626; }
+.text-white { color: #fff; }
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05); }
+.ring-green-500\/30 { box-shadow: 0 0 0 3px rgba(34, 197, 94, .3); }
+.ring-red-500\/30 { box-shadow: 0 0 0 3px rgba(239, 68, 68, .3); }
+.focus\:border-blue-500:focus { border-color: #3b82f6; }
+.focus\:outline-none:focus { outline: 2px solid transparent; outline-offset: 2px; }
+.focus\:ring-2:focus { box-shadow: 0 0 0 2px rgba(59, 130, 246, .5); }
+.focus\:ring-blue-500\/30:focus { box-shadow: 0 0 0 3px rgba(59, 130, 246, .3); }
+
+select.w-full,
+input.w-full {
+    display: block;
+}

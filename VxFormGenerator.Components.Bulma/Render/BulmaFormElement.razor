@@ -1,0 +1,25 @@
+@namespace VxFormGenerator.Render.Bulma
+
+@typeparam TFormElement
+@inherits BulmaFormElementComponent<TFormElement>
+
+@if (FieldTemplate != null)
+{
+    @FieldTemplate(CreateFieldTemplateContext("help is-danger"))
+}
+else
+{
+    <div class="@CssClass">
+        @if (!string.IsNullOrWhiteSpace(FormColumnDefinition.RenderOptions.Label) && FormColumnDefinition.RenderOptions.ShowLabel)
+        {
+            <label class="label" for="@Id">@FormColumnDefinition.RenderOptions.Label</label>
+        }
+
+        <div class="control">
+            @CreateComponent()
+        </div>
+
+        <VxFormGenerator.Core.Validation.VxValidationMessage For="@ValueExpression" Class="help is-danger">
+        </VxFormGenerator.Core.Validation.VxValidationMessage>
+    </div>
+}

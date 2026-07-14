@@ -1,0 +1,68 @@
+@page "/tailwind-form"
+
+@using System
+@using System.ComponentModel.DataAnnotations
+@using VxFormGenerator.Core
+
+<h1>Tailwind Renderer Demo</h1>
+
+<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+    <h5 class="text-lg font-semibold text-gray-900">Package registration</h5>
+    <p class="mb-4 text-sm text-gray-600">
+        Compile the demo with the <code>TAILWIND</code> symbol to use <code>VxFormGenerator.Components.Tailwind</code> for generated forms.
+    </p>
+
+    <EditForm Model="Model" OnValidSubmit="HandleValidSubmit">
+        <VxFormGenerator.Core.Validation.ObjectGraphDataAnnotationsValidator />
+        <RenderFormElements></RenderFormElements>
+        <button class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white" type="submit">Submit</button>
+    </EditForm>
+
+    @if (Submitted)
+    {
+        <p class="rounded-md bg-green-50 p-3 text-sm text-green-700">Submitted @Model.Name for @Model.FoodKind.</p>
+    }
+</div>
+
+@code {
+    private TailwindDemoModel Model { get; } = new TailwindDemoModel();
+
+    private bool Submitted { get; set; }
+
+    private void HandleValidSubmit()
+    {
+        Submitted = true;
+    }
+
+    public class TailwindDemoModel
+    {
+        [Required]
+        [Display(Name = "Session name", Prompt = "Morning feeding")]
+        public string Name { get; set; }
+
+        [Display(Name = "Food kind")]
+        public TailwindFoodKind FoodKind { get; set; }
+
+        [Range(0, 1000)]
+        [Display(Name = "Amount")]
+        public decimal Amount { get; set; }
+
+        [Display(Name = "Served on")]
+        public DateTime ServedOn { get; set; } = DateTime.Today;
+
+        [Display(Name = "Options")]
+        public ValueReferences Options { get; set; } = new ValueReferences
+        {
+            new ValueReference<string, bool> { Key = "Warmed", Value = true },
+            new ValueReference<string, bool> { Key = "Prepared ahead", Value = false },
+            new ValueReference<string, bool> { Key = "Needs follow-up", Value = false }
+        };
+    }
+
+    public enum TailwindFoodKind
+    {
+        Bottle,
+        Solid,
+        Other
+    }
+}
